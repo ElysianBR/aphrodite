@@ -21,7 +21,7 @@ export default function TopPageCanvas() {
                 }
 
                 const R = function (x: number, y: number, time: number) {
-                    return (Math.floor(192 + 64 * Math.cos((x * x - y * y) / 300 + time)));
+                    return (Math.floor(192 + 64 * Math.cos((x * x - y * y) / 500 + time)));
                 }
 
                 const G = function (x: number, y: number, time: number) {
@@ -38,7 +38,7 @@ export default function TopPageCanvas() {
                             color(x, y, R(x, y, time), G(x, y, time), B(x, y, time));
                         }
                     }
-                    time = time + 0.03;
+                    time = time + 0.02;
                     window.requestAnimationFrame(startAnimation);
                 }
 
@@ -59,7 +59,7 @@ export default function TopPageCanvas() {
             top: 0,
             left: 0,
             width: innerWidth+1000,
-            height: 500,
+            height: "70vh",
             zIndex: -1,
         }} />
     );
