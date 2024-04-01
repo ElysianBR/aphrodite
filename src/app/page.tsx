@@ -4,8 +4,9 @@ import 'react';
 import { Typography, Grid, useTheme, useMediaQuery } from "@mui/material";
 import { Roboto_Condensed } from 'next/font/google';
 import TopPageCanvas from '@/components/top-page-canvas';
+import Header from '@/components/header';
 
-const roboto_h1 = Roboto_Condensed({ subsets: ["latin"], weight: "800" });
+const roboto = Roboto_Condensed({ subsets: ["latin"], weight: "800" });
 
 export default function Home() {
 
@@ -19,13 +20,14 @@ export default function Home() {
   return (
     <main>
       <TopPageCanvas></TopPageCanvas>
+      <Header></Header>
       <Grid
         // divide a tela na horizontal, em dispositivos pequenos usa toda a horizontal
         container
         direction={"row"}
         xs={12} sm={12} md={6} lg={6} xl={6}
         alignItems="flex-end"
-        justifyContent={isXs || isSm ? "center" : "flex-end"} 
+        justifyContent={isXs || isSm ? "center" : "flex-end"}
         marginTop={isXs || isSm ? "2vh" : 0} >
         <Grid
           container
@@ -37,9 +39,8 @@ export default function Home() {
             item
             style={{ mixBlendMode: 'difference' }}>
             <Typography
-              style={Object.assign({}, roboto_h1.style)}
+              style={Object.assign({}, roboto.style)}
               fontSize={'10vw'}
-              variant={"h1"}
               fontFamily={'unset'}>
               Elysian
             </Typography>
