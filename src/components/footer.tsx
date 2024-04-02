@@ -5,7 +5,7 @@ import { AppBar, Toolbar, Typography, Grid, Link } from "@mui/material";
 
 export default function Footer() {
   return (
-    <AppBar position="static">
+    <AppBar position="static" color={"default"}>
       <Toolbar>
         <Grid container spacing={2} justifyContent="center">
           <Grid item>

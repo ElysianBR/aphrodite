@@ -1,10 +1,11 @@
 "use client";
 
 import "react";
-import { Typography, Grid, useTheme, useMediaQuery } from "@mui/material";
+import { Typography, Grid, useTheme, useMediaQuery, Container, Box } from "@mui/material";
 import { Roboto_Condensed } from "next/font/google";
 import TopPageCanvas from "@/components/top-page-canvas";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 const roboto = Roboto_Condensed({ subsets: ["latin"], weight: "800" });
 
@@ -19,45 +20,50 @@ export default function Home() {
   return (
     <main>
       <TopPageCanvas></TopPageCanvas>
-      <Header></Header>
-      <Grid
-        // divide a tela na horizontal, em dispositivos pequenos usa toda a horizontal
-        container
-        direction={"row"}
-        xs={12}
-        sm={12}
-        md={6}
-        lg={6}
-        xl={6}
-        alignItems="flex-end"
-        justifyContent={isXs || isSm ? "center" : "flex-end"}
-        // marginTop={isXs || isSm ? "2vh" : 0}
-      >
-        <Grid
-          container
-          direction={"column"}
-          alignItems={isXs || isSm ? "center" : "flex-end"}
-          justifyContent={isXs || isSm ? "flex-start" : "flex-end"}
-          minHeight={isXs || isSm ? 0 : "50vh"}
-        >
-          <Grid item style={{ mixBlendMode: "difference" }}>
-            <Typography
-              style={Object.assign({}, roboto.style)}
-              fontSize={"10vw"}
-              fontFamily={"unset"}
+      <Box display="flex" flexDirection="column" minHeight="100vh">
+        <Header></Header>
+        <Container style={{ flex: 1 }}>
+          <Grid
+            // divide a tela na horizontal, em dispositivos pequenos usa toda a horizontal
+            container
+            direction={"row"}
+            xs={12}
+            sm={12}
+            md={6}
+            lg={6}
+            xl={6}
+            alignItems="flex-end"
+            justifyContent={isXs || isSm ? "center" : "flex-end"}
+          // marginTop={isXs || isSm ? "2vh" : 0}
+          >
+            <Grid
+              container
+              direction={"column"}
+              alignItems={isXs || isSm ? "center" : "flex-end"}
+              justifyContent={isXs || isSm ? "flex-start" : "flex-end"}
+              minHeight={isXs || isSm ? 0 : "50vh"}
             >
-              Elysian
-            </Typography>
-            <Typography
-              variant={"overline"}
-              fontSize={"1vw"}
-              fontFamily={"unset"}
-            >
-              Uma nova forma de fazer integrações
-            </Typography>
+              <Grid item style={{ mixBlendMode: "difference" }}>
+                <Typography
+                  style={Object.assign({}, roboto.style)}
+                  fontSize={"10vw"}
+                  fontFamily={"unset"}
+                >
+                  Elysian
+                </Typography>
+                <Typography
+                  variant={"overline"}
+                  fontSize={"1vw"}
+                  fontFamily={"unset"}
+                >
+                  Uma nova forma de fazer integrações
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
-        </Grid>
-      </Grid>
+        </Container>
+        <Footer></Footer>
+      </Box>
     </main>
   );
 }
