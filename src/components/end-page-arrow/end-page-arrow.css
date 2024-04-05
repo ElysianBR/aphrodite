@@ -1,0 +1,55 @@
+:root {
+    --ani-speed: 2s;
+    --ani-delay: 1s;
+}
+
+.arrow {
+    opacity: 0;
+    position: absolute;
+    transform-origin: 50% 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.arrow-first {
+    animation: arrow-movement var(--ani-speed) ease-in-out infinite;
+}
+
+.arrow-second {
+    animation: arrow-movement var(--ani-speed) var(--ani-delay) ease-in-out infinite;
+}
+
+.arrow:before,
+.arrow:after {
+    background: #fff;
+    content: '';
+    display: block;
+    height: 3px;
+    margin-left: -15px;
+    position: absolute;
+    width: 30px;
+}
+
+.arrow:before {
+    transform: rotate(45deg) translateX(-23%);
+    transform-origin: top left;
+}
+
+.arrow:after {
+    transform: rotate(-45deg) translateX(23%);
+    transform-origin: top right;
+}
+
+@keyframes arrow-movement {
+    0% {
+        opacity: 0;
+        margin-bottom: 6vh;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

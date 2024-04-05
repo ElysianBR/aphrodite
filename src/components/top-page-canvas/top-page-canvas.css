@@ -1,0 +1,5 @@
+.top-canvas {
+    -webkit-transform:skewY(-10deg) translateY(-30%);
+    -ms-transform:skewY(-10deg) translateY(-30%);
+    transform: skewY(-10deg) translateY(-30%);
+}

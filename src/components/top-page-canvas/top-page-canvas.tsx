@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import "./top-page-canvas.css"
+import { Grid } from "@mui/material";
 
 export default function TopPageCanvas() {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -55,12 +56,12 @@ export default function TopPageCanvas() {
 
     return (
         <canvas ref={canvasRef} width={32} height={32} className={"top-canvas"} style={{
-            position: "fixed",
+            position: "absolute",
             top: 0,
             left: 0,
-            width: innerWidth+1000,
+            width: "99vw",
             height: "70vh",
             zIndex: -1,
-        }} />
+        }} ></canvas>
     );
 }
