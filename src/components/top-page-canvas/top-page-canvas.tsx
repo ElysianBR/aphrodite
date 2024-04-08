@@ -59,7 +59,7 @@ export default function TopPageCanvas() {
             position: "absolute",
             top: 0,
             left: 0,
-            width: "99vw",
+            width: "100%",
             height: "70vh",
             zIndex: -1,
         }} ></canvas>

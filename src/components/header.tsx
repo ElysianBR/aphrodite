@@ -51,89 +51,87 @@ export default function Header() {
 
   const normalToolbar = () => {
     return (
-      <Toolbar variant="dense">
-        <Grid
-          container
-          spacing={10}
-          alignItems={"flex-end"}
-          justifyContent="center"
-        >
-          <Grid item key={0}>
-            <Typography
-              style={Object.assign({}, roboto.style)}
-              fontSize={"25px"}
-            >
-              elysian
-            </Typography>
-          </Grid>
-          {linksArray.map((link, index) => (
-            <Grid item key={index}>
-              <Link
-                href={link.href}
-                underline={
-                  actual === index
-                    ? "always"
-                    : hover === index
+      <Grid
+        container
+        spacing={10}
+        alignItems={"flex-end"}
+        justifyContent="center"
+      >
+        <Grid item key={0}>
+          <Typography
+            style={Object.assign({}, roboto.style)}
+            fontSize={"25px"}
+          >
+            elysian
+          </Typography>
+        </Grid>
+        {linksArray.map((link, index) => (
+          <Grid item key={index}>
+            <Link
+              href={link.href}
+              underline={
+                actual === index
+                  ? "always"
+                  : hover === index
                     ? "hover"
                     : "none"
-                }
-                color={"inherit"}
-                style={Object.assign({}, roboto.style)}
-                fontSize={"20px"}
-                onClick={() => setActual(index)}
-                onMouseOver={() => setHover(index)}
-              >
-                {link.text}
-              </Link>
-            </Grid>
-          ))}
-        </Grid>
-      </Toolbar>
+              }
+              color={"inherit"}
+              style={Object.assign({}, roboto.style)}
+              fontSize={"20px"}
+              onClick={() => setActual(index)}
+              onMouseOver={() => setHover(index)}
+            >
+              {link.text}
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
     );
   };
 
   const compactionToolbar = () => {
     return (
-      <Toolbar variant="dense">
-        <Grid container alignItems={"flex-end"} justifyContent="space-between">
-          <Grid item>
-            <Typography
-              style={Object.assign({}, roboto.style)}
-              fontSize={"25px"}
-            >
-              elysian
-            </Typography>
-          </Grid>
-          <Grid item>
-            <IconButton
-              size="medium"
-              edge="start"
-              aria-label="menu"
-              color="inherit"
-              style={{
-                backdropFilter: "blur(1px)",
-                backgroundColor: buttonMenuHover
-                  ? "rgba(255, 255, 255, 0.7)"
-                  : "rgba(255, 255, 255, 0.4)",
-              }}
-              onMouseOver={() => {
-                setButtonMenuHover(true);
-              }}
-              onMouseOut={() => {
-                setButtonMenuHover(false);
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-          </Grid>
+      <Grid container alignItems={"flex-end"} justifyContent="space-between">
+        <Grid item>
+          <Typography
+            style={Object.assign({}, roboto.style)}
+            fontSize={"25px"}
+          >
+            elysian
+          </Typography>
         </Grid>
-      </Toolbar>
+        <Grid item>
+          <IconButton
+            size="medium"
+            edge="start"
+            aria-label="menu"
+            color="inherit"
+            style={{
+              backdropFilter: "blur(1px)",
+              backgroundColor: buttonMenuHover
+                ? "rgba(255, 255, 255, 0.7)"
+                : "rgba(255, 255, 255, 0.4)",
+            }}
+            onMouseOver={() => {
+              setButtonMenuHover(true);
+            }}
+            onMouseOut={() => {
+              setButtonMenuHover(false);
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
     );
   };
 
   return (
     <AppBar position="static" color={"transparent"} variant="elevation">
-      {isXs || isSm ? compactionToolbar() : normalToolbar()}
+      <Toolbar variant="dense" >
+        {isXs || isSm ? compactionToolbar() : normalToolbar()}
+      </Toolbar>
     </AppBar>
   );
 }
