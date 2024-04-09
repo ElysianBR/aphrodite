@@ -14,55 +14,73 @@ const roboto = Roboto_Condensed({ subsets: ["latin"], });
 
 export default function Home() {
   const theme = useTheme();
-  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
-  const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
-  const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));
-  const isLg = useMediaQuery(theme.breakpoints.between("lg", "xl"));
-  const isXl = useMediaQuery(theme.breakpoints.up("xl"));
-
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <main>
       <ScrollbarCustom hideAfter={2000}>
-        <TopPageCanvas></TopPageCanvas>
+        <TopPageCanvas />
         <Box display="flex" flexDirection="column" minHeight="100vh">
-          <Header></Header>
-          <HomeSection></HomeSection>
-          <section>
-            <Grid container
-              direction={"row"}
-              alignItems="flex-start"
-              justifyContent={isXs || isSm ? "center" : "flex-end"}
-              marginTop={"5%"}
-            >
-              <Grid direction={"row"}
-                xs={12}
-                sm={12}
-                md={6}
-                lg={6}
-                xl={6}>
-                <Typography
-                  style={Object.assign({}, roboto.style)}
-                  fontFamily={"unset"}
-                  textAlign={isXs || isSm ? "center" : "end"}
-                  variant={"h4"}
-                >
-                  Que tal conectar o seu negócio com a Blockchain?
-                </Typography>
-                <Typography
-                  style={Object.assign({}, roboto.style)}
-                  fontFamily={"unset"}
-                  textAlign="justify"
-                  variant={"subtitle1"}
-                >
-                  Somos uma startup de tecnologia que tem seu foco no desenvolvimento de soluções para blockchain.
-                  <br></br>
-                  Leve hoje a sua empresa para um outro nível, fazendo com que seus dados se tornem 100% distribuídos e criptografados.
-                </Typography>
+          <Header />
+          <HomeSection />
+
+          {/* Introdução Impactante */}
+          <Box bgcolor="secondary.main" color="primary.contrastText" py={5}>
+            <Container>
+              <Typography variant={isMobile ? 'h5' : 'h3'} textAlign="center" gutterBottom>
+                Transforme Seu Negócio Com a Blockchain
+              </Typography>
+              <Typography variant="body1" textAlign="center">
+                Entre na nova era digital e revolucione o mercado com soluções blockchain inovadoras.
+              </Typography>
+            </Container>
+          </Box>
+
+          {/* Seção de Vantagens */}
+          <Box py={5}>
+            <Container>
+              <Grid container spacing={4} justifyContent="center">
+                <Grid item xs={12} sm={6} md={4}>
+                  <Typography variant="h6" textAlign="center" gutterBottom>
+                    Segurança Máxima
+                  </Typography>
+                  <Typography variant="body2" textAlign="center">
+                    Garanta a segurança dos dados com criptografia avançada e tecnologia de ponta.
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <Typography variant="h6" textAlign="center" gutterBottom>
+                    Eficiência e Velocidade
+                  </Typography>
+                  <Typography variant="body2" textAlign="center">
+                    Processe transações rapidamente, sem intermediários, reduzindo custos e tempo.
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <Typography variant="h6" textAlign="center" gutterBottom>
+                    Inovação e Crescimento
+                  </Typography>
+                  <Typography variant="body2" textAlign="center">
+                    Explore novos modelos de negócios e abra portas para o crescimento exponencial.
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
-          </section>
-          <Footer></Footer>
+            </Container>
+          </Box>
+
+          {/* Chamada para Ação */}
+          <Box bgcolor="primary.main" color="primary.contrastText" py={5}>
+            <Container>
+              <Typography variant={isMobile ? 'h5' : 'h4'} textAlign="center" gutterBottom>
+                Pronto para Revolucionar seu Negócio?
+              </Typography>
+              <Typography variant="h6" textAlign="center">
+                Entre em contato conosco hoje mesmo e dê o primeiro passo para o futuro!
+              </Typography>
+            </Container>
+          </Box>
+
+          <Footer />
         </Box>
       </ScrollbarCustom>
     </main>
