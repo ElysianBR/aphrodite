@@ -41,17 +41,13 @@ const linksArray: links[] = [
   },
 ];
 
-
-
 export default function Header() {
   const [hover, setHover] = useState<number>(0);
   const [buttonMenuHover, setButtonMenuHover] = useState<boolean>(false);
 
-
   const theme = useTheme();
   const beackpoint = getBreakpoint(theme)
   const isMobile = beackpoint == 'xs' || beackpoint == 'sm';
-
 
   const [curentSection, setCurentSection] = useState<number>(0);
   useEffect(() => {
@@ -62,27 +58,24 @@ export default function Header() {
     };
   }, [])
 
-
   const setCenterSection = () => {
-    var center = window.innerHeight / 2;
-    var minDistance = Number.MAX_VALUE;
-
-
+    const center = window.innerHeight / 2;
+    let minDistance = Number.MAX_VALUE;
+  
     linksArray.forEach((e, i) => {
-      const element = document.getElementById(e.id)
-
-      if (element != null) {
-        var verticalPositionElement = element.getBoundingClientRect().top + (element.clientHeight / 2);
-        var distance = Math.abs(verticalPositionElement - center);
-
+      const element = document.getElementById(e.id);
+  
+      if (element) {
+        const verticalPositionElement = element.getBoundingClientRect().top + (element.clientHeight / 2);
+        const distance = Math.abs(verticalPositionElement - center);
+  
         if (distance < minDistance) {
-
+          minDistance = distance; 
           setCurentSection(i);
-
         }
       }
     });
-  }
+  };
 
   const normalToolbar = () => {
     return (
@@ -97,7 +90,7 @@ export default function Header() {
             style={Object.assign({}, roboto.style)}
             fontSize={"25px"}
           >
-            elysian
+            Elysian
           </Typography>
         </Grid>
         {linksArray.map((link, index) => (
@@ -133,7 +126,7 @@ export default function Header() {
             style={Object.assign({}, roboto.style)}
             fontSize={"25px"}
           >
-            elysian
+            Elysian
           </Typography>
         </Grid>
         <Grid item>
