@@ -13,7 +13,7 @@ export default function HomeSection() {
     const isXl = useMediaQuery(theme.breakpoints.up("xl"));
 
     return (
-        <section style={{ flex: 1, minHeight: "100vh" }}>
+        <section id={"home"} style={{ flex: 1, minHeight: "100vh" }}>
             <Grid
                 // divide a tela na horizontal, em dispositivos pequenos usa toda a horizontal
                 container

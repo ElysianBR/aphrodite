@@ -1,3 +1,5 @@
+import { useMediaQuery, Theme } from "@mui/material";
+
 export function scrollToNextSection() {
     let nextSection = getNextSection();
     if (nextSection != null) {
@@ -25,4 +27,29 @@ export function getNextSection(): HTMLElement | null {
     });
 
     return proximaSecao;
+}
+
+export function getBreakpoint(theme: Theme): 'xs' | 'sm' | 'md' | 'lg' | 'xl' {
+    const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+    const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
+    const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));
+    const isLg = useMediaQuery(theme.breakpoints.between("lg", "xl"));
+
+    if (isXs){
+        return 'xs'
+    }
+
+    if (isSm){
+        return 'sm'
+    }
+
+    if (isMd){
+        return 'md'
+    }
+
+    if (isLg){
+        return 'lg'
+    }
+
+    return 'xl'
 }

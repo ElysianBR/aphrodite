@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Roboto_Condensed } from "next/font/google";
 import {
   AppBar,
@@ -13,41 +13,76 @@ import {
   IconButton,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { getBreakpoint } from "@/utils/utils";
 
 const roboto = Roboto_Condensed({ subsets: ["latin"], weight: "600" });
 
 type links = {
   text: string;
   href: string;
+  id: string,
 };
 
 const linksArray: links[] = [
   {
     text: "Home",
-    href: "#",
+    href: "#home",
+    id: "home",
   },
   {
     text: "Sobre",
-    href: "#",
+    href: "#about",
+    id: "about",
   },
   {
     text: "Contato",
-    href: "#",
+    href: "#contact",
+    id: "contact",
   },
 ];
 
-export default function Header() {
-  const [actual, setActual] = useState<number>(0);
-  const [hover, setHover] = useState<number>(0);
 
+
+export default function Header() {
+  const [hover, setHover] = useState<number>(0);
   const [buttonMenuHover, setButtonMenuHover] = useState<boolean>(false);
 
+
   const theme = useTheme();
-  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
-  const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
-  const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));
-  const isLg = useMediaQuery(theme.breakpoints.between("lg", "xl"));
-  const isXl = useMediaQuery(theme.breakpoints.up("xl"));
+  const beackpoint = getBreakpoint(theme)
+  const isMobile = beackpoint == 'xs' || beackpoint == 'sm';
+
+
+  const [curentSection, setCurentSection] = useState<number>(0);
+  useEffect(() => {
+    document.addEventListener('scroll', setCenterSection);
+
+    return () => {
+      document.removeEventListener('scroll', setCenterSection);
+    };
+  }, [])
+
+
+  const setCenterSection = () => {
+    var center = window.innerHeight / 2;
+    var minDistance = Number.MAX_VALUE;
+
+
+    linksArray.forEach((e, i) => {
+      const element = document.getElementById(e.id)
+
+      if (element != null) {
+        var verticalPositionElement = element.getBoundingClientRect().top + (element.clientHeight / 2);
+        var distance = Math.abs(verticalPositionElement - center);
+
+        if (distance < minDistance) {
+
+          setCurentSection(i);
+
+        }
+      }
+    });
+  }
 
   const normalToolbar = () => {
     return (
@@ -70,7 +105,7 @@ export default function Header() {
             <Link
               href={link.href}
               underline={
-                actual === index
+                curentSection === index
                   ? "always"
                   : hover === index
                     ? "hover"
@@ -79,7 +114,7 @@ export default function Header() {
               color={"inherit"}
               style={Object.assign({}, roboto.style)}
               fontSize={"20px"}
-              onClick={() => setActual(index)}
+              onClick={() => setCurentSection(index)}
               onMouseOver={() => setHover(index)}
             >
               {link.text}
@@ -128,9 +163,9 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="static" color={"transparent"} variant="elevation">
+    <AppBar position="sticky" color={"transparent"} variant="elevation">
       <Toolbar variant="dense" >
-        {isXs || isSm ? compactionToolbar() : normalToolbar()}
+        {isMobile ? compactionToolbar() : normalToolbar()}
       </Toolbar>
     </AppBar>
   );

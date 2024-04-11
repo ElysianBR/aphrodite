@@ -8,23 +8,26 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import HomeSection from "./homeSection";
 import ScrollbarCustom from "@/components/scroll-bar/scrollbar";
+import { getBreakpoint } from "@/utils/utils";
 
 const roboto = Roboto_Condensed({ subsets: ["latin"], });
 
 
 export default function Home() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const beackpoint = getBreakpoint(theme)
+  const isMobile = beackpoint == 'xs' || beackpoint == 'sm';
 
   return (
     <main>
-      <ScrollbarCustom hideAfter={2000}>
+      <ScrollbarCustom>
         <TopPageCanvas />
         <Box display="flex" flexDirection="column" minHeight="100vh">
           <Header />
           <HomeSection />
 
           {/* Introdução Impactante */}
+          <section id="about">
           <Box bgcolor="secondary.main" color="primary.contrastText" py={5}>
             <Container>
               <Typography variant={isMobile ? 'h5' : 'h3'} textAlign="center" gutterBottom>
@@ -79,6 +82,7 @@ export default function Home() {
               </Typography>
             </Container>
           </Box>
+          </section>
 
           <Footer />
         </Box>
