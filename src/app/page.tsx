@@ -72,7 +72,7 @@ export default function Home() {
           </Box>
 
           {/* Chamada para Ação */}
-          <Box bgcolor="primary.main" color="primary.contrastText" py={5}>
+          <Box bgcolor="secondary.main" color="primary.contrastText" py={5}>
             <Container>
               <Typography variant={isMobile ? 'h5' : 'h4'} textAlign="center" gutterBottom>
                 Pronto para Revolucionar seu Negócio?
