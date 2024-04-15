@@ -1,165 +1,116 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { Roboto_Condensed } from "next/font/google";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Grid,
-  Link,
-  useTheme,
-  useMediaQuery,
-  IconButton,
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { AppBar, Toolbar, Typography, Button, Grid, IconButton, useTheme, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { getBreakpoint } from "@/utils/utils";
+import { Roboto_Condensed } from "next/font/google";
+
+// Tipagem para os links
+interface Link {
+  text: string;
+  href: string;
+  id: string;
+}
+
+// Tipagem para as props do LinkButton
+interface LinkButtonProps {
+  link: Link;
+  index: number;
+  currentSection: number;
+  setCurrentSection: React.Dispatch<React.SetStateAction<number>>;
+}
+
+// Componente LinkButton com tipos explicitamente definidos
+const LinkButton: React.FC<LinkButtonProps> = ({ link, index, currentSection, setCurrentSection }) => (
+  <Button
+    href={link.href}
+    color="inherit"
+    sx={{
+      fontSize: "20px",
+      fontWeight: "bold",
+      textTransform: "none",
+      color: "white",
+      textShadow: "0px 0px 8px rgba(0, 0, 0, 0.6)",
+      textDecoration: index === currentSection ? "underline" : "none",
+    }}
+    onMouseEnter={() => setCurrentSection(index)}
+  >
+    {link.text}
+  </Button>
+);
 
 const roboto = Roboto_Condensed({ subsets: ["latin"], weight: "600" });
 
-type links = {
-  text: string;
-  href: string;
-  id: string,
-};
-
-const linksArray: links[] = [
-  {
-    text: "Home",
-    href: "#home",
-    id: "home",
-  },
-  {
-    text: "Sobre",
-    href: "#about",
-    id: "about",
-  },
-  {
-    text: "Contato",
-    href: "#contact",
-    id: "contact",
-  },
+const linksArray: Link[] = [
+  { text: "Home", href: "#home", id: "home" },
+  { text: "Sobre", href: "#about", id: "about" },
+  { text: "Contato", href: "#contact", id: "contact" },
 ];
 
-export default function Header() {
-  const [hover, setHover] = useState<number>(0);
-  const [buttonMenuHover, setButtonMenuHover] = useState<boolean>(false);
-
+const Header: React.FC = () => {
+  const [currentSection, setCurrentSection] = useState<number>(0);
   const theme = useTheme();
-  const beackpoint = getBreakpoint(theme)
-  const isMobile = beackpoint == 'xs' || beackpoint == 'sm';
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const [curentSection, setCurentSection] = useState<number>(0);
   useEffect(() => {
-    document.addEventListener('scroll', setCenterSection);
+    const setCenterSection = () => {
+      const center = window.innerHeight / 2;
+      let minDistance = Number.MAX_VALUE;
 
+      linksArray.forEach((link, index) => {
+        const element = document.getElementById(link.id);
+        if (element) {
+          const verticalPosition = element.getBoundingClientRect().top + (element.clientHeight / 2);
+          const distance = Math.abs(verticalPosition - center);
+          if (distance < minDistance) {
+            minDistance = distance;
+            setCurrentSection(index);
+          }
+        }
+      });
+    };
+
+    document.addEventListener('scroll', setCenterSection);
     return () => {
       document.removeEventListener('scroll', setCenterSection);
     };
-  }, [])
-
-  const setCenterSection = () => {
-    const center = window.innerHeight / 2;
-    let minDistance = Number.MAX_VALUE;
-  
-    linksArray.forEach((e, i) => {
-      const element = document.getElementById(e.id);
-  
-      if (element) {
-        const verticalPositionElement = element.getBoundingClientRect().top + (element.clientHeight / 2);
-        const distance = Math.abs(verticalPositionElement - center);
-  
-        if (distance < minDistance) {
-          minDistance = distance; 
-          setCurentSection(i);
-        }
-      }
-    });
-  };
-
-  const normalToolbar = () => {
-    return (
-      <Grid
-        container
-        spacing={10}
-        alignItems={"flex-end"}
-        justifyContent="center"
-      >
-        <Grid item key={0}>
-          <Typography
-            style={Object.assign({}, roboto.style)}
-            fontSize={"25px"}
-          >
-            Elysian
-          </Typography>
-        </Grid>
-        {linksArray.map((link, index) => (
-          <Grid item key={index}>
-            <Link
-              href={link.href}
-              underline={
-                curentSection === index
-                  ? "always"
-                  : hover === index
-                    ? "hover"
-                    : "none"
-              }
-              color={"inherit"}
-              style={Object.assign({}, roboto.style)}
-              fontSize={"20px"}
-              onClick={() => setCurentSection(index)}
-              onMouseOver={() => setHover(index)}
-            >
-              {link.text}
-            </Link>
-          </Grid>
-        ))}
-      </Grid>
-    );
-  };
-
-  const compactionToolbar = () => {
-    return (
-      <Grid container alignItems={"flex-end"} justifyContent="space-between">
-        <Grid item>
-          <Typography
-            style={Object.assign({}, roboto.style)}
-            fontSize={"25px"}
-          >
-            Elysian
-          </Typography>
-        </Grid>
-        <Grid item>
-          <IconButton
-            size="medium"
-            edge="start"
-            aria-label="menu"
-            color="inherit"
-            style={{
-              backdropFilter: "blur(1px)",
-              backgroundColor: buttonMenuHover
-                ? "rgba(255, 255, 255, 0.7)"
-                : "rgba(255, 255, 255, 0.4)",
-            }}
-            onMouseOver={() => {
-              setButtonMenuHover(true);
-            }}
-            onMouseOut={() => {
-              setButtonMenuHover(false);
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Grid>
-      </Grid>
-    );
-  };
+  }, []);
 
   return (
-    <AppBar position="sticky" color={"transparent"} variant="elevation">
-      <Toolbar variant="dense" >
-        {isMobile ? compactionToolbar() : normalToolbar()}
+    <AppBar position="sticky" color="transparent" elevation={0}>
+      <Toolbar variant="dense">
+        <Grid container alignItems="center" justifyContent="center" spacing={2}>
+          <Grid item xs>
+            <Typography variant="h6" sx={{
+              fontSize: "25px",
+              fontWeight: "bold",
+              color: "white",
+              textShadow: "0px 0px 8px rgba(0, 0, 0, 0.6)",
+            }}>
+              Elysian
+            </Typography>
+          </Grid>
+          {!isMobile && linksArray.map((link, index) => (
+            <Grid item key={link.id}>
+              <LinkButton link={link} index={index} currentSection={currentSection} setCurrentSection={setCurrentSection} />
+            </Grid>
+          ))}
+          {isMobile && (
+            <Grid item>
+              <IconButton
+                aria-label="menu"
+                sx={{
+                  backdropFilter: "blur(1px)",
+                  backgroundColor: "rgba(255, 255, 255, 0.4)",
+                  '&:hover': { backgroundColor: "rgba(255, 255, 255, 0.7)" }
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Grid>
+          )}
+        </Grid>
       </Toolbar>
     </AppBar>
   );
-}
+};
+
+export default Header;
