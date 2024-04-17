@@ -8,14 +8,14 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import HomeSection from "./homeSection";
 import ScrollbarCustom from "@/components/scroll-bar/scrollbar";
-import { getBreakpoint } from "@/utils/utils";
+import { GetBreakpoint } from "@/utils/utils";
 
 const roboto = Roboto_Condensed({ subsets: ["latin"], });
 
 
 export default function Home() {
   const theme = useTheme();
-  const beackpoint = getBreakpoint(theme)
+  const beackpoint = GetBreakpoint(theme)
   const isMobile = beackpoint == 'xs' || beackpoint == 'sm';
 
   return (

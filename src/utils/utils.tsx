@@ -1,7 +1,7 @@
 import { useMediaQuery, Theme } from "@mui/material";
 
-export function scrollToNextSection() {
-    let nextSection = getNextSection();
+export function ScrollToNextSection() {
+    let nextSection = GetNextSection();
     if (nextSection != null) {
         window.scrollTo({
             top: nextSection.offsetTop,
@@ -10,7 +10,7 @@ export function scrollToNextSection() {
     }
 }
 
-export function getNextSection(): HTMLElement | null {
+export function GetNextSection(): HTMLElement | null {
     const sections = document.querySelectorAll('section');
     const scrollPosition = window.scrollY + window.innerHeight; // Posição atual de rolagem + altura da janela de visualização
 
@@ -29,7 +29,7 @@ export function getNextSection(): HTMLElement | null {
     return proximaSecao;
 }
 
-export function getBreakpoint(theme: Theme): 'xs' | 'sm' | 'md' | 'lg' | 'xl' {
+export function GetBreakpoint(theme: Theme): 'xs' | 'sm' | 'md' | 'lg' | 'xl' {
     const isXs = useMediaQuery(theme.breakpoints.down("sm"));
     const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
     const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));

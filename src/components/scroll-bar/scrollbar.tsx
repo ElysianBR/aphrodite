@@ -1,6 +1,6 @@
 "user client"
 
-import { useEffect, useState, ReactNode } from 'react';
+import { useEffect, ReactNode } from 'react';
 import "./scrollbar.css"
 
 export default function ScrollbarCustom({ children, hideAfter = 0 }: { children?: ReactNode, hideAfter?: number }) {
