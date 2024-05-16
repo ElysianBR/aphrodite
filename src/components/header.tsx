@@ -20,6 +20,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link, index, currentSection, se
     color="inherit"
     href={link.href}
     onClick={() => setCurrentSection(index)}
+    data-testid={`section-button-${link.id}`}
     sx={{
       fontSize: "20px",
       fontWeight: "bold",
@@ -35,6 +36,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link, index, currentSection, se
     {link.text}
   </Button>
 );
+
 
 const linksArray: Link[] = [
   { text: "Home", href: "#home", id: "home" },
@@ -81,7 +83,7 @@ const Header: React.FC = () => {
       <Toolbar variant="dense">
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <a href="#home">
+            <a href="#home" data-testid="elysian-logo-button">     
               <img src="/logo_wo_bg.png" alt="Elysian Logo" style={{ height: '40px', cursor: 'pointer' }} />
             </a>
           </Grid>
