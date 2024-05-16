@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AppBar, Toolbar, Typography, Button, Grid, IconButton, Drawer, List, ListItem, useTheme, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link as ScrollLink } from 'react-scroll';
 
 interface Link {
   text: string;
@@ -17,31 +16,24 @@ interface LinkButtonProps {
 }
 
 const LinkButton: React.FC<LinkButtonProps> = ({ link, index, currentSection, setCurrentSection }) => (
-  <ScrollLink
-    to={link.id}
-    smooth={true}
-    duration={500}
-    offset={-70}
-    spy={true}
-    onSetActive={() => setCurrentSection(index)}
+  <Button
+    color="inherit"
+    href={link.href}
+    onClick={() => setCurrentSection(index)}
+    sx={{
+      fontSize: "20px",
+      fontWeight: "bold",
+      textTransform: "none",
+      color: "white",
+      textShadow: "0px 0px 8px rgba(0, 0, 0, 0.6)",
+      textDecoration: index === currentSection ? "underline" : "none",
+      '&:hover': {
+        color: "#fa0083",
+      }
+    }}
   >
-    <Button
-      color="inherit"
-      sx={{
-        fontSize: "20px",
-        fontWeight: "bold",
-        textTransform: "none",
-        color: "white",
-        textShadow: "0px 0px 8px rgba(0, 0, 0, 0.6)",
-        textDecoration: index === currentSection ? "underline" : "none",
-        '&:hover': {
-          color: "#fa0083",
-        }
-      }}
-    >
-      {link.text}
-    </Button>
-  </ScrollLink>
+    {link.text}
+  </Button>
 );
 
 const linksArray: Link[] = [
@@ -89,9 +81,9 @@ const Header: React.FC = () => {
       <Toolbar variant="dense">
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <ScrollLink to="home" smooth={true} duration={500} offset={-70}>
+            <a href="#home">
               <img src="/logo_wo_bg.png" alt="Elysian Logo" style={{ height: '40px', cursor: 'pointer' }} />
-            </ScrollLink>
+            </a>
           </Grid>
           {isMobile ? (
             <Grid item>
