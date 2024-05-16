@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { AppBar, Toolbar, Typography, Button, Grid, IconButton, useTheme, useMediaQuery } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, Grid, IconButton, Drawer, List, ListItem, useTheme, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Roboto_Condensed } from "next/font/google";
 
-// Tipagem para os links
 interface Link {
   text: string;
   href: string;
   id: string;
 }
 
-// Tipagem para as props do LinkButton
 interface LinkButtonProps {
   link: Link;
   index: number;
@@ -18,7 +15,6 @@ interface LinkButtonProps {
   setCurrentSection: React.Dispatch<React.SetStateAction<number>>;
 }
 
-// Componente LinkButton com tipos explicitamente definidos
 const LinkButton: React.FC<LinkButtonProps> = ({ link, index, currentSection, setCurrentSection }) => (
   <Button
     href={link.href}
@@ -31,13 +27,11 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link, index, currentSection, se
       textShadow: "0px 0px 8px rgba(0, 0, 0, 0.6)",
       textDecoration: index === currentSection ? "underline" : "none",
     }}
-    onMouseEnter={() => setCurrentSection(index)}
+    // onMouseEnter={() => setCurrentSection(index)}
   >
     {link.text}
   </Button>
 );
-
-const roboto = Roboto_Condensed({ subsets: ["latin"], weight: "600" });
 
 const linksArray: Link[] = [
   { text: "Home", href: "#home", id: "home" },
@@ -47,6 +41,7 @@ const linksArray: Link[] = [
 
 const Header: React.FC = () => {
   const [currentSection, setCurrentSection] = useState<number>(0);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -74,11 +69,15 @@ const Header: React.FC = () => {
     };
   }, []);
 
+  const toggleDrawer = (open: boolean) => () => {
+    setIsDrawerOpen(open);
+  };
+
   return (
     <AppBar position="sticky" color="transparent" elevation={0}>
       <Toolbar variant="dense">
-        <Grid container alignItems="center" justifyContent="center" spacing={2}>
-          <Grid item xs>
+        <Grid container alignItems="center" justifyContent="space-between">
+          <Grid item>
             <Typography variant="h6" sx={{
               fontSize: "25px",
               fontWeight: "bold",
@@ -88,15 +87,11 @@ const Header: React.FC = () => {
               Elysian
             </Typography>
           </Grid>
-          {!isMobile && linksArray.map((link, index) => (
-            <Grid item key={link.id}>
-              <LinkButton link={link} index={index} currentSection={currentSection} setCurrentSection={setCurrentSection} />
-            </Grid>
-          ))}
-          {isMobile && (
+          {isMobile ? (
             <Grid item>
               <IconButton
                 aria-label="menu"
+                onClick={toggleDrawer(true)}
                 sx={{
                   backdropFilter: "blur(1px)",
                   backgroundColor: "rgba(255, 255, 255, 0.4)",
@@ -106,9 +101,24 @@ const Header: React.FC = () => {
                 <MenuIcon />
               </IconButton>
             </Grid>
+          ) : (
+            <Grid item>
+              {linksArray.map((link, index) => (
+                <LinkButton key={link.id} link={link} index={index} currentSection={currentSection} setCurrentSection={setCurrentSection} />
+              ))}
+            </Grid>
           )}
         </Grid>
       </Toolbar>
+      <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer(false)}>
+        <List>
+          {linksArray.map((link, index) => (
+            <ListItem button key={link.id} onClick={() => setCurrentSection(index)}>
+              <LinkButton link={link} index={index} currentSection={currentSection} setCurrentSection={setCurrentSection} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
     </AppBar>
   );
 };

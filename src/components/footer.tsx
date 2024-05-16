@@ -13,7 +13,7 @@ export default function Footer() {
                 © 2024 Elysian - Transformando cadeias de suprimentos com tecnologia Blockchain
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} sx={{ display: { xs: "none", sm: "flex" } }}>
+            <Grid item xs={12} sm={6} sx={{ display: { xs: "flex", sm: "flex" } }}>
               <IconButton color="inherit" aria-label="Instagram" href="https://www.instagram.com/elysianbrazil">
                 <Instagram />
               </IconButton>
