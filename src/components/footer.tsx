@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AppBar, Toolbar, Typography, Grid, Link, IconButton } from "@mui/material";
-import { Facebook, LinkedIn, MailOutline, Newspaper } from "@mui/icons-material"; // Import social media icons
+import { Instagram, LinkedIn, MailOutline, Newspaper } from "@mui/icons-material"; // Import social media icons
 
 export default function Footer() {
   return (
@@ -14,10 +14,10 @@ export default function Footer() {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} sx={{ display: { xs: "none", sm: "flex" } }}>
-              <IconButton color="inherit" aria-label="Facebook" href="https://www.facebook.com/your-company-page">
-                <Facebook />
+              <IconButton color="inherit" aria-label="Instagram" href="https://www.instagram.com/elysianbrazil">
+                <Instagram />
               </IconButton>
-              <IconButton color="inherit" aria-label="LinkedIn" href="https://www.linkedin.com/company/your-company-name">
+              <IconButton color="inherit" aria-label="LinkedIn" href="https://br.linkedin.com/company/elysianbr">
                 <LinkedIn />
               </IconButton>
               <IconButton color="inherit" aria-label="Email" href="mailto:contato@elysian.com.br">

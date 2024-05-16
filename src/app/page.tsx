@@ -31,7 +31,7 @@ export default function Home() {
           <Box bgcolor="secondary.main" color="primary.contrastText" py={5}>
             <Container>
               <Typography variant={isMobile ? 'h5' : 'h3'} textAlign="center" gutterBottom>
-                Transforme Seu Negócio Com a Blockchain
+                Transforme seu negócio com a blockchain
               </Typography>
               <Typography variant="body1" textAlign="center">
                 Entre na nova era digital e revolucione o mercado com soluções blockchain inovadoras.
@@ -75,7 +75,7 @@ export default function Home() {
           <Box bgcolor="secondary.main" color="primary.contrastText" py={5}>
             <Container>
               <Typography variant={isMobile ? 'h5' : 'h4'} textAlign="center" gutterBottom>
-                Pronto para Revolucionar seu Negócio?
+                Pronto para revolucionar seu negócio?
               </Typography>
               <Typography variant="h6" textAlign="center">
                 Entre em contato conosco hoje mesmo e dê o primeiro passo para o futuro!
