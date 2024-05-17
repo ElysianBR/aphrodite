@@ -9,6 +9,7 @@ import Footer from "@/components/footer";
 import HomeSection from "./homeSection";
 import ScrollbarCustom from "@/components/scroll-bar/scrollbar";
 import { GetBreakpoint } from "@/utils/utils";
+import ContactSection from "./contact";
 
 const roboto = Roboto_Condensed({ subsets: ["latin"], });
 
@@ -96,7 +97,8 @@ export default function Home() {
               </Container>
             </Box>
           </section>
-
+          {/* Seção de Contato */}
+          <ContactSection isMobile={isMobile} />
           <Footer />
         </Box>
       </ScrollbarCustom>

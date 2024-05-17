@@ -1,15 +1,16 @@
 import * as React from "react";
 import { AppBar, Toolbar, Typography, Grid, IconButton } from "@mui/material";
 import { Instagram, LinkedIn, MailOutline } from "@mui/icons-material";
+import { relative } from "path";
 
 export default function Footer() {
   return (
     <section id="footer"> 
       <AppBar position="static" color="transparent"> 
-        <Toolbar sx={{ justifyContent: "space-between" }}>
+        <Toolbar sx={{ justifyContent: "space-between" }} style={{margin: 2, padding: 2}}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <Typography variant="body2" color="inherit">
+              <Typography variant="body2" color="inherit" >
                 © 2024 Elysian - Transformando cadeias de suprimentos com tecnologia Blockchain
               </Typography>
             </Grid>

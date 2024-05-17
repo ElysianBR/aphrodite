@@ -29,7 +29,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link, index, currentSection, se
       textShadow: "0px 0px 8px rgba(0, 0, 0, 0.6)",
       textDecoration: index === currentSection ? "underline" : "none",
       '&:hover': {
-        color: "#fa0083",
+        color: "#E4405F",
       }
     }}
   >
@@ -80,11 +80,11 @@ const Header: React.FC = () => {
 
   return (
     <AppBar position="sticky" color="transparent" elevation={0}>
-      <Toolbar variant="dense">
+      <Toolbar variant="dense" style={{margin: 2, padding: 2}}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <a href="#home" data-testid="elysian-logo-button">     
-              <img src="/logo_wo_bg.png" alt="Elysian Logo" style={{ height: '40px', cursor: 'pointer' }} />
+              <img src="/logo_wo_bg.png" alt="Elysian Logo" style={{ height: '40px', cursor: 'pointer'}} />
             </a>
           </Grid>
           {isMobile ? (
@@ -102,7 +102,7 @@ const Header: React.FC = () => {
               </IconButton>
             </Grid>
           ) : (
-            <Grid item>
+            <Grid item> 
               {linksArray.map((link, index) => (
                 <LinkButton key={link.id} link={link} index={index} currentSection={currentSection} setCurrentSection={setCurrentSection} />
               ))}
@@ -120,7 +120,7 @@ const Header: React.FC = () => {
         <List>
           {linksArray.map((link, index) => (
             <ListItem button key={link.id} onClick={() => setCurrentSection(index)}>
-              <LinkButton link={link} index={index} currentSection={currentSection} setCurrentSection={setCurrentSection} />
+              <LinkButton link={link} index={index} currentSection={currentSection} setCurrentSection={setCurrentSection}/>
             </ListItem>
           ))}
         </List>
