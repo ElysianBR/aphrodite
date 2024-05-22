@@ -9,90 +9,141 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  FormHelperText,
+  FormHelperText
 } from "@mui/material";
-import { useForm } from "react-hook-form";
 
 const Contact = ({ isMobile }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+    inquiryType: ''
+  });
+  const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
 
-  const onSubmit = (data) => {
-    console.log("Form data:", data); 
-    setSuccessMessage("Your message has been sent successfully!");
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name) newErrors.name = "Nome completo é obrigatório";
+    if (!formData.email.match(/^\S+@\S+\.\S+$/)) newErrors.email = "Informe um e-mail válido (exemplo@email.com)";
+    if (formData.message.length < 20) newErrors.message = "Mensagem deve ter no mínimo 20 caracteres";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (validateForm()) {
+      console.log("Form data:", formData);
+      setSuccessMessage("Sua mensagem foi enviada com sucesso!");
+    }
   };
 
   return (
     <section id="contact">
-      <Box bgcolor="inherit" color="white" py={5}>
-        <Container maxWidth="md">
+      <Box bgcolor="inherit" color="#ffffff" py={5} style={{ backgroundImage: 'url(/path/to/your/contact-background.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <Container>
           <Typography variant={isMobile ? "h5" : "h4"} textAlign="center" gutterBottom>
             CONTATO
           </Typography>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            {/* Name field */}
+          <form onSubmit={onSubmit}>
             <TextField
-              {...register("name", { required: true, maxLength: 40})}
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
               label="Nome"
               fullWidth
               margin="normal"
               error={!!errors.name}
-              helperText={errors.name?.message || "Nome completo é obrigatório"}
-              sx={{
-                color: "white"
+              helperText={errors.name || "Nome completo é obrigatório"}
+              InputLabelProps={{
+                style: { color: '#d852ff' }
+              }}
+              InputProps={{
+                style: { color: '#d852ff' }
               }}
             />
 
-            {/* Email field */}
             <TextField
-              {...register("email", { required: true, pattern: /^\S+@\S+\.\S+$/ })}
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
               label="E-mail"
               fullWidth
               margin="normal"
               error={!!errors.email}
-              helperText={
-                errors.email?.message || "Informe um e-mail válido (exemplo@email.com)"
-              }
+              helperText={errors.email || "Informe um e-mail válido (exemplo@email.com)"}
+              InputLabelProps={{
+                style: { color: '#d852ff' }
+              }}
+              InputProps={{
+                style: { color: '#d852ff' }
+              }}
             />
 
-            {/* Subject field (optional) */}
             <TextField
-              {...register("subject")}
+              name="subject"
+              value={formData.subject}
+              onChange={handleInputChange}
               label="Assunto (opcional)"
               fullWidth
               margin="normal"
+              InputLabelProps={{
+                style: { color: '#d852ff' }
+              }}
+              InputProps={{
+                style: { color: '#d852ff' }
+              }}
             />
 
-            {/* Message field */}
             <TextField
-              {...register("message", { required: true, minLength: 20 })}
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
               label="Mensagem"
               multiline
               rows={4}
               fullWidth
               margin="normal"
               error={!!errors.message}
-              helperText={errors.message?.message || "Mensagem deve ter no mínimo 20 caracteres"}
+              helperText={errors.message || "Mensagem deve ter no mínimo 20 caracteres"} 
+              InputLabelProps={{
+                style: { color: '#d852ff' }
+              }}
+              InputProps={{
+                style: { color: '#d852ff' }
+              }}
             />
 
-            {/* Inquiry type selection (optional) */}
             <FormControl fullWidth margin="normal">
-              <InputLabel id="inquiryTypeLabel">Tipo de consulta (opcional)</InputLabel>
+              <InputLabel id="inquiryTypeLabel" style={{ color: '#d852ff' }}>Tipo de consulta (opcional)</InputLabel>
               <Select
                 labelId="inquiryTypeLabel"
-                {...register("inquiryType")}
+                name="inquiryType"
+                value={formData.inquiryType}
+                onChange={handleInputChange}
                 label="Tipo de consulta"
+                style={{ color: '#d852ff' }}
               >
                 <MenuItem value="">Selecione</MenuItem>
                 <MenuItem value="general">Consulta geral</MenuItem>
                 <MenuItem value="support">Suporte técnico</MenuItem>
                 <MenuItem value="partnership">Parceria</MenuItem>
               </Select>
-              <FormHelperText>Selecione o tipo de consulta para direcionar melhor sua mensagem.</FormHelperText>
+              <FormHelperText style={{ color: '#d852ff' }}>Selecione o tipo de consulta para direcionar melhor sua mensagem.</FormHelperText>
             </FormControl>
 
-            <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
+            <Button variant="contained" color="primary" type="submit" fullWidth sx={{ mt: 2, bgcolor: '#d852ff' }}>
               Enviar
             </Button>
           </form>
