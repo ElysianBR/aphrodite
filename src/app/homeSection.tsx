@@ -1,7 +1,7 @@
 import EndPageArrow from "@/components/end-page-arrow/end-page-arrow";
 import { Typography, Grid, useTheme, useMediaQuery } from "@mui/material";
 import { Roboto_Condensed } from "next/font/google";
-import { getNextSection, scrollToNextSection } from "@/utils/utils";
+import { GetNextSection, ScrollToNextSection } from "@/utils/utils";
 const roboto_title = Roboto_Condensed({ subsets: ["latin"], weight: "800" });
 
 export default function HomeSection() {
@@ -72,7 +72,7 @@ export default function HomeSection() {
                         variant={"overline"}
                         fontSize={isXs || isSm ? "2vh" : "1.5vw"}
                         fontFamily={"unset"}
-                        onClick={scrollToNextSection}
+                        onClick={ScrollToNextSection}
                         className={"clickable"}>
                         Descubra
                     </Typography>
@@ -82,7 +82,7 @@ export default function HomeSection() {
                         justifyContent={"center"}
                         marginTop={"2vh"}
                         className={"clickable"}>
-                        <EndPageArrow onClick={scrollToNextSection}></EndPageArrow>
+                        <EndPageArrow onClick={ScrollToNextSection}></EndPageArrow>
                     </Grid>
                 </Grid>
             </Grid>

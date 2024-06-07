@@ -6,7 +6,7 @@ const roboto_condensed = Roboto_Condensed({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Elysian",
-  description: "Elysian é uma Startup de Tecnologia.",
+  description: "Elysian é uma startup de tecnologia.",
 };
 
 export default function RootLayout({
