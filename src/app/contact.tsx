@@ -12,7 +12,7 @@ import {
   FormHelperText
 } from "@mui/material";
 
-const Contact = ({ isMobile }) => {
+const Contact = ({ isMobile: boolean }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
