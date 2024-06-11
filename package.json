@@ -15,7 +15,6 @@
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18",
-    "react-google-recaptcha-v3": "^1.10.1",
     "tslombok": "^1.2.6"
   },
   "devDependencies": {

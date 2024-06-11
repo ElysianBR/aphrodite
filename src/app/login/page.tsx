@@ -1,6 +1,6 @@
 "use client"
 
-import { FormEventHandler, useState } from "react";
+import React, { FormEventHandler, Ref, useRef } from "react";
 
 import CenterContainer from "@/components/center-container";
 import { Typography, useTheme, useMediaQuery } from "@mui/material";
@@ -15,6 +15,7 @@ import LoginMethod from "@/provider/methods/loginMethod";
 import { LoginResponseOk } from "@/provider/dtos/LoginResponseOkDTO";
 import ResponseError from "@/provider/dtos/ResponseErrorDTO";
 import Image from "next/image";
+import GoogleCaptchaV3, { GetCaptchaToken } from "@/components/recaptcha/v3/google-captcha-v3";
 
 
 export default function Login() {
@@ -26,8 +27,7 @@ export default function Login() {
     const isLg = useMediaQuery(theme.breakpoints.between("lg", "xl"));
     const isXl = useMediaQuery(theme.breakpoints.up("xl"));
 
-    const [tokenCaptcha, setTokenCaptcha] = useState("");
-
+    const captchaRef: React.ForwardedRef<GetCaptchaToken> = useRef(null);
 
     const provider = new Provider();
     const loginProvider = new LoginMethod(provider);
@@ -42,18 +42,29 @@ export default function Login() {
         }
 
         try {
+
+            let gToken = '';
+            if (captchaRef.current) {
+                gToken = await captchaRef.current()
+            }
+
+
             const data = await loginProvider.login({
                 credentials: { email: form.email, password: form.password },
-                gRecaptchaResponse: tokenCaptcha
+                gRecaptchaResponse: gToken
             });
 
-
+            
             if (data instanceof LoginResponseOk) {
+
                 localStorage.setItem("SessionToken", data.getToken());
                 localStorage.setItem("SessionExpires", data.getExpiresIn().toISOString())
+
             } else {
+
                 // TODO: Implements de message return to user from backend
                 alert(JSON.stringify(data))
+
             }
 
         } catch (err) {
@@ -88,12 +99,9 @@ export default function Login() {
 
 
             {/* Captcha V3 enabled */}
-            <GoogleReCaptchaProvider reCaptchaKey={provider.getRecaptchaAppKey()}>
-                <GoogleReCaptcha onVerify={(t) => setTokenCaptcha(t)} />
-            </GoogleReCaptchaProvider>
+            <GoogleCaptchaV3 sitekey={provider.getRecaptchaAppKey()} ref={captchaRef} />
 
 
-            {/* <CaptchaV3 refrash={refreshReCaptcha} ref={captchaRef} /> */}
         </section>
     )
 }
