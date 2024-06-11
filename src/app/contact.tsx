@@ -1,4 +1,4 @@
-import React, { useState, ChangeEventHandler, ChangeEvent, FormEventHandler } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import {
   Typography,
   Box,
@@ -13,49 +13,61 @@ import {
   SelectChangeEvent
 } from "@mui/material";
 
-
-type FormData = {
-  name: string,
-  email: string,
-  subject: string,
-  message: string,
-  inquiryType: string,
-  [key: string]: any,
+interface ContactProps {
+  isMobile: boolean;
 }
 
-const defaultFormData: FormData = {
-  name: '',
-  email: '',
-  subject: '',
-  message: '',
-  inquiryType: '',
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  inquiryType: string;
 }
 
+interface Errors {
+  name?: string;
+  email?: string;
+  message?: string;
+}
 
-const Contact = ({ isMobile }: { isMobile: boolean }) => {
-  const [formData, setFormData] = useState<FormData>(defaultFormData);
-  const [errors, setErrors] = useState<FormData>();
-  const [successMessage, setSuccessMessage] = useState("");
+const Contact: React.FC<ContactProps> = ({ isMobile }) => {
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+    inquiryType: ''
+  });
+  const [errors, setErrors] = useState<Errors>({});
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
-  const handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
-    // TODO: @Andriano, precisa corrigir isso e tipar esses retornos de event, aqui fiz uma solução de contorno, mas ficar converterndo objetos em any e depois no tipo desejado não é uma boa prática!!
-    const { name, value }: { name: string, value: string } = (event.target as any as { name: string, value: string });
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
     setFormData({
       ...formData,
       [name]: value
     });
   };
 
-  const validateForm = () => {
-    const newErrors: FormData = defaultFormData;
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: Errors = {};
     if (!formData.name) newErrors.name = "Nome completo é obrigatório";
-    if (!formData.email.match('/^\S+@\S+\.\S+$/')) newErrors.email = "Informe um e-mail válido (exemplo@email.com)";
+    if (!formData.email.match(/^\S+@\S+\.\S+$/)) newErrors.email = "Informe um e-mail válido (exemplo@email.com)";
     if (formData.message.length < 20) newErrors.message = "Mensagem deve ter no mínimo 20 caracteres";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+  const onSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (validateForm()) {
       console.log("Form data:", formData);
@@ -65,7 +77,7 @@ const Contact = ({ isMobile }: { isMobile: boolean }) => {
 
   return (
     <section id="contact">
-      <Box bgcolor="inherit" color="#ffffff" py={5} style={{ backgroundImage: 'url(/path/to/your/contact-background.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <Box bgcolor="inherit" color="#ffffff" py={5} style={{ backgroundImage: '/', backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <Container>
           <Typography variant={isMobile ? "h5" : "h4"} textAlign="center" gutterBottom>
             CONTATO
@@ -79,8 +91,8 @@ const Contact = ({ isMobile }: { isMobile: boolean }) => {
               label="Nome"
               fullWidth
               margin="normal"
-              error={!!errors?.name}
-              helperText={errors?.name || "Nome completo é obrigatório"}
+              error={!!errors.name}
+              helperText={errors.name || "Nome completo é obrigatório"}
               InputLabelProps={{
                 style: { color: '#d852ff' }
               }}
@@ -96,8 +108,8 @@ const Contact = ({ isMobile }: { isMobile: boolean }) => {
               label="E-mail"
               fullWidth
               margin="normal"
-              error={!!errors?.email}
-              helperText={errors?.email || "Informe um e-mail válido (exemplo@email.com)"}
+              error={!!errors.email}
+              helperText={errors.email || "Informe um e-mail válido (exemplo@email.com)"}
               InputLabelProps={{
                 style: { color: '#d852ff' }
               }}
@@ -130,8 +142,8 @@ const Contact = ({ isMobile }: { isMobile: boolean }) => {
               rows={4}
               fullWidth
               margin="normal"
-              error={!!errors?.message}
-              helperText={errors?.message || "Mensagem deve ter no mínimo 20 caracteres"}
+              error={!!errors.message}
+              helperText={errors.message || "Mensagem deve ter no mínimo 20 caracteres"}
               InputLabelProps={{
                 style: { color: '#d852ff' }
               }}
@@ -146,8 +158,7 @@ const Contact = ({ isMobile }: { isMobile: boolean }) => {
                 labelId="inquiryTypeLabel"
                 name="inquiryType"
                 value={formData.inquiryType}
-                /* TODO: @Andriano é necessário fazer um check nessa função, ela é a mesma do text field, no entato elas possuem assinaturas diferentes, portanto tipei ela como field e deixo a teu ver como fara o type das duas ou se irá segmentar em dois types separados*/
-                // onChange={handleInputChange}
+                onChange={handleSelectChange}
                 label="Tipo de consulta"
                 style={{ color: '#d852ff' }}
               >
