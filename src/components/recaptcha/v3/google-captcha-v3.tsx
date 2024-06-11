@@ -9,22 +9,20 @@ export type CaptchaV3Props = {
 
 const GoogleCaptchaV3 = forwardRef<GetCaptchaToken, CaptchaV3Props>((props, ref) => {
 
-    
+
     const getToken = async () => {
-        return await window.grecaptcha.execute(props.sitekey, {action: 'submit'})
+        return await window.grecaptcha.execute(props.sitekey, { action: 'submit' })
     }
-    
+
 
     useImperativeHandle(ref, () => getToken);
 
 
     return (
-        <div id="g-recaptcha-component">
-            <Script src={`https://www.google.com/recaptcha/api.js?render=${props.sitekey}`} async defer>
-            </Script>
-        </div>
-
+        <Script src={`https://www.google.com/recaptcha/api.js?render=${props.sitekey}`} async defer />
     )
 })
+
+GoogleCaptchaV3.displayName = "GoogleCaptchaV3";
 
 export default GoogleCaptchaV3;
