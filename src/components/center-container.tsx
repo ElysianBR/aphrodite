@@ -1,7 +1,8 @@
 import { Grid } from "@mui/material";
+import { CSSProperties } from "@mui/material/styles/createMixins";
 import { ReactNode } from "react";
 
-export default function CenterContainer({ children }: { children?: ReactNode }) {
+export default function CenterContainer({ children, style }: { children?: ReactNode, style?: CSSProperties | undefined }) {
     return (
         <Grid container
             direction="row"

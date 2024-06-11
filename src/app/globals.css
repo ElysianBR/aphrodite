@@ -24,6 +24,15 @@ main {
 }
 
 
+img.logo-animation:hover {
+  transform: rotate(-360deg);
+}
+
+img.logo-animation {
+  transition: transform 0.8s ease-in-out;
+}
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

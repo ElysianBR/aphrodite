@@ -1,92 +1,99 @@
 "use client"
+
 import { FormEventHandler, useState } from "react";
 
 import CenterContainer from "@/components/center-container";
-import { TextField, Grid, Button, Box } from "@mui/material";
+import { Typography, useTheme, useMediaQuery } from "@mui/material";
 import { GoogleReCaptchaProvider, GoogleReCaptcha } from "react-google-recaptcha-v3";
+
+import Input from "@/components/input/input"
+import Button from "@/components/button/button"
+
+import "@/app/login/login.css"
+import Provider from "@/provider/provider";
+import LoginMethod from "@/provider/methods/loginMethod";
+import { LoginResponseOk } from "@/provider/dtos/LoginResponseOkDTO";
+import ResponseError from "@/provider/dtos/ResponseErrorDTO";
+import Image from "next/image";
+
 
 export default function Login() {
 
-    const [token, setToken] = useState("");
-    const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
+    const theme = useTheme();
+    const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+    const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
+    const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));
+    const isLg = useMediaQuery(theme.breakpoints.between("lg", "xl"));
+    const isXl = useMediaQuery(theme.breakpoints.up("xl"));
+
+    const [tokenCaptcha, setTokenCaptcha] = useState("");
+
+
+    const provider = new Provider();
+    const loginProvider = new LoginMethod(provider);
 
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
 
         var form = {
-            "email": e.currentTarget.elements.namedItem("email")?.value,
-            "password": e.currentTarget.elements.namedItem("password")?.value
+            "email": (e.currentTarget.elements.namedItem("email") as HTMLInputElement)?.value,
+            "password": (e.currentTarget.elements.namedItem("password") as HTMLInputElement)?.value
         }
 
         try {
-            const res = await fetch("http://localhost:8080/api/user/registration", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "g-recaptcha-response": token
-                },
-                body: JSON.stringify(form),
+            const data = await loginProvider.login({
+                credentials: { email: form.email, password: form.password },
+                gRecaptchaResponse: tokenCaptcha
             });
-            const data = await res.json();
-            console.log(data);
+
+
+            if (data instanceof LoginResponseOk) {
+                localStorage.setItem("SessionToken", data.getToken());
+                localStorage.setItem("SessionExpires", data.getExpiresIn().toISOString())
+            } else {
+                // TODO: Implements de message return to user from backend
+                alert(JSON.stringify(data))
+            }
+
         } catch (err) {
-            setRefreshReCaptcha(!refreshReCaptcha);
-            console.log(err);
+            // TODO: Implements a popup provider or component for exceptions not mappeds
+            alert("Ocorreu um erro inesperado durante o login...")
+            console.error(err);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} id="login-form">
+        <section id="login-page">
             <CenterContainer>
-                <Grid container
-                    justifyContent="center"
-                    alignItems="center"
-                    padding={"5%"}
-                >
-                    <TextField
-                        required
-                        name="email"
-                        label="E-Mail"
-                        variant="outlined"
-                        // value={mail}
-                        // error={passOrMailInvalid}
-                        type="email"
-                        // onChange={(e) => {
-                        //     setMail(e.target.value);
-                        // }}
-                        style={{ minWidth: "75%", margin: "2%" }}
-                    />
-                    <TextField
-                        required
-                        name="password"
-                        label="Senha"
-                        variant="outlined"
-                        type="password"
-                        // value={password}
-                        // error={passOrMailInvalid}
-                        // onChange={(e) => {
-                        //     setPassword(e.target.value);
-                        //     setPassOrMailInvalid(false);
-                        // }}
-                        style={{ minWidth: "75%", margin: "2%" }}
-                    />
-                    <Grid container
-                        justifyContent="center"
-                        alignItems="center"
-                        padding={"5%"}
-                    >
-                        <Button type="submit" >Registre</Button>
-                    </Grid>
-                </Grid>
+                <Image src="/logo_wo_bg.png" alt="Elysian Logo" className="logo-login logo-animation" />
 
+                <Typography fontSize={isXs || isSm ? "4.5vh" : "4.5vw"} className="login-title">Login</Typography>
+
+
+                <form
+                    onSubmit={handleSubmit}
+                    id="login-form"
+                    style={isXs || isSm ? { minWidth: '80%', maxWidth: '85%', margin: 0 } : { minWidth: '60%', maxWidth: '65%', margin: 0 }}>
+
+                    <Input required placeholder="E-mail" name="email" type="email" />
+
+                    <Input name="password" placeholder="Senha" type="password" autoComplete="on" />
+
+                    <a className="what-is-my-password">Esqueci minha senha</a>
+
+                    <Button type="submit" className="login" >Entrar</Button>
+                </form>
             </CenterContainer>
-            <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY != null ? process.env.REACT_APP_RECAPTCHA_KEY : "6LeCGMApAAAAABXtvwasSa9Aw3oy9xSiIg7YsWSC"}>
-                <GoogleReCaptcha
-                    onVerify={(token) => { setToken(token) }}
-                    refreshReCaptcha={refreshReCaptcha}
-                />
+
+
+            {/* Captcha V3 enabled */}
+            <GoogleReCaptchaProvider reCaptchaKey={provider.getRecaptchaAppKey()}>
+                <GoogleReCaptcha onVerify={(t) => setTokenCaptcha(t)} />
             </GoogleReCaptchaProvider>
-        </form>
+
+
+            {/* <CaptchaV3 refrash={refreshReCaptcha} ref={captchaRef} /> */}
+        </section>
     )
 }

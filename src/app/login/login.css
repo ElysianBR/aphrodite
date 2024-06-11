@@ -1,0 +1,42 @@
+#login-page {
+    background-color: #3B2266;
+}
+
+img.logo-login {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: 1%;
+    margin-top: 1%;
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+}
+
+.login-title {
+    padding-bottom: 5%;
+    cursor: default;
+}
+
+.what-is-my-password {
+    display: inline-block;
+    width: 100%;
+    direction: rtl;
+}
+
+.what-is-my-password:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 0.5px;
+    text-underline-offset: 15%;
+    cursor: pointer;
+}
+
+button.login {
+    border-style: none;
+    display: inline;
+    position: relative;
+    left: 25%;
+    width: 50%;
+    height: 60px;
+    margin-top: 5%;
+}

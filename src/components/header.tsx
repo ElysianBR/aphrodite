@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AppBar, Toolbar, Typography, Button, Grid, IconButton, Drawer, List, ListItem, useTheme, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import Image from "next/image";
 
 interface Link {
   text: string;
@@ -84,7 +85,7 @@ const Header: React.FC = () => {
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <a href="#home" data-testid="elysian-logo-button">     
-              <img src="/logo_wo_bg.png" alt="Elysian Logo" style={{ height: '40px', cursor: 'pointer'}} />
+              <Image src="/logo_wo_bg.png" alt="Elysian Logo" style={{ height: '40px', cursor: 'pointer'}} className="logo-animation"/>
             </a>
           </Grid>
           {isMobile ? (

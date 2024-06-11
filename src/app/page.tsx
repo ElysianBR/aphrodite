@@ -10,13 +10,14 @@ import HomeSection from "./homeSection";
 import ScrollbarCustom from "@/components/scroll-bar/scrollbar";
 import { GetBreakpoint } from "@/utils/utils";
 import ContactSection from "./contact";
+import Image from "next/image";
 
 const roboto = Roboto_Condensed({ subsets: ["latin"], });
 
 export default function Home() {
   const theme = useTheme();
   const breakpoint = GetBreakpoint(theme);
-  const isMobile = breakpoint == 'xs' || breakpoint == 'sm';
+  const isMobile: boolean = breakpoint == 'xs' || breakpoint == 'sm';
 
   return (
     <main>
@@ -50,7 +51,7 @@ export default function Home() {
                 <Grid container spacing={4} justifyContent="center">
                   <Grid item xs={12} sm={6} md={4}>
                     <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-                      <img src="/security.png" alt="Segurança Máxima" style={{ height: 50 }} />
+                      <Image src="/security.png" alt="Segurança Máxima" style={{ height: 50 }} />
                       <Typography variant="h6" textAlign="center" gutterBottom>
                         Segurança Máxima
                       </Typography>
@@ -61,7 +62,7 @@ export default function Home() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
                     <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-                      <img src="/clock.png" alt="Eficiência e Velocidade" style={{ height: 50 }} />
+                      <Image src="/clock.png" alt="Eficiência e Velocidade" style={{ height: 50 }} />
                       <Typography variant="h6" textAlign="center" gutterBottom>
                         Eficiência e Velocidade
                       </Typography>
@@ -72,7 +73,7 @@ export default function Home() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
                     <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-                      <img src="/idea.png" alt="Inovação e Crescimento" style={{ height: 50 }} />
+                      <Image src="/idea.png" alt="Inovação e Crescimento" style={{ height: 50 }} />
                       <Typography variant="h6" textAlign="center" gutterBottom>
                         Inovação e Crescimento
                       </Typography>

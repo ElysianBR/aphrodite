@@ -17,6 +17,7 @@ export default function HomeSection() {
             <Grid
                 // divide a tela na horizontal, em dispositivos pequenos usa toda a horizontal
                 container
+                item
                 direction={"row"}
                 xs={12}
                 sm={12}
@@ -26,6 +27,7 @@ export default function HomeSection() {
                 minHeight={"50vh"}>
                 <Grid
                     container
+                    item
                     direction={"column"}
                     alignItems={isXs || isSm ? "center" : "flex-end"}
                     justifyContent={"center"} >
@@ -40,6 +42,7 @@ export default function HomeSection() {
             </Grid>
 
             <Grid container
+                item
                 direction={"row-reverse"}
                 xs={12}
                 sm={12}
@@ -47,6 +50,7 @@ export default function HomeSection() {
                 lg={12}
                 xl={12}>
                 <Grid container
+                    item
                     xs={12}
                     sm={12}
                     md={6}

@@ -1,0 +1,10 @@
+button.custom-button {
+    background-color: #0C0C24;
+    border-radius: 50px;
+    font-size: x-large;
+    transition: transform 0.3s ease;
+}
+
+button.custom-button:hover {
+    transform: scale(1.05); 
+}

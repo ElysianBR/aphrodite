@@ -25,7 +25,7 @@ export default function ScrollbarCustom({ children, hideAfter = 0 }: { children?
         window.removeEventListener('wheel', handleScroll);
       };
     }
-  }, []);
+  }, [hideAfter]);
 
   return <div>{children}</div>
 
