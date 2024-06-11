@@ -4,7 +4,6 @@ import React, { FormEventHandler, Ref, useRef } from "react";
 
 import CenterContainer from "@/components/center-container";
 import { Typography, useTheme, useMediaQuery } from "@mui/material";
-import { GoogleReCaptchaProvider, GoogleReCaptcha } from "react-google-recaptcha-v3";
 
 import Input from "@/components/input/input"
 import Button from "@/components/button/button"
