@@ -10,7 +10,9 @@ import {
   Select,
   MenuItem,
   FormHelperText,
-  SelectChangeEvent
+  SelectChangeEvent,
+  Card,
+  CardContent
 } from "@mui/material";
 
 interface ContactProps {
@@ -78,108 +80,125 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
   return (
     <section id="contact">
       <Box bgcolor="inherit" color="#ffffff" py={5} style={{ backgroundImage: '/', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <Container>
-          <Typography variant={isMobile ? "h5" : "h4"} textAlign="center" gutterBottom>
-            CONTATO
-          </Typography>
+        <Container maxWidth="sm">
+          <Card style={{ backgroundColor: 'rgb(156, 39, 176)' }}>
+            <CardContent>
+              <Typography variant={isMobile ? "h5" : "h4"} textAlign="center" gutterBottom style={{ color: '#ffffff' }}>
+                CONTATO
+              </Typography>
 
-          <form onSubmit={onSubmit}>
-            <TextField
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              label="Nome"
-              fullWidth
-              margin="normal"
-              error={!!errors.name}
-              helperText={errors.name || "Nome completo é obrigatório"}
-              InputLabelProps={{
-                style: { color: '#d852ff' }
-              }}
-              InputProps={{
-                style: { color: '#d852ff' }
-              }}
-            />
+              <form onSubmit={onSubmit}>
+                <TextField
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  label="Nome"
+                  fullWidth
+                  margin="normal"
+                  error={!!errors.name}
+                  helperText={errors.name || "Nome completo é obrigatório"}
+                  InputLabelProps={{
+                    style: { color: '#ffffff' }
+                  }}
+                  InputProps={{
+                    style: { color: '#ffffff' }
+                  }}
+                />
 
-            <TextField
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              label="E-mail"
-              fullWidth
-              margin="normal"
-              error={!!errors.email}
-              helperText={errors.email || "Informe um e-mail válido (exemplo@email.com)"}
-              InputLabelProps={{
-                style: { color: '#d852ff' }
-              }}
-              InputProps={{
-                style: { color: '#d852ff' }
-              }}
-            />
+                <TextField
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  label="E-mail"
+                  fullWidth
+                  margin="normal"
+                  error={!!errors.email}
+                  helperText={errors.email || "Informe um e-mail válido (exemplo@email.com)"}
+                  InputLabelProps={{
+                    style: { color: '#ffffff' }
+                  }}
+                  InputProps={{
+                    style: { color: '#ffffff' }
+                  }}
+                />
 
-            <TextField
-              name="subject"
-              value={formData.subject}
-              onChange={handleInputChange}
-              label="Assunto (opcional)"
-              fullWidth
-              margin="normal"
-              InputLabelProps={{
-                style: { color: '#d852ff' }
-              }}
-              InputProps={{
-                style: { color: '#d852ff' }
-              }}
-            />
+                <TextField
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  label="Assunto (opcional)"
+                  fullWidth
+                  margin="normal"
+                  InputLabelProps={{
+                    style: { color: '#ffffff' }
+                  }}
+                  InputProps={{
+                    style: { color: '#ffffff' }
+                  }}
+                />
 
-            <TextField
-              name="message"
-              value={formData.message}
-              onChange={handleInputChange}
-              label="Mensagem"
-              multiline
-              rows={4}
-              fullWidth
-              margin="normal"
-              error={!!errors.message}
-              helperText={errors.message || "Mensagem deve ter no mínimo 20 caracteres"}
-              InputLabelProps={{
-                style: { color: '#d852ff' }
-              }}
-              InputProps={{
-                style: { color: '#d852ff' }
-              }}
-            />
+                <TextField
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  label="Mensagem"
+                  multiline
+                  rows={4}
+                  fullWidth
+                  margin="normal"
+                  error={!!errors.message}
+                  helperText={errors.message || "Mensagem deve ter no mínimo 20 caracteres"}
+                  InputLabelProps={{
+                    style: { color: '#ffffff' }
+                  }}
+                  InputProps={{
+                    style: { color: '#ffffff' }
+                  }}
+                />
 
-            <FormControl fullWidth margin="normal">
-              <InputLabel id="inquiryTypeLabel" style={{ color: '#d852ff' }}>Tipo de consulta (opcional)</InputLabel>
-              <Select
-                labelId="inquiryTypeLabel"
-                name="inquiryType"
-                value={formData.inquiryType}
-                onChange={handleSelectChange}
-                label="Tipo de consulta"
-                style={{ color: '#d852ff' }}
-              >
-                <MenuItem value="">Selecione</MenuItem>
-                <MenuItem value="general">Consulta geral</MenuItem>
-                <MenuItem value="support">Suporte técnico</MenuItem>
-                <MenuItem value="partnership">Parceria</MenuItem>
-              </Select>
-              <FormHelperText style={{ color: '#d852ff' }}>Selecione o tipo de consulta para direcionar melhor sua mensagem.</FormHelperText>
-            </FormControl>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel id="inquiryTypeLabel" style={{ color: '#ffffff' }}>Tipo de consulta (opcional)</InputLabel>
+                  <Select
+                    labelId="inquiryTypeLabel"
+                    name="inquiryType"
+                    value={formData.inquiryType}
+                    onChange={handleSelectChange}
+                    label="Tipo de consulta"
+                    style={{ color: '#ffffff' }}
+                  >
+                    <MenuItem value="">Selecione</MenuItem>
+                    <MenuItem value="general">Consulta geral</MenuItem>
+                    <MenuItem value="support">Suporte técnico</MenuItem>
+                    <MenuItem value="partnership">Parceria</MenuItem>
+                  </Select>
+                  <FormHelperText style={{ color: '#ffffff' }}>Selecione o tipo de consulta para direcionar melhor sua mensagem.</FormHelperText>
+                </FormControl>
 
-            <Button variant="contained" color="primary" type="submit" fullWidth sx={{ mt: 2, bgcolor: '#d852ff' }}>
-              Enviar
-            </Button>
-          </form>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  fullWidth
+                  sx={{
+                    mt: 2,
+                    bgcolor: 'rgb(35, 35, 35)',
+                    color: '#ffffff',
+                    '&:hover': {
+                      bgcolor: 'rgb(35, 35, 35)',
+                      color: '#ffffff'
+                    }
+                  }}
+                >
+                  Enviar
+                </Button>
+              </form>
 
-          {successMessage && (
-            <Typography variant="body1" color="success.main" align="center">
-              {successMessage}
-            </Typography>
-          )}
+              {successMessage && (
+                <Typography variant="body1" color="success.main" align="center">
+                  {successMessage}
+                </Typography>
+              )}
+            </CardContent>
+          </Card>
         </Container>
       </Box>
     </section>
