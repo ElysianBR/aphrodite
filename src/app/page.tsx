@@ -51,18 +51,18 @@ export default function Home() {
                 <Grid container spacing={4} justifyContent="center">
                   <Grid item xs={12} sm={6} md={4}>
                     <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-                      <Image src="/security.png" alt="Segurança Máxima" style={{ height: 50 }} />
+                      <Image src="/security.png" alt="Segurança Máxima" width={50} height={50} />
                       <Typography variant="h6" textAlign="center" gutterBottom>
                         Segurança Máxima
                       </Typography>
                       <Typography variant="body2" textAlign="center">
                         Garanta a segurança dos dados com criptografia avançada e tecnologia de ponta.
-                      </Typography>
+                      </Typography>x
                     </Box>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
                     <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-                      <Image src="/clock.png" alt="Eficiência e Velocidade" style={{ height: 50 }} />
+                      <Image src="/clock.png" alt="Eficiência e Velocidade" width={50} height={50} />
                       <Typography variant="h6" textAlign="center" gutterBottom>
                         Eficiência e Velocidade
                       </Typography>
@@ -73,7 +73,7 @@ export default function Home() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
                     <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-                      <Image src="/idea.png" alt="Inovação e Crescimento" style={{ height: 50 }} />
+                      <Image src="/idea.png" alt="Inovação e Crescimento" width={50} height={50} />
                       <Typography variant="h6" textAlign="center" gutterBottom>
                         Inovação e Crescimento
                       </Typography>

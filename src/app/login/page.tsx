@@ -66,7 +66,7 @@ export default function Login() {
     return (
         <section id="login-page">
             <CenterContainer>
-                <Image src="/logo_wo_bg.png" alt="Elysian Logo" className="logo-login logo-animation" />
+                <Image src="/logo_wo_bg.png" alt="Elysian Logo" className="logo-login logo-animation" width={120} height={120} />
 
                 <Typography fontSize={isXs || isSm ? "4.5vh" : "4.5vw"} className="login-title">Login</Typography>
 

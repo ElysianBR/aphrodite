@@ -7,9 +7,15 @@ input.custom-input {
     margin: 1%;
     border-radius: 25px;
     font-size: x-large;
+    transition: transform 0.3s ease;
+}
+
+input.custom-input:hover {
+    transform: scale(1.01);
 }
 
 input.custom-input:focus {
+    transform: scale(1.02);
     outline-color: aliceblue;
     outline-width: 0.08cap;
     outline-style: solid;
