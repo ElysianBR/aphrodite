@@ -10,14 +10,15 @@ export type CaptchaProp = {
 
 interface gReCaptcha {
 
-    execute(container: string, parameters: CaptchaProp): Promise<string>;
+    execute(container: string, { action: string }): Promise<string>;
+    reset(): void;
 
 }
 
 declare global {
 
     interface Window {
-        grecaptcha: typeof gReCaptcha;
+        grecaptcha: gReCaptcha;
     }
 
 }

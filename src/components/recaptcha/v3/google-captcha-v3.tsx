@@ -1,5 +1,5 @@
 import Script from "next/script";
-import React, { useImperativeHandle, forwardRef } from "react"
+import React, { useImperativeHandle, forwardRef, useEffect, useState } from "react"
 
 export type GetCaptchaToken = () => Promise<string>
 
@@ -11,15 +11,37 @@ const GoogleCaptchaV3 = forwardRef<GetCaptchaToken, CaptchaV3Props>((props, ref)
 
 
     const getToken = async () => {
-        return await window.grecaptcha.execute(props.sitekey, { action: 'submit' })
+        const token = await window.grecaptcha.execute(props.sitekey, { action: 'login' })
+        // window.grecaptcha.reset()
+        return token;
     }
-
 
     useImperativeHandle(ref, () => getToken);
 
 
+    const destroy = () => {
+        document.querySelector('.grecaptcha-badge')?.parentElement?.remove();
+        document.getElementById('google-captcha-scprit')?.remove()
+    }
+
+
+    var destroyed = true;
+    useEffect(() => {
+        destroyed  = !destroyed;
+
+        return () => {
+            if (destroyed) {
+                destroy();
+            }
+        };
+
+    }, []);
+
+
     return (
-        <Script src={`https://www.google.com/recaptcha/api.js?render=${props.sitekey}`} async defer />
+        <div id="google-captcha-container">
+            <Script id="google-captcha-scprit" src={`https://www.google.com/recaptcha/api.js?render=${props.sitekey}`} async defer ></Script>
+        </div>
     )
 })
 

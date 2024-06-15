@@ -15,7 +15,11 @@ body {
 
 main {
   background: transparent;
-  width: "100vw";
+  min-height: 100vh;
+}
+
+.full-height {
+  min-height: 100vh;
 }
 
 
@@ -23,9 +27,16 @@ main {
   cursor: pointer;
 }
 
+.purple-bg {
+  background-color: #3B2266;
+}
 
 img.logo-animation:hover {
   transform: rotate(-360deg);
+}
+
+img.logo-animation.reverse {
+  transform: rotate(360deg);
 }
 
 img.logo-animation {
@@ -38,3 +49,21 @@ img.logo-animation {
     text-wrap: balance;
   }
 }
+
+
+
+/* Resposive Global CSS */
+/* Mobile */
+@media (max-width: 480px) {}
+
+/* iPads e tablets */
+@media (max-width: 768px) {}
+
+/* Small screens and laptops */
+@media (max-width: 1024px) {}
+
+/* Large screens and desktops */
+@media (max-width: 1200px) {}
+
+/* Very large screens and TVs */
+@media (min-width: 1201px) {}

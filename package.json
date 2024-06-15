@@ -14,8 +14,7 @@
     "json2typescript": "^1.5.1",
     "next": "14.1.4",
     "react": "^18",
-    "react-dom": "^18",
-    "tslombok": "^1.2.6"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@emotion/react": "^11.11.4",

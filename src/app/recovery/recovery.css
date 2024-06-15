@@ -1,0 +1,12 @@
+.purple-bg {
+    background-color: #3B2266;
+}
+
+input.recovery {
+    width: 40vw;
+    height: 10vh;
+}
+
+span.recovery {
+    font-size: x-large;
+}

@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import { AppBar, Toolbar, Button, Grid, IconButton, Drawer, List, ListItem, useTheme, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
-
-interface Link {
-  text: string;
-  href: string;
-  id: string;
-}
+import { Link } from "@/app/types";
 
 interface LinkButtonProps {
   link: Link;
@@ -39,14 +34,11 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link, index, currentSection, se
 );
 
 
-const linksArray: Link[] = [
-  { text: "Home", href: "#home", id: "home" },
-  { text: "Sobre", href: "#about", id: "about" },
-  { text: "Contato", href: "#contact", id: "contact" },
-  { text: "Acesso", href: "/login", id: "login" },
-];
+export type HeaderProps = {
+  links: Link[]
+}
 
-const Header: React.FC = () => {
+const Header: FC<HeaderProps> = (props) => {
   const [currentSection, setCurrentSection] = useState<number>(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const theme = useTheme();
@@ -57,7 +49,7 @@ const Header: React.FC = () => {
       const center = window.innerHeight / 2;
       let minDistance = Number.MAX_VALUE;
 
-      linksArray.forEach((link, index) => {
+      props.links.forEach((link, index) => {
         const element = document.getElementById(link.id);
         if (element) {
           const verticalPosition = element.getBoundingClientRect().top + (element.clientHeight / 2);
@@ -105,7 +97,7 @@ const Header: React.FC = () => {
             </Grid>
           ) : (
             <Grid item>
-              {linksArray.map((link, index) => (
+              {props.links.map((link, index) => (
                 <LinkButton key={link.id} link={link} index={index} currentSection={currentSection} setCurrentSection={setCurrentSection} />
               ))}
             </Grid>
@@ -120,7 +112,7 @@ const Header: React.FC = () => {
         transitionDuration={500}
       >
         <List>
-          {linksArray.map((link, index) => (
+          {props.links.map((link, index) => (
             <ListItem button key={link.id} onClick={() => setCurrentSection(index)}>
               <LinkButton link={link} index={index} currentSection={currentSection} setCurrentSection={setCurrentSection} />
             </ListItem>

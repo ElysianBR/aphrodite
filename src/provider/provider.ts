@@ -32,13 +32,13 @@ export default class Provider {
     }
 
 
-    deserializeResponse<T extends { new(...args: any[]): any }> (response: any, classT: T) {
+    deserializeResponse<T extends { new(...args: any[]): any }>(response: any, classT: T) {
         let jsonConvert: JsonConvert = new JsonConvert();
         jsonConvert.operationMode = OperationMode.ENABLE;
         // jsonConvert.ignorePrimitiveChecks = true;
         jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL;
-    
-    
+
+
         try {
             return jsonConvert.deserializeObject(response, classT);
         } catch (e) {
@@ -48,22 +48,32 @@ export default class Provider {
 
 
     public async executePost<T extends { new(...args: any[]): any }>(post: executePostType, classT: T): Promise<T | ResponseError> {
-        const response = await fetch(
-            `${this.URI}/${post.path}`,
-            {
-                method: 'POST',
-                headers: this.resolveHeaders(post.headers),
-                body: JSON.stringify(post.data),
+        try {
+            const response = await fetch(
+                `${this.URI}/${post.path}`,
+                {
+                    method: 'POST',
+                    headers: this.resolveHeaders(post.headers),
+                    body: JSON.stringify(post.data),
+                }
+            );
+
+            const json = await response.json();
+
+            if (response.ok) {
+                return this.deserializeResponse(json, classT)
             }
-        );
 
-        const json = await response.json();
+            return this.deserializeResponse(json, ResponseError)
+        } catch (err) {
 
-        if (response.status === 200) {
-            return this.deserializeResponse(json, classT)
+            if (err instanceof Error) {
+                return new ResponseError(0, err.name, err.message);
+            }
+
+            return new ResponseError(-1, "UNEXPECTED ERROR", "An unexpected error has occurred, contact your administrator.");
+
         }
-
-        return this.deserializeResponse(json, ResponseError)
     }
 
 

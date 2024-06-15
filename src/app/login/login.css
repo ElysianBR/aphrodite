@@ -1,7 +1,3 @@
-#login-page {
-    background-color: #3B2266;
-}
-
 img.logo-login {
     position: absolute;
     left: 0;
@@ -29,6 +25,16 @@ img.logo-login {
     cursor: pointer;
 }
 
+.msg-error-form {
+    display: inline-block;
+    width: 100%;
+    margin-top: 2.5%;
+    align-items: center;
+    text-align: center;
+    color: #EB7878;
+    cursor: default;
+}
+
 button.login {
     border-style: none;
     display: inline;
@@ -37,4 +43,34 @@ button.login {
     width: 50%;
     height: 60px;
     margin-top: 5%;
+}
+
+input.login {
+    width: 100%;
+    height: 5vw;
+}
+
+
+/* Mobile */
+@media (max-width: 480px) {
+    input.login {
+        margin: 1vh;
+        height: 3vw;
+    }
+}
+
+/* iPads e tablets */
+@media (max-width: 768px) {
+    input.login {
+        margin: 1vh;
+        height: 8vh;
+    }
+}
+
+/* Very large screens and TVs */
+@media (min-width: 1201px) {
+    input.login {
+        margin: 1vh;
+        height: 5vw;
+    }
 }

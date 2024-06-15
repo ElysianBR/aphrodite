@@ -9,7 +9,7 @@ export default class ResponseError {
     @JsonProperty('error', String)
     private error: string;
 
-    @JsonProperty('error', String)
+    @JsonProperty('message', String)
     private message: string;
 
     constructor(statusCode: number, error: string, message: string) {
@@ -17,4 +17,10 @@ export default class ResponseError {
         this.error = error;
         this.message = message;
     }
+
+
+    getStatusCode = () => this.statusCode;
+    getError = () => this.error;
+    getMessage = () => this.message;
+
 }
