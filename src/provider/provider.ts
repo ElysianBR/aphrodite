@@ -18,8 +18,8 @@ export type executeGetType = {
 export default class Provider {
 
     // Variables
-    private protocol = window.location.protocol;
-    private host = window.location.hostname;
+    private protocol = window != undefined ? window.location.protocol : '';
+    private host =  window != undefined ? window.location.hostname : '';
     private profile = process.env.NODE_ENV;
     private alias = this.profile === 'development' ? '' : 'api.';
     private port =  this.profile === 'development' ? ':8080' : '';
