@@ -1,3 +1,5 @@
+"use client"
+
 import { JsonConvert, OperationMode, ValueCheckingMode } from "json2typescript";
 import ResponseError from "./dtos/ResponseErrorDTO";
 
