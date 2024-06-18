@@ -1,5 +1,3 @@
-"use client"
-
 import { JsonConvert, OperationMode, ValueCheckingMode } from "json2typescript";
 import ResponseError from "./dtos/ResponseErrorDTO";
 
@@ -24,8 +22,6 @@ export default class Provider {
     private alias = this.profile === 'development' ? '' : 'api.';
     private port =  this.profile === 'development' ? ':8080' : '';
     private URI = this.protocol + '//' + this.alias + this.host + this.port;
-
-    private REACT_APP_RECAPTCHA_KEY = process.env.NEXT_PUBLIC_REACT_APP_RECAPTCHA_KEY || '';
 
     private headers: Headers = new Headers({
         'Content-Type': 'application/json',
@@ -114,6 +110,5 @@ export default class Provider {
 
 
     public getUri = (): string => this.URI;
-    public getRecaptchaAppKey = (): string => this.REACT_APP_RECAPTCHA_KEY;
 
 }

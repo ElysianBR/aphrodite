@@ -4,14 +4,17 @@ import React, { useImperativeHandle, forwardRef, useEffect, useState } from "rea
 export type GetCaptchaToken = () => Promise<string>
 
 export type CaptchaV3Props = {
-    sitekey: string
 }
 
 const GoogleCaptchaV3 = forwardRef<GetCaptchaToken, CaptchaV3Props>((props, ref) => {
 
 
+    const sitekey = process.env.NEXT_PUBLIC_REACT_APP_RECAPTCHA_KEY || ''
+
+
     const getToken = async () => {
-        const token = await window.grecaptcha.execute(props.sitekey, { action: 'login' })
+
+        const token = await window.grecaptcha.execute(sitekey, { action: 'login' })
         // window.grecaptcha.reset()
         return token;
     }
@@ -40,7 +43,7 @@ const GoogleCaptchaV3 = forwardRef<GetCaptchaToken, CaptchaV3Props>((props, ref)
 
     return (
         <div id="google-captcha-container">
-            <Script id="google-captcha-scprit" src={`https://www.google.com/recaptcha/api.js?render=${props.sitekey}`} async defer ></Script>
+            <Script id="google-captcha-scprit" src={`https://www.google.com/recaptcha/api.js?render=${sitekey}`} async defer ></Script>
         </div>
     )
 })

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { FormEventHandler, useRef, useState } from "react";
+import React, { FormEventHandler, useRef, useState, useEffect } from "react";
 
 import CenterContainer from "@/components/center-container";
 import { Typography, useTheme, useMediaQuery } from "@mui/material";
@@ -37,8 +37,21 @@ export default function Login() {
 
 
 
-    const provider = new Provider();
-    const loginProvider = new LoginMethod(provider);
+    const [provider, setProvider] = useState<Provider>();
+    const [loginProvider, setLoginProvider] = useState<LoginMethod>();
+
+
+    useEffect(() => {
+        const tmpProvider = new Provider();
+        setProvider(tmpProvider);
+        setLoginProvider(new LoginMethod(tmpProvider));
+
+
+        return () => {
+        }
+
+    }, [])
+
 
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -59,29 +72,33 @@ export default function Login() {
             }
 
 
-            const data = await loginProvider.login({
-                credentials: { email: form.email, password: form.password },
-                gRecaptchaResponse: gToken
-            });
+            if (loginProvider != undefined) {
+
+                const data = await loginProvider.login({
+                    credentials: { email: form.email, password: form.password },
+                    gRecaptchaResponse: gToken
+                });
 
 
-            if (data instanceof LoginResponseOk) {
+                if (data instanceof LoginResponseOk) {
 
-                localStorage.setItem("SessionToken", data.getToken());
-                localStorage.setItem("SessionExpires", data.getExpiresIn().toISOString())
+                    localStorage.setItem("SessionToken", data.getToken());
+                    localStorage.setItem("SessionExpires", data.getExpiresIn().toISOString())
 
-            } else if (data instanceof ResponseError) {
+                } else if (data instanceof ResponseError) {
 
-                const code = data.getStatusCode()
-                const message = data.getMessage()
+                    const code = data.getStatusCode()
+                    const message = data.getMessage()
 
-                if (code <= 0) {
+                    if (code <= 0) {
 
-                    setMsgError(`O servidor não está respondendo. [ ${code} - ${message} ]`);
+                        setMsgError(`O servidor não está respondendo. [ ${code} - ${message} ]`);
 
-                } else {
+                    } else {
 
-                    setMsgError(message);
+                        setMsgError(message);
+
+                    }
 
                 }
 
@@ -105,7 +122,7 @@ export default function Login() {
             clearTimeout(timeOut);
             router.push("/")
         }, 80);
-        
+
     }
 
 
@@ -140,7 +157,7 @@ export default function Login() {
 
 
             {/* Captcha V3 enabled */}
-            <GoogleCaptchaV3 sitekey={provider.getRecaptchaAppKey()} ref={captchaRef} />
+            <GoogleCaptchaV3 ref={captchaRef} />
 
 
         </section>
