@@ -16,19 +16,25 @@ export type executeGetType = {
 export default class Provider {
 
     // Variables
-    private URI = process.env.NEXT_PUBLIC_API_URI || '';
+    private protocol = window.location.protocol;
+    private host = window.location.hostname;
+    private profile = process.env.NODE_ENV;
+    private alias = this.profile === 'development' ? '' : 'api.';
+    private port =  this.profile === 'development' ? ':8080' : '';
+    private URI = this.protocol + '//' + this.alias + this.host + this.port;
+
     private REACT_APP_RECAPTCHA_KEY = process.env.NEXT_PUBLIC_REACT_APP_RECAPTCHA_KEY || '';
-    private headers: Headers;
+
+    private headers: Headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${'token'}`,
+        'Accept-Language': 'pt-BR',
+        'XSS-Security': 'true'
+    });
 
 
     // Constructors
     constructor() {
-        this.headers = new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${'token'}`,
-            'Accept-Language': 'pt-BR',
-            'XSS-Security': 'true'
-        });
     }
 
 

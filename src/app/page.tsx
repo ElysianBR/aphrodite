@@ -1,22 +1,23 @@
 "use client";
 
 import "react";
-import { Typography, Grid, useTheme, useMediaQuery, Container, Box } from "@mui/material";
-import { Roboto_Condensed } from "next/font/google";
+import { useTheme, Box } from "@mui/material";
 import TopPageCanvas from "@/components/top-page-canvas/top-page-canvas";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import HomeSection from "./homeSection";
+import HomeSection from "./home-section";
 import ScrollbarCustom from "@/components/scroll-bar/scrollbar";
 import { GetBreakpoint } from "@/utils/utils";
 import ContactSection from "./contact";
-import AboutSection from "./aboutSection";
+import AboutSection from "./about-section";
 import { Link } from "./types";
+import PlansSection from "../components/plans/plans-section";
 
 
 const linksArray: Link[] = [
   { text: "Home", href: "#home", id: "home" },
   { text: "Sobre", href: "#about", id: "about" },
+  // { text: "Planos", href: "#plans", id: "plans" },
   { text: "Contato", href: "#contact", id: "contact" },
   { text: "Acesso", href: "/login", id: "login" },
 ];
@@ -34,6 +35,7 @@ export default function Home() {
           <Header links={linksArray} />
           <HomeSection />
           <AboutSection isMobile={isMobile} />
+          {/* <PlansSection /> */}
           <ContactSection isMobile={isMobile} />
           <Footer />
         </Box>
