@@ -12,26 +12,37 @@ const AboutSection: FC<AboutProps> = (props) => {
             <Box
                 bgcolor="secondary.main"
                 color="primary.contrastText"
-                py={5}
-                style={{ backgroundImage: 'url(/path/to/your/background-image.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+                py={8}
+                style={{ 
+                    backgroundImage: 'url(/path/to/your/background-image.jpg)', 
+                    backgroundSize: 'cover', 
+                    backgroundPosition: 'center' 
+                }}
             >
                 <Container>
-                    <Typography variant={props.isMobile ? 'h5' : 'h3'} textAlign="center" fontWeight="bold" gutterBottom>
+                    <Typography 
+                        variant={props.isMobile ? 'h5' : 'h3'} 
+                        textAlign="center" 
+                        fontWeight="700" 
+                        gutterBottom
+                        style={{ fontFamily: "'Roboto', sans-serif", color: "#fff" }}
+                    >
                         Transforme seu negócio com a blockchain
                     </Typography>
-                    <Typography variant="body1" textAlign="center">
-                    Na Elysian, acreditamos que a tecnologia blockchain pode
-                    revolucionar a maneira como as empresas operam, trazendo
-                    transparência, segurança e eficiência sem precedentes. Somos uma
-                    startup inovadora focada em desenvolver contratos inteligentes,
-                    integrar sistemas e oferecer suporte de qualidade para garantir que
-                    sua transição para a nova era digital seja suave e bem-sucedida.
+                    <Typography 
+                        variant="body1" 
+                        textAlign="center" 
+                        paragraph 
+                        style={{ fontFamily: "'Open Sans', sans-serif", lineHeight: 1.6 }}
+                    >
+                        Na Elysian, acreditamos que a tecnologia blockchain pode
+                        revolucionar a maneira como as empresas operam, trazendo
+                        transparência, segurança e eficiência sem precedentes. Somos uma
+                        startup inovadora focada em desenvolver contratos inteligentes,
+                        integrar sistemas e oferecer suporte de qualidade para garantir que
+                        sua transição para a nova era digital seja suave e bem-sucedida.
                     </Typography>
                 </Container>
-            </Box>
-
-            {/* Seção de Vantagens */}
-            <Box py={5}>
                 <Container>
                     <Grid container spacing={4} justifyContent="center">
                         <Grid item xs={12} sm={6} md={4}>
@@ -121,9 +132,9 @@ const AboutSection: FC<AboutProps> = (props) => {
             </Box>
 
             {/* Chamada para Ação */}
-            <Box bgcolor="secondary.main" color="primary.contrastText" py={5}>
+            <Box bgcolor="secondary.main" color="primary.contrastText" py={8}>
                 <Container>
-                    <Typography variant={props.isMobile ? 'h5' : 'h4'} textAlign="center" gutterBottom>
+                    <Typography variant={props.isMobile ? 'h5' : 'h4'} textAlign="center" fontWeight="bold" gutterBottom>
                         Pronto para revolucionar seu negócio?
                     </Typography>
                     <Typography variant="h6" textAlign="center">
