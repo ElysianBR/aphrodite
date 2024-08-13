@@ -97,6 +97,9 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
                   margin="normal"
                   error={!!errors.name}
                   helperText={errors.name || "Nome completo é obrigatório"}
+                  FormHelperTextProps={{
+                    style: { color: '#ffffff' }  // Cor do texto de ajuda
+                  }}
                   InputLabelProps={{
                     style: { color: '#ffffff' }
                   }}
@@ -114,6 +117,9 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
                   margin="normal"
                   error={!!errors.email}
                   helperText={errors.email || "Informe um e-mail válido (exemplo@email.com)"}
+                  FormHelperTextProps={{
+                    style: { color: '#ffffff' }  // Cor do texto de ajuda
+                  }}
                   InputLabelProps={{
                     style: { color: '#ffffff' }
                   }}
@@ -148,6 +154,9 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
                   margin="normal"
                   error={!!errors.message}
                   helperText={errors.message || "Mensagem deve ter no mínimo 20 caracteres"}
+                  FormHelperTextProps={{
+                    style: { color: '#ffffff' }  // Cor do texto de ajuda
+                  }}
                   InputLabelProps={{
                     style: { color: '#ffffff' }
                   }}
