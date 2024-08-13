@@ -83,13 +83,7 @@ export default function Login() {
                 } else if (data instanceof ResponseError) {
                     const code = data.getStatusCode();
                     const message = data.getMessage();
-                    if (code === 401) {
-                        setMsgError("Credenciais inválidas. Por favor, verifique seu e-mail e senha.");
-                    } else if (code === 503) {
-                        setMsgError("Serviço temporariamente indisponível. Tente novamente mais tarde.");
-                    } else {
                         setMsgError(`Erro inesperado: [ ${code} - ${message} ]`);
-                    }
                 }
             }
         } catch (err) {
