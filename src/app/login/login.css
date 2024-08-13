@@ -10,6 +10,7 @@ img.logo-login {
 .login-title {
     padding-bottom: 5%;
     cursor: default;
+    font-weight: "bold";
 }
 
 .what-is-my-password {
