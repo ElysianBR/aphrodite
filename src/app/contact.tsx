@@ -83,7 +83,7 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
         <Container maxWidth="sm">
           <Card style={{ backgroundColor: 'rgb(156, 39, 176)' }}>
             <CardContent>
-              <Typography variant={isMobile ? "h5" : "h4"} textAlign="center" gutterBottom style={{ color: '#ffffff' }}>
+              <Typography variant={isMobile ? "h5" : "h4"} color="#ffffff" textAlign="center" fontWeight="bold" gutterBottom>
                 CONTATO
               </Typography>
 
@@ -98,7 +98,7 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
                   error={!!errors.name}
                   helperText={errors.name || "Nome completo é obrigatório"}
                   FormHelperTextProps={{
-                    style: { color: '#ffffff' }  // Cor do texto de ajuda
+                    style: { color: '#ffffff' }
                   }}
                   InputLabelProps={{
                     style: { color: '#ffffff' }
@@ -118,7 +118,7 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
                   error={!!errors.email}
                   helperText={errors.email || "Informe um e-mail válido (exemplo@email.com)"}
                   FormHelperTextProps={{
-                    style: { color: '#ffffff' }  // Cor do texto de ajuda
+                    style: { color: '#ffffff' }
                   }}
                   InputLabelProps={{
                     style: { color: '#ffffff' }
@@ -155,7 +155,7 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
                   error={!!errors.message}
                   helperText={errors.message || "Mensagem deve ter no mínimo 20 caracteres"}
                   FormHelperTextProps={{
-                    style: { color: '#ffffff' }  // Cor do texto de ajuda
+                    style: { color: '#ffffff' }
                   }}
                   InputLabelProps={{
                     style: { color: '#ffffff' }
@@ -175,10 +175,11 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
                     label="Tipo de consulta"
                     style={{ color: '#ffffff' }}
                   >
-                    <MenuItem value="">Selecione</MenuItem>
+                    {/* <MenuItem value="">Selecione</MenuItem> */}
                     <MenuItem value="general">Consulta geral</MenuItem>
                     <MenuItem value="support">Suporte técnico</MenuItem>
                     <MenuItem value="partnership">Parceria</MenuItem>
+                    <MenuItem value="others">Outros</MenuItem>
                   </Select>
                   <FormHelperText style={{ color: '#ffffff' }}>Selecione o tipo de consulta para direcionar melhor sua mensagem.</FormHelperText>
                 </FormControl>
