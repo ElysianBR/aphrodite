@@ -17,7 +17,7 @@ import PlansSection from "../components/plans/plans-section";
 const linksArray: Link[] = [
   { text: "Home", href: "#home", id: "home" },
   { text: "Sobre", href: "#about", id: "about" },
-  // { text: "Planos", href: "#plans", id: "plans" },
+  { text: "Planos", href: "#plans", id: "plans" },
   { text: "Contato", href: "#contact", id: "contact" },
   { text: "Acesso", href: "/login", id: "login" },
 ];
@@ -35,7 +35,7 @@ export default function Home() {
           <Header links={linksArray} />
           <HomeSection />
           <AboutSection isMobile={isMobile} />
-          {/* <PlansSection /> */}
+          <PlansSection isMobile={isMobile} />
           <ContactSection isMobile={isMobile} />
           <Footer />
         </Box>
