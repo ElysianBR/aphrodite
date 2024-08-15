@@ -22,9 +22,15 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                     <Typography 
                         variant="h3" 
                         textAlign="center" 
-                        fontWeight="bold" 
+                        fontWeight="bold"
+                        bgcolor="secondary.main" //comentar se achar feio
                         gutterBottom
-                        style={{ fontFamily: "'Roboto', sans-serif", color: "#fff" }}
+                        style={{ 
+                            fontFamily: "'Roboto', sans-serif", 
+                            color: "#fff", 
+                            padding: '20px 0',  // Aumenta o espaçamento vertical
+                            marginBottom: '40px' // Adiciona espaço abaixo do título
+                        }}
                     >
                         Escolha um plano
                     </Typography>
