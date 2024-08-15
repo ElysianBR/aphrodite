@@ -51,7 +51,7 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                     Plano Mensal
                                 </Typography>
                                 <Typography variant="h6" color="secondary.light" gutterBottom>
-                                    R$ 4.000,00/mês
+                                     R$ {/*4.000,00*/}/mês 
                                 </Typography>
                                 <Typography variant="body1" textAlign="justify" gutterBottom>
                                     Acesso completo à API e suporte técnico prioritário 24/7. <br />
@@ -101,7 +101,7 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                     Plano Anual
                                 </Typography>
                                 <Typography variant="h6" color="secondary.light" gutterBottom>
-                                    R$ 40.000,00/ano
+                                    R$ {/*40.000,00*/}/ano
                                 </Typography>
                                 <Typography variant="body1" textAlign="justify" gutterBottom>
                                     Acesso completo à API, suporte técnico 24/7 e <strong>desconto significativo</strong>.
@@ -152,7 +152,7 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                     Integração Personalizada
                                 </Typography>
                                 <Typography variant="h6" color="secondary.light" gutterBottom>
-                                    A partir de R$ 10.000,00
+                                    A partir de R$ {/*10.000,00*/}
                                 </Typography>
                                 <Typography variant="body1" textAlign="justify" gutterBottom>
                                     Soluções personalizadas e altamente adaptáveis, projetadas para se integrar perfeitamente aos seus sistemas existentes.
