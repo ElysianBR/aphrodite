@@ -1,4 +1,5 @@
 import { Box, Container, Grid, Typography, Button } from "@mui/material";
+import Link from 'next/link';
 import { FC } from "react";
 
 type PlansSectionProps = {
@@ -50,22 +51,32 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                     Acesso completo à API e suporte técnico prioritário 24/7. <br />
                                     Criação de rotinas agendadas, sincronizadores e demais ferramentas para o seu sistema.
                                 </Typography>
-                                <Button
-                                    variant="contained"
-                                    type="submit"
-                                    fullWidth
+                                <Box 
+                                    component={Link} 
+                                    href="/login" 
                                     sx={{
-                                        mt: 'auto',
-                                        bgcolor: 'rgb(35, 35, 35)',
-                                        color: '#ffffff',
-                                        '&:hover': {
-                                            bgcolor: 'rgb(35, 35, 35)',
-                                            color: '#ffffff'
-                                        }
+                                        display: 'block', 
+                                        width: '100%', 
+                                        mt: 'auto', 
+                                        textDecoration: 'none'
                                     }}
                                 >
-                                    Escolher plano
-                                </Button>
+                                    <Button
+                                        variant="contained"
+                                        type="submit"
+                                        fullWidth
+                                        sx={{
+                                            bgcolor: 'rgb(35, 35, 35)',
+                                            color: '#ffffff',
+                                            '&:hover': {
+                                                bgcolor: 'rgb(35, 35, 35)',
+                                                color: '#ffffff'
+                                            }
+                                        }}
+                                    >
+                                        Escolher plano
+                                    </Button>
+                                </Box>
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
@@ -91,22 +102,32 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                     Criação de rotinas agendadas, sincronizadores e demais ferramentas para o seu sistema.
                                     <br />
                                 </Typography>
-                                <Button
-                                    variant="contained"
-                                    type="submit"
-                                    fullWidth
+                                <Box 
+                                    component={Link} 
+                                    href="/login" 
                                     sx={{
-                                        mt: 'auto',
-                                        bgcolor: 'rgb(35, 35, 35)',
-                                        color: '#ffffff',
-                                        '&:hover': {
-                                            bgcolor: 'rgb(35, 35, 35)',
-                                            color: '#ffffff'
-                                        }
+                                        display: 'block', 
+                                        width: '100%', 
+                                        mt: 'auto', 
+                                        textDecoration: 'none'
                                     }}
                                 >
-                                    Escolher plano
-                                </Button>
+                                    <Button
+                                        variant="contained"
+                                        type="submit"
+                                        fullWidth
+                                        sx={{
+                                            bgcolor: 'rgb(35, 35, 35)',
+                                            color: '#ffffff',
+                                            '&:hover': {
+                                                bgcolor: 'rgb(35, 35, 35)',
+                                                color: '#ffffff'
+                                            }
+                                        }}
+                                    >
+                                        Escolher plano
+                                    </Button>
+                                </Box>
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
@@ -128,24 +149,34 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                     A partir de R$ 10.000,00
                                 </Typography>
                                 <Typography variant="body1" textAlign="justify" gutterBottom>
-                                Soluções personalizadas e altamente adaptáveis, projetadas para se integrar perfeitamente aos seus sistemas existentes.
+                                    Soluções personalizadas e altamente adaptáveis, projetadas para se integrar perfeitamente aos seus sistemas existentes.
                                 </Typography>
-                                <Button
-                                    variant="contained"
-                                    type="submit"
-                                    fullWidth
+                                <Box 
+                                    component={Link} 
+                                    href="/login" 
                                     sx={{
-                                        mt: 'auto',
-                                        bgcolor: 'rgb(35, 35, 35)',
-                                        color: '#ffffff',
-                                        '&:hover': {
-                                            bgcolor: 'rgb(35, 35, 35)',
-                                            color: '#ffffff'
-                                        }
+                                        display: 'block', 
+                                        width: '100%', 
+                                        mt: 'auto', 
+                                        textDecoration: 'none'
                                     }}
                                 >
-                                    Escolher plano
-                                </Button>
+                                    <Button
+                                        variant="contained"
+                                        type="submit"
+                                        fullWidth
+                                        sx={{
+                                            bgcolor: 'rgb(35, 35, 35)',
+                                            color: '#ffffff',
+                                            '&:hover': {
+                                                bgcolor: 'rgb(35, 35, 35)',
+                                                color: '#ffffff'
+                                            }
+                                        }}
+                                    >
+                                        Escolher plano
+                                    </Button>
+                                </Box>
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
@@ -169,22 +200,32 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                 <Typography variant="body1" textAlign="justify" gutterBottom>
                                     Sem custos fixos, pague apenas pelo que usar. Ideal para empresas que não precisam de um plano recorrente.
                                 </Typography>
-                                <Button
-                                    variant="contained"
-                                    type="submit"
-                                    fullWidth
+                                <Box 
+                                    component={Link} 
+                                    href="/login" 
                                     sx={{
-                                        mt: 'auto',
-                                        bgcolor: 'rgb(35, 35, 35)',
-                                        color: '#ffffff',
-                                        '&:hover': {
-                                            bgcolor: 'rgb(35, 35, 35)',
-                                            color: '#ffffff'
-                                        }
+                                        display: 'block', 
+                                        width: '100%', 
+                                        mt: 'auto', 
+                                        textDecoration: 'none'
                                     }}
                                 >
-                                    Saiba Mais
-                                </Button>
+                                    <Button
+                                        variant="contained"
+                                        type="submit"
+                                        fullWidth
+                                        sx={{
+                                            bgcolor: 'rgb(35, 35, 35)',
+                                            color: '#ffffff',
+                                            '&:hover': {
+                                                bgcolor: 'rgb(35, 35, 35)',
+                                                color: '#ffffff'
+                                            }
+                                        }}
+                                    >
+                                        Saiba Mais
+                                    </Button>
+                                </Box>
                             </Box>
                         </Grid>
                     </Grid>
