@@ -88,7 +88,7 @@ export default function Login() {
             }
         } catch (err) {
             alert("Ocorreu um erro inesperado durante o login...");
-            console.error("Erro de captura:", err); // Log para ver o erro completo
+            console.error("Erro de captura:", err);
         } finally {
             setLoading(false);
         }
@@ -151,6 +151,11 @@ export default function Login() {
                             {loading ? "Entrando..." : "Entrar"}
                         </Button>
                     </div>
+                    
+                    {/* Botão de criar conta que leva ao cadastro */}
+                    {/* <div style={{ marginTop: 20 }}>
+                        <a href="/signup" className="signup-link">Criar uma conta</a>
+                    </div> */}
                 </form>
             </CenterContainer>
 
