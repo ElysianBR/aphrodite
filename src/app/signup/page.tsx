@@ -1,13 +1,17 @@
 'use client';
 import React, { useState } from 'react';
-import { Box, Container, Grid, Typography, TextField, Button, Paper } from '@mui/material';
+import { Box, Container, Grid, Typography, TextField, Button, Paper, useMediaQuery } from '@mui/material';
 import Footer from '../../components/footer';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTheme } from '@mui/material/styles';
 
 const Signup = () => {
   const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
   const [reverseAnimation, setReverseAnimation] = useState(false);
+  
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -51,7 +55,7 @@ const Signup = () => {
 
     const timeOut = setTimeout(() => {
       clearTimeout(timeOut);
-      // Aqui deve ser a lógica do provider praligar com o backend blz willzao
+      // Lógica para conectar com o backend
     }, 500);
   };
 
@@ -69,17 +73,18 @@ const Signup = () => {
           backgroundImage: 'url(/path/to/your/background-image.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          padding: isMobile ? theme.spacing(2) : theme.spacing(8),
         }}
       >
-        {/* Logo animado */}
-        <Box position="absolute" top={20} left={20}>
+        {/* Logo */}
+        <Box position="absolute" top={isMobile ? 10 : 20} left={isMobile ? 10 : 20}>
           <Link href="/" onClick={awaitAnimationLogo}>
             <Image
               src="/logo_wo_bg.png"
               alt="Elysian Logo"
               className={`logo-login logo-animation ${reverseAnimation ? 'reverse' : ''}`}
-              width={100}
-              height={100}
+              width={isMobile ? 80 : 100}
+              height={isMobile ? 80 : 100}
             />
           </Link>
         </Box>
@@ -88,7 +93,7 @@ const Signup = () => {
           <Paper
             elevation={3}
             sx={{
-              padding: 4,
+              padding: isMobile ? theme.spacing(2) : theme.spacing(4),
               bgcolor: 'secondary.main',
               color: 'secondary.contrastText',
               display: 'flex',
@@ -97,7 +102,7 @@ const Signup = () => {
             }}
           >
             <Typography
-              variant="h4"
+              variant={isMobile ? 'h5' : 'h4'}
               textAlign="center"
               fontWeight="700"
               gutterBottom
