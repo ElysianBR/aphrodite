@@ -25,7 +25,6 @@ export default function Login() {
 
     const captchaRef: React.ForwardedRef<GetCaptchaToken> = useRef(null);
     const [reverseAnimation, setReverseAnimation] = useState(false);
-    const [msgError, setMsgError] = useState<string>('');
     const [loading, setLoading] = useState(false);
     const [provider, setProvider] = useState<Provider>();
     const [loginProvider, setLoginProvider] = useState<LoginMethod>();
@@ -38,18 +37,17 @@ export default function Login() {
 
     const validateForm = (form: { email: string; password: string }): boolean => {
         if (!form.email.includes("@")) {
-            setMsgError("Por favor, insira um e-mail válido.");
+            alert("Por favor, insira um e-mail válido.");
             return false;
         }
         if (form.password.length < 6) {
-            setMsgError("A senha deve ter pelo menos 6 caracteres.");
+            alert("A senha deve ter pelo menos 6 caracteres.");
             return false;
         }
         return true;
     };
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-        setMsgError('');
         setLoading(true);
 
         e.preventDefault();
@@ -83,7 +81,7 @@ export default function Login() {
                 } else if (data instanceof ResponseError) {
                     const code = data.getStatusCode();
                     const message = data.getMessage();
-                        setMsgError(`Erro inesperado: [ ${code} - ${message} ]`);
+                    alert(`Erro inesperado: [ ${code} - ${message} ]`);
                 }
             }
         } catch (err) {
@@ -144,8 +142,6 @@ export default function Login() {
 
                     <a className="what-is-my-password" href="/recovery">Esqueci minha senha</a>
 
-                    <span className="msg-error-form">{msgError}</span>
-
                     <div>
                         <Button type="submit" className="login" disabled={loading}>
                             {loading ? "Entrando..." : "Entrar"}
@@ -153,7 +149,7 @@ export default function Login() {
                     </div>
                     
                     {/* Botão de criar conta que leva ao cadastro */}
-                    {/* <div style={{ marginTop: 20 }}>
+                    {/* <div style={{ marginTop: -130, marginLeft: 15 }}>
                         <a href="/signup" className="signup-link">Criar uma conta</a>
                     </div> */}
                 </form>

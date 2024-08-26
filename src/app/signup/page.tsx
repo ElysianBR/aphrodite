@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 const Signup = () => {
   const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
+  const [reverseAnimation, setReverseAnimation] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -15,17 +16,47 @@ const Signup = () => {
     });
   };
 
+  const validateForm = () => {
+    const { email, password, confirmPassword } = formData;
+
+    if (!email.includes('@')) {
+      alert('Por favor, insira um e-mail válido.');
+      return false;
+    }
+
+    if (password.length < 6) {
+      alert('A senha deve ter pelo menos 6 caracteres.');
+      return false;
+    }
+
+    if (password !== confirmPassword) {
+      alert('As senhas não coincidem.');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData);
+
+    if (validateForm()) {
+      console.log(formData);
+      alert('Cadastro realizado com sucesso!');
+    }
+  };
+
+  const awaitAnimationLogo = () => {
+    setReverseAnimation(true);
+
+    const timeOut = setTimeout(() => {
+      clearTimeout(timeOut);
+      // Aqui deve ser a lógica do provider praligar com o backend blz willzao
+    }, 500);
   };
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      minHeight="100vh"
-    >
+    <Box display="flex" flexDirection="column" minHeight="100vh">
       <Box
         bgcolor="#303030"
         color="secondary.contrastText"
@@ -40,19 +71,25 @@ const Signup = () => {
           backgroundPosition: 'center',
         }}
       >
-        {/* Logo */}
+        {/* Logo animado */}
         <Box position="absolute" top={20} left={20}>
-          <Link href="/">
-            <Image src="/logo_wo_bg.png" alt="Elysian Logo" width={100} height={100} />
+          <Link href="/" onClick={awaitAnimationLogo}>
+            <Image
+              src="/logo_wo_bg.png"
+              alt="Elysian Logo"
+              className={`logo-login logo-animation ${reverseAnimation ? 'reverse' : ''}`}
+              width={100}
+              height={100}
+            />
           </Link>
         </Box>
 
         <Container maxWidth="xs">
-          <Paper 
-            elevation={3} 
-            sx={{ 
-              padding: 4, 
-              bgcolor: 'secondary.main', 
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 4,
+              bgcolor: 'secondary.main',
               color: 'secondary.contrastText',
               display: 'flex',
               flexDirection: 'column',
@@ -76,6 +113,7 @@ const Signup = () => {
                     id="email"
                     name="email"
                     label="Email"
+                    type="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
@@ -136,7 +174,6 @@ const Signup = () => {
           </Paper>
         </Container>
       </Box>
-
       <Footer />
     </Box>
   );

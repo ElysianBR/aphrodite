@@ -1,0 +1,11 @@
+.logo-login {
+    transition: transform 0.5s ease;
+}
+
+.logo-animation {
+    transform: scale(1);
+}
+
+.logo-animation.reverse {
+    transform: scale(0.5);
+}
