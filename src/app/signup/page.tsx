@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useTheme } from '@mui/material/styles';
 
 const Signup = () => {
-  const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
+  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '' });
   const [reverseAnimation, setReverseAnimation] = useState(false);
   
   const theme = useTheme();
@@ -21,7 +21,12 @@ const Signup = () => {
   };
 
   const validateForm = () => {
-    const { email, password, confirmPassword } = formData;
+    const { firstName, lastName, email, password, confirmPassword } = formData;
+
+    if (!firstName || !lastName) {
+      alert('Por favor, insira seu primeiro e último nome.');
+      return false;
+    }
 
     if (!email.includes('@')) {
       alert('Por favor, insira um e-mail válido.');
@@ -112,6 +117,40 @@ const Signup = () => {
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate width="100%">
               <Grid container spacing={2} direction="column">
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="firstName"
+                    name="firstName"
+                    label="Primeiro Nome"
+                    type="text"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
+                    variant="outlined"
+                    style={{ backgroundColor: '#fff', borderRadius: 4 }}
+                    InputProps={{
+                      style: { height: 50 },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="lastName"
+                    name="lastName"
+                    label="Último Nome"
+                    type="text"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    required
+                    variant="outlined"
+                    style={{ backgroundColor: '#fff', borderRadius: 4 }}
+                    InputProps={{
+                      style: { height: 50 },
+                    }}
+                  />
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
