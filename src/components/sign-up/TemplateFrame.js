@@ -1,9 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
@@ -35,9 +32,6 @@ function TemplateFrame({
   toggleColorMode,
   children,
 }) {
-  const handleChange = (event) => {
-    toggleCustomTheme(event.target.value === 'custom');
-  };
   const signUpTheme = createTheme(getSignUpTheme(mode));
 
   return (
@@ -63,7 +57,7 @@ function TemplateFrame({
               href="/login"
               sx={{ display: { xs: 'none', sm: 'flex' } }}
             >
-              Voltar ao Login
+              Voltar ao login
             </Button>
             <IconButton
               size="small"

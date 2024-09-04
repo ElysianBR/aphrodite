@@ -1,30 +1,22 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import MuiCard from '@mui/material/Card';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import getSignUpTheme from './theme/getSignUpTheme';
+import { GoogleIcon, FacebookIcon } from './CustomIcons';
+import TemplateFrame from './TemplateFrame';
 import Image from 'next/image';
 import ElysianIcon from '/public/logo_wo_bg.png';
-import {
-  createTheme,
-  ThemeProvider,
-  styled,
-  PaletteMode,
-} from '@mui/material/styles';
-import getSignUpTheme from './theme/getSignUpTheme';
-import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
-import TemplateFrame from './TemplateFrame';
 
-const Card = styled(MuiCard)(({ theme }) => ({
+const Card = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignSelf: 'center',
@@ -56,7 +48,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignUp() {
-  const [mode, setMode] = React.useState<PaletteMode>('light');
+  const [mode, setMode] = React.useState<'light' | 'dark'>('light');
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
   const defaultTheme = createTheme({ palette: { mode } });
   const SignUpTheme = createTheme(getSignUpTheme(mode));
@@ -66,14 +58,12 @@ export default function SignUp() {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
-  // This code only runs on the client side, to determine the system color preference
+
   React.useEffect(() => {
-    // Check if there is a preferred mode in localStorage
-    const savedMode = localStorage.getItem('themeMode') as PaletteMode | null;
+    const savedMode = localStorage.getItem('themeMode');
     if (savedMode) {
-      setMode(savedMode);
+      setMode(savedMode as 'light' | 'dark');
     } else {
-      // If no preference is found, it uses system preference
       const systemPrefersDark = window.matchMedia(
         '(prefers-color-scheme: dark)',
       ).matches;
@@ -84,7 +74,7 @@ export default function SignUp() {
   const toggleColorMode = () => {
     const newMode = mode === 'dark' ? 'light' : 'dark';
     setMode(newMode);
-    localStorage.setItem('themeMode', newMode); // Save the selected mode to localStorage
+    localStorage.setItem('themeMode', newMode);
   };
 
   const toggleCustomTheme = () => {
@@ -92,13 +82,13 @@ export default function SignUp() {
   };
 
   const validateInputs = () => {
-    const email = document.getElementById('email') as HTMLInputElement;
-    const password = document.getElementById('password') as HTMLInputElement;
-    const name = document.getElementById('name') as HTMLInputElement;
+    const email = (document.getElementById('email') as HTMLInputElement).value;
+    const password = (document.getElementById('password') as HTMLInputElement).value;
+    const name = (document.getElementById('name') as HTMLInputElement).value;
 
     let isValid = true;
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
       setEmailError(true);
       setEmailErrorMessage('Insira um e-mail válido.');
       isValid = false;
@@ -107,7 +97,7 @@ export default function SignUp() {
       setEmailErrorMessage('');
     }
 
-    if (!password.value || password.value.length < 6) {
+    if (!password || password.length < 6) {
       setPasswordError(true);
       setPasswordErrorMessage('A senha deve conter 6 caracteres.');
       isValid = false;
@@ -116,7 +106,7 @@ export default function SignUp() {
       setPasswordErrorMessage('');
     }
 
-    if (!name.value || name.value.length < 1) {
+    if (!name || name.length < 1) {
       setNameError(true);
       setNameErrorMessage('Nome é obrigatório.');
       isValid = false;
@@ -148,7 +138,6 @@ export default function SignUp() {
     >
       <ThemeProvider theme={showCustomTheme ? SignUpTheme : defaultTheme}>
         <CssBaseline enableColorScheme />
-
         <SignUpContainer direction="column" justifyContent="space-between">
           <Stack
             sx={{
@@ -157,8 +146,13 @@ export default function SignUp() {
               p: 2,
             }}
           >
-            <Card variant="outlined">
-              <SitemarkIcon />
+            <Card>
+              <Image
+                src={ElysianIcon}
+                alt="Elysian logo"
+                width={100}
+                height={100}
+              />
               <Typography
                 component="h1"
                 variant="h4"
@@ -197,7 +191,7 @@ export default function SignUp() {
                     variant="outlined"
                     error={emailError}
                     helperText={emailErrorMessage}
-                    color={passwordError ? 'error' : 'primary'}
+                    color={emailError ? 'error' : 'primary'}
                   />
                 </FormControl>
                 <FormControl>
@@ -216,10 +210,6 @@ export default function SignUp() {
                     color={passwordError ? 'error' : 'primary'}
                   />
                 </FormControl>
-                {/* <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive updates via email."
-                /> */}
                 <Button
                   type="submit"
                   fullWidth
@@ -229,7 +219,7 @@ export default function SignUp() {
                   Cadastrar
                 </Button>
                 <Typography sx={{ textAlign: 'center' }}>
-                Já tem uma conta?{' '}
+                  Já tem uma conta?{' '}
                   <span>
                     <Link
                       href="/login"
@@ -246,7 +236,7 @@ export default function SignUp() {
               </Divider>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Button
-                  type="submit"
+                  type="button"
                   fullWidth
                   variant="outlined"
                   onClick={() => alert('Cadastro com o Google')}
@@ -255,7 +245,7 @@ export default function SignUp() {
                   Cadastro com o Google
                 </Button>
                 <Button
-                  type="submit"
+                  type="button"
                   fullWidth
                   variant="outlined"
                   onClick={() => alert('Cadastro com o Facebook')}

@@ -1,12 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -194,7 +192,7 @@ export default function SignUp() {
                     variant="outlined"
                     error={emailError}
                     helperText={emailErrorMessage}
-                    color={passwordError ? 'error' : 'primary'}
+                    color={emailError ? 'error' : 'primary'}
                   />
                 </FormControl>
                 <FormControl>
@@ -239,7 +237,7 @@ export default function SignUp() {
               </Divider>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Button
-                  type="submit"
+                  type="button"
                   fullWidth
                   variant="outlined"
                   onClick={() => alert('Cadastro com o Google')}
@@ -248,7 +246,7 @@ export default function SignUp() {
                   Cadastro com o Google
                 </Button>
                 <Button
-                  type="submit"
+                  type="button"
                   fullWidth
                   variant="outlined"
                   onClick={() => alert('Cadastro com o Facebook')}

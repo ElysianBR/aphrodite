@@ -5,9 +5,6 @@ import {
   PaletteMode,
   styled,
 } from '@mui/material/styles';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
@@ -47,9 +44,6 @@ export default function TemplateFrame({
   toggleColorMode,
   children,
 }: TemplateFrameProps) {
-  const handleChange = (event: SelectChangeEvent) => {
-    toggleCustomTheme(event.target.value === 'custom');
-  };
   const signUpTheme = createTheme(getSignUpTheme(mode));
 
   return (
@@ -72,7 +66,7 @@ export default function TemplateFrame({
               aria-label="Back to login"
               startIcon={<ArrowBackRoundedIcon />}
               component="a"
-              href="/"
+              href="/login"
               sx={{ display: { xs: 'none', sm: 'flex' } }}
             >
               Voltar ao login
