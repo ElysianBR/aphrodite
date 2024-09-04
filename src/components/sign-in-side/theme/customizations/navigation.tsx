@@ -277,3 +277,9 @@ export const navigationCustomizations: Components<Theme> = {
     },
   },
 };
+
+// Add displayName to the IconComponent
+const CustomIconComponent = React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
+  <UnfoldMoreRoundedIcon fontSize="small" {...props} ref={ref} />
+));
+CustomIconComponent.displayName = 'CustomIconComponent'; // <-- Add this line

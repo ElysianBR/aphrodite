@@ -9,6 +9,13 @@ import UnfoldMoreRoundedIcon from '@mui/icons-material/UnfoldMoreRounded';
 import { gray, brand } from '../themePrimitives';
 
 /* eslint-disable import/prefer-default-export */
+const CustomIcon = React.forwardRef((props, ref) => (
+  <UnfoldMoreRoundedIcon fontSize="small" {...props} ref={ref} />
+));
+
+// Adicione o displayName
+CustomIcon.displayName = 'CustomIcon';
+
 export const navigationCustomizations = {
   MuiMenuItem: {
     styleOverrides: {
@@ -57,9 +64,7 @@ export const navigationCustomizations = {
   },
   MuiSelect: {
     defaultProps: {
-      IconComponent: React.forwardRef((props, ref) => (
-        <UnfoldMoreRoundedIcon fontSize="small" {...props} ref={ref} />
-      )),
+      IconComponent: CustomIcon, // Use CustomIcon aqui
     },
     styleOverrides: {
       root: ({ theme }) => ({
@@ -275,6 +280,3 @@ export const navigationCustomizations = {
     },
   },
 };
-
-// Adicione displayName aos componentes forwardRef
-UnfoldMoreRoundedIcon.displayName = 'UnfoldMoreRoundedIcon';
