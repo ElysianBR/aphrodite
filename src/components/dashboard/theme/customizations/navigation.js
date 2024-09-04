@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { alpha } from '@mui/material/styles';
-
 import { buttonBaseClasses } from '@mui/material/ButtonBase';
 import { dividerClasses } from '@mui/material/Divider';
 import { menuItemClasses } from '@mui/material/MenuItem';
@@ -276,3 +275,6 @@ export const navigationCustomizations = {
     },
   },
 };
+
+// Adicione displayName aos componentes forwardRef
+UnfoldMoreRoundedIcon.displayName = 'UnfoldMoreRoundedIcon';
