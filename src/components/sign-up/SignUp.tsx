@@ -12,6 +12,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
+import Image from 'next/image';
+import ElysianIcon from '/public/logo_wo_bg.png';
 import {
   createTheme,
   ThemeProvider,
@@ -98,7 +100,7 @@ export default function SignUp() {
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+      setEmailErrorMessage('Insira um e-mail válido.');
       isValid = false;
     } else {
       setEmailError(false);
@@ -107,7 +109,7 @@ export default function SignUp() {
 
     if (!password.value || password.value.length < 6) {
       setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      setPasswordErrorMessage('A senha deve conter 6 caracteres.');
       isValid = false;
     } else {
       setPasswordError(false);
@@ -116,7 +118,7 @@ export default function SignUp() {
 
     if (!name.value || name.value.length < 1) {
       setNameError(true);
-      setNameErrorMessage('Name is required.');
+      setNameErrorMessage('Nome é obrigatório.');
       isValid = false;
     } else {
       setNameError(false);
@@ -162,7 +164,7 @@ export default function SignUp() {
                 variant="h4"
                 sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
               >
-                Sign up
+                Crie sua conta
               </Typography>
               <Box
                 component="form"
@@ -170,7 +172,7 @@ export default function SignUp() {
                 sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
               >
                 <FormControl>
-                  <FormLabel htmlFor="name">Full name</FormLabel>
+                  <FormLabel htmlFor="name">Nome completo</FormLabel>
                   <TextField
                     autoComplete="name"
                     name="name"
@@ -189,7 +191,7 @@ export default function SignUp() {
                     required
                     fullWidth
                     id="email"
-                    placeholder="your@email.com"
+                    placeholder="exemplo@email.com"
                     name="email"
                     autoComplete="email"
                     variant="outlined"
@@ -199,7 +201,7 @@ export default function SignUp() {
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <FormLabel htmlFor="password">Senha</FormLabel>
                   <TextField
                     required
                     fullWidth
@@ -214,52 +216,52 @@ export default function SignUp() {
                     color={passwordError ? 'error' : 'primary'}
                   />
                 </FormControl>
-                <FormControlLabel
+                {/* <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive updates via email."
-                />
+                /> */}
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
                   onClick={validateInputs}
                 >
-                  Sign up
+                  Cadastrar
                 </Button>
                 <Typography sx={{ textAlign: 'center' }}>
-                  Already have an account?{' '}
+                Já tem uma conta?{' '}
                   <span>
                     <Link
-                      href="/material-ui/getting-started/templates/sign-in/"
+                      href="/login"
                       variant="body2"
                       sx={{ alignSelf: 'center' }}
                     >
-                      Sign in
+                      Login
                     </Link>
                   </span>
                 </Typography>
               </Box>
               <Divider>
-                <Typography sx={{ color: 'text.secondary' }}>or</Typography>
+                <Typography sx={{ color: 'text.secondary' }}>ou</Typography>
               </Divider>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Button
                   type="submit"
                   fullWidth
                   variant="outlined"
-                  onClick={() => alert('Sign up with Google')}
+                  onClick={() => alert('Cadastro com o Google')}
                   startIcon={<GoogleIcon />}
                 >
-                  Sign up with Google
+                  Cadastro com o Google
                 </Button>
                 <Button
                   type="submit"
                   fullWidth
                   variant="outlined"
-                  onClick={() => alert('Sign up with Facebook')}
+                  onClick={() => alert('Cadastro com o Facebook')}
                   startIcon={<FacebookIcon />}
                 >
-                  Sign up with Facebook
+                  Cadastro com o Facebook
                 </Button>
               </Box>
             </Card>

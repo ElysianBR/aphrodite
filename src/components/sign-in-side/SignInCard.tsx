@@ -66,7 +66,7 @@ export default function SignInCard() {
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+      setEmailErrorMessage('Por favor, insira um e-mail válido.');
       isValid = false;
     } else {
       setEmailError(false);
@@ -75,7 +75,7 @@ export default function SignInCard() {
 
     if (!password.value || password.value.length < 6) {
       setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      setPasswordErrorMessage('A senha deve conter 6 caracteres.');
       isValid = false;
     } else {
       setPasswordError(false);
@@ -95,7 +95,7 @@ export default function SignInCard() {
         variant="h4"
         sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
       >
-        Sign in
+        Login
       </Typography>
       <Box
         component="form"
@@ -111,7 +111,7 @@ export default function SignInCard() {
             id="email"
             type="email"
             name="email"
-            placeholder="your@email.com"
+            placeholder="exemplo@email.com"
             autoComplete="email"
             autoFocus
             required
@@ -123,14 +123,14 @@ export default function SignInCard() {
         </FormControl>
         <FormControl>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <FormLabel htmlFor="password">Password</FormLabel>
+            <FormLabel htmlFor="password">Senha</FormLabel>
             <Link
               component="button"
               onClick={handleClickOpen}
               variant="body2"
               sx={{ alignSelf: 'baseline' }}
             >
-              Forgot your password?
+              Esqueceu sua senha?
             </Link>
           </Box>
           <TextField
@@ -150,26 +150,26 @@ export default function SignInCard() {
         </FormControl>
         <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
+          label="Lembrar de mim"
         />
         <ForgotPassword open={open} handleClose={handleClose} />
         <Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
-          Sign in
+          Entrar
         </Button>
         <Typography sx={{ textAlign: 'center' }}>
-          Don&apos;t have an account?{' '}
+        Você não tem uma conta?{' '}
           <span>
             <Link
-              href="/material-ui/getting-started/templates/sign-in/"
+              href="/signup"
               variant="body2"
               sx={{ alignSelf: 'center' }}
             >
-              Sign up
+              Cadastre-se
             </Link>
           </span>
         </Typography>
       </Box>
-      <Divider>or</Divider>
+      <Divider>ou</Divider>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Button
           type="submit"
@@ -178,7 +178,7 @@ export default function SignInCard() {
           onClick={() => alert('Sign in with Google')}
           startIcon={<GoogleIcon />}
         >
-          Sign in with Google
+          Entre com o Google
         </Button>
         <Button
           type="submit"
@@ -187,7 +187,7 @@ export default function SignInCard() {
           onClick={() => alert('Sign in with Facebook')}
           startIcon={<FacebookIcon />}
         >
-          Sign in with Facebook
+          Entre com o Facebook
         </Button>
       </Box>
     </Card>
