@@ -75,19 +75,6 @@ function TemplateFrame({
               <ArrowBackRoundedIcon />
             </IconButton>
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <FormControl variant="outlined" sx={{ minWidth: 180 }}>
-                <Select
-                  size="small"
-                  labelId="theme-select-label"
-                  id="theme-select"
-                  value={showCustomTheme ? 'custom' : 'material'}
-                  onChange={handleChange}
-                  label="Design Language"
-                >
-                  <MenuItem value="custom">Custom Theme</MenuItem>
-                  <MenuItem value="material">Material Design 2</MenuItem>
-                </Select>
-              </FormControl>
               <ToggleColorMode
                 data-screenshot="toggle-mode"
                 mode={mode}

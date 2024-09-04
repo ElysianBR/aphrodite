@@ -27,18 +27,6 @@ export default function Login() {
         setLoginProvider(new LoginMethod(tmpProvider));
     }, []);
 
-    const validateForm = (form: { email: string; password: string }): boolean => {
-        if (!form.email.includes("@")) {
-            alert("Por favor, insira um e-mail válido.");
-            return false;
-        }
-        if (form.password.length < 6) {
-            alert("A senha deve ter pelo menos 6 caracteres.");
-            return false;
-        }
-        return true;
-    };
-
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         setLoading(true);
         e.preventDefault();
@@ -47,11 +35,6 @@ export default function Login() {
             email: (e.currentTarget.elements.namedItem("email") as HTMLInputElement)?.value,
             password: (e.currentTarget.elements.namedItem("password") as HTMLInputElement)?.value,
         };
-
-        if (!validateForm(form)) {
-            setLoading(false);
-            return;
-        }
 
         try {
             let gToken = '';
