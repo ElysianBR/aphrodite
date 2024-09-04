@@ -14,8 +14,10 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import getSignUpTheme from './theme/getSignUpTheme';
-import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
+import { GoogleIcon, FacebookIcon } from './CustomIcons';
 import TemplateFrame from './TemplateFrame';
+import Image from 'next/image';
+import ElysianIcon from '/public/logo_wo_bg.png';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -59,14 +61,12 @@ export default function SignUp() {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
-  // This code only runs on the client side, to determine the system color preference
+
   React.useEffect(() => {
-    // Check if there is a preferred mode in localStorage
     const savedMode = localStorage.getItem('themeMode');
     if (savedMode) {
       setMode(savedMode);
     } else {
-      // If no preference is found, it uses system preference
       const systemPrefersDark = window.matchMedia(
         '(prefers-color-scheme: dark)',
       ).matches;
@@ -77,7 +77,7 @@ export default function SignUp() {
   const toggleColorMode = () => {
     const newMode = mode === 'dark' ? 'light' : 'dark';
     setMode(newMode);
-    localStorage.setItem('themeMode', newMode); // Save the selected mode to localStorage
+    localStorage.setItem('themeMode', newMode);
   };
 
   const toggleCustomTheme = () => {
@@ -93,7 +93,7 @@ export default function SignUp() {
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+      setEmailErrorMessage('Insira um e-mail válido.');
       isValid = false;
     } else {
       setEmailError(false);
@@ -102,7 +102,7 @@ export default function SignUp() {
 
     if (!password.value || password.value.length < 6) {
       setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      setPasswordErrorMessage('A senha deve conter 6 caracteres.');
       isValid = false;
     } else {
       setPasswordError(false);
@@ -111,7 +111,7 @@ export default function SignUp() {
 
     if (!name.value || name.value.length < 1) {
       setNameError(true);
-      setNameErrorMessage('Name is required.');
+      setNameErrorMessage('Nome é obrigatório.');
       isValid = false;
     } else {
       setNameError(false);
@@ -150,13 +150,18 @@ export default function SignUp() {
             }}
           >
             <Card variant="outlined">
-              <SitemarkIcon />
+              <Image
+                src={ElysianIcon}
+                alt="Elysian logo"
+                width={100}
+                height={100}
+              />
               <Typography
                 component="h1"
                 variant="h4"
                 sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
               >
-                Sign up
+                Crie sua conta
               </Typography>
               <Box
                 component="form"
@@ -164,7 +169,7 @@ export default function SignUp() {
                 sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
               >
                 <FormControl>
-                  <FormLabel htmlFor="name">Full name</FormLabel>
+                  <FormLabel htmlFor="name">Nome completo</FormLabel>
                   <TextField
                     autoComplete="name"
                     name="name"
@@ -183,7 +188,7 @@ export default function SignUp() {
                     required
                     fullWidth
                     id="email"
-                    placeholder="your@email.com"
+                    placeholder="exemplo@email.com"
                     name="email"
                     autoComplete="email"
                     variant="outlined"
@@ -193,7 +198,7 @@ export default function SignUp() {
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <FormLabel htmlFor="password">Senha</FormLabel>
                   <TextField
                     required
                     fullWidth
@@ -208,52 +213,48 @@ export default function SignUp() {
                     color={passwordError ? 'error' : 'primary'}
                   />
                 </FormControl>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive updates via email."
-                />
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
                   onClick={validateInputs}
                 >
-                  Sign up
+                  Cadastrar
                 </Button>
                 <Typography sx={{ textAlign: 'center' }}>
-                  Already have an account?{' '}
+                  Já tem uma conta?{' '}
                   <span>
                     <Link
-                      href="/material-ui/getting-started/templates/sign-in/"
+                      href="/login"
                       variant="body2"
                       sx={{ alignSelf: 'center' }}
                     >
-                      Sign in
+                      Login
                     </Link>
                   </span>
                 </Typography>
               </Box>
               <Divider>
-                <Typography sx={{ color: 'text.secondary' }}>or</Typography>
+                <Typography sx={{ color: 'text.secondary' }}>ou</Typography>
               </Divider>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Button
                   type="submit"
                   fullWidth
                   variant="outlined"
-                  onClick={() => alert('Sign up with Google')}
+                  onClick={() => alert('Cadastro com o Google')}
                   startIcon={<GoogleIcon />}
                 >
-                  Sign up with Google
+                  Cadastro com o Google
                 </Button>
                 <Button
                   type="submit"
                   fullWidth
                   variant="outlined"
-                  onClick={() => alert('Sign up with Facebook')}
+                  onClick={() => alert('Cadastro com o Facebook')}
                   startIcon={<FacebookIcon />}
                 >
-                  Sign up with Facebook
+                  Cadastro com o Facebook
                 </Button>
               </Box>
             </Card>

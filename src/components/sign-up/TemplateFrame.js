@@ -57,19 +57,19 @@ function TemplateFrame({
             <Button
               variant="text"
               size="small"
-              aria-label="Back to templates"
+              aria-label="Back to login"
               startIcon={<ArrowBackRoundedIcon />}
               component="a"
-              href="/material-ui/getting-started/templates/"
+              href="/login"
               sx={{ display: { xs: 'none', sm: 'flex' } }}
             >
-              Back to templates
+              Voltar ao Login
             </Button>
             <IconButton
               size="small"
-              aria-label="Back to templates"
+              aria-label="Back to login"
               component="a"
-              href="/material-ui/getting-started/templates/"
+              href="/"
               sx={{ display: { xs: 'auto', sm: 'none' } }}
             >
               <ArrowBackRoundedIcon />
