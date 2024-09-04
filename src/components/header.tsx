@@ -33,9 +33,8 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link, index, currentSection, se
   </Button>
 );
 
-
 export type HeaderProps = {
-  links: Link[]
+  links: Link[];
 }
 
 const Header: FC<HeaderProps> = (props) => {
@@ -66,7 +65,7 @@ const Header: FC<HeaderProps> = (props) => {
     return () => {
       document.removeEventListener('scroll', setCenterSection);
     };
-  }, []);
+  }, [props.links]);  // Adiciona props.links aqui
 
   const toggleDrawer = (open: boolean) => () => {
     setIsDrawerOpen(open);

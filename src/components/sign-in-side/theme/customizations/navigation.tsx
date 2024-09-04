@@ -10,6 +10,13 @@ import UnfoldMoreRoundedIcon from '@mui/icons-material/UnfoldMoreRounded';
 import { gray, brand } from '../themePrimitives';
 
 /* eslint-disable import/prefer-default-export */
+
+// Definindo o componente com displayName
+const CustomIconComponent = React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
+  <UnfoldMoreRoundedIcon fontSize="small" {...props} ref={ref} />
+));
+CustomIconComponent.displayName = 'CustomIconComponent';
+
 export const navigationCustomizations: Components<Theme> = {
   MuiMenuItem: {
     styleOverrides: {
@@ -58,9 +65,7 @@ export const navigationCustomizations: Components<Theme> = {
   },
   MuiSelect: {
     defaultProps: {
-      IconComponent: React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
-        <UnfoldMoreRoundedIcon fontSize="small" {...props} ref={ref} />
-      )),
+      IconComponent: CustomIconComponent, // Usando o componente com displayName
     },
     styleOverrides: {
       root: ({ theme }) => ({
@@ -271,15 +276,21 @@ export const navigationCustomizations: Components<Theme> = {
       label: ({ theme }) => ({
         '&.Mui-completed': {
           opacity: 0.6,
-          ...theme.applyStyles('dark', { opacity: 0.5 }),
+          ...theme.applyStyles('dark', { opacity: 0.6 }),
         },
       }),
     },
   },
+  MuiTooltip: {
+    styleOverrides: {
+      tooltip: ({ theme }) => ({
+        backgroundColor: theme.palette.grey[900],
+        borderRadius: '4px',
+        fontSize: '0.75rem',
+        ...theme.applyStyles('dark', {
+          backgroundColor: gray[700],
+        }),
+      }),
+    },
+  },
 };
-
-// Add displayName to the IconComponent
-const CustomIconComponent = React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
-  <UnfoldMoreRoundedIcon fontSize="small" {...props} ref={ref} />
-));
-CustomIconComponent.displayName = 'CustomIconComponent'; // <-- Add this line
