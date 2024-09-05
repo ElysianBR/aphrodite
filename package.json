@@ -19,6 +19,7 @@
     "@mui/x-data-grid": "^7.15.0",
     "@mui/x-data-grid-pro": "^7.16.0",
     "@mui/x-date-pickers": "^7.15.0",
+    "@mui/x-date-pickers-pro": "^7.16.0",
     "@mui/x-tree-view": "^7.15.0",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
