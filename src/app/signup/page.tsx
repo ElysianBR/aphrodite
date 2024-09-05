@@ -5,10 +5,7 @@ import '../../app/signup/signup.css';
 
 const Dashboard = () => {
     return (
-        <SignUpTemplate>
-            <div className="p-6">
-            </div>
-        </SignUpTemplate>
+        <SignUpTemplate />
     );
 };
 
