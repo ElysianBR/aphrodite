@@ -1,5 +1,5 @@
 import React, { useEffect, useState, FC } from "react";
-import { AppBar, Toolbar, Button, Grid, IconButton, Drawer, List, ListItem, useTheme, useMediaQuery } from "@mui/material";
+import { AppBar, Toolbar, Button, Grid, IconButton, Drawer, List, ListItemButton, useTheme, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
 import { Link } from "@/app/types";
@@ -65,7 +65,7 @@ const Header: FC<HeaderProps> = (props) => {
     return () => {
       document.removeEventListener('scroll', setCenterSection);
     };
-  }, [props.links]);  // Adiciona props.links aqui
+  }, [props.links]);
 
   const toggleDrawer = (open: boolean) => () => {
     setIsDrawerOpen(open);
@@ -112,9 +112,9 @@ const Header: FC<HeaderProps> = (props) => {
       >
         <List>
           {props.links.map((link, index) => (
-            <ListItem button key={link.id} onClick={() => setCurrentSection(index)}>
+            <ListItemButton key={link.id} onClick={() => setCurrentSection(index)}>
               <LinkButton link={link} index={index} currentSection={currentSection} setCurrentSection={setCurrentSection} />
-            </ListItem>
+            </ListItemButton>
           ))}
         </List>
       </Drawer>
