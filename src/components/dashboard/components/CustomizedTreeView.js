@@ -87,7 +87,8 @@ function TransitionComponent(props) {
     },
   });
 
-  return <AnimatedCollapse style={style} {...props} />;
+  return 
+  // <AnimatedCollapse style={style} {...props} />;
 }
 
 TransitionComponent.propTypes = {
@@ -105,18 +106,19 @@ function CustomLabel({ color, expandable, children, ...other }) {
   };
 
   const iconColor = color ? colors[color] : null;
-  return (
-    <TreeItem2Label {...other} sx={{ display: 'flex', alignItems: 'center' }}>
-      {iconColor && <DotIcon color={iconColor} />}
-      <Typography
-        className="labelText"
-        variant="body2"
-        sx={{ color: 'text.primary' }}
-      >
-        {children}
-      </Typography>
-    </TreeItem2Label>
-  );
+  return 
+  // (
+  //   <TreeItem2Label {...other} sx={{ display: 'flex', alignItems: 'center' }}>
+  //     {iconColor && <DotIcon color={iconColor} />}
+  //     <Typography
+  //       className="labelText"
+  //       variant="body2"
+  //       sx={{ color: 'text.primary' }}
+  //     >
+  //       {children}
+  //     </Typography>
+  //   </TreeItem2Label>
+  // );
 }
 
 CustomLabel.propTypes = {
@@ -140,35 +142,36 @@ const CustomTreeItem = React.forwardRef(function CustomTreeItem(props, ref) {
 
   const item = publicAPI.getItem(itemId);
   const color = item?.color;
-  return (
-    <TreeItem2Provider itemId={itemId}>
-      <TreeItem2Root {...getRootProps(other)}>
-        <TreeItem2Content
-          {...getContentProps({
-            className: clsx('content', {
-              expanded: status.expanded,
-              selected: status.selected,
-              focused: status.focused,
-              disabled: status.disabled,
-            }),
-          })}
-        >
-          {status.expandable && (
-            <TreeItem2IconContainer {...getIconContainerProps()}>
-              <TreeItem2Icon status={status} />
-            </TreeItem2IconContainer>
-          )}
+  return 
+  // (
+  //   <TreeItem2Provider itemId={itemId}>
+  //     <TreeItem2Root {...getRootProps(other)}>
+  //       <TreeItem2Content
+  //         {...getContentProps({
+  //           className: clsx('content', {
+  //             expanded: status.expanded,
+  //             selected: status.selected,
+  //             focused: status.focused,
+  //             disabled: status.disabled,
+  //           }),
+  //         })}
+  //       >
+  //         {status.expandable && (
+  //           <TreeItem2IconContainer {...getIconContainerProps()}>
+  //             <TreeItem2Icon status={status} />
+  //           </TreeItem2IconContainer>
+  //         )}
 
-          <CustomLabel {...getLabelProps({ color })} />
-        </TreeItem2Content>
-        {children && (
-          <TransitionComponent
-            {...getGroupTransitionProps({ className: 'groupTransition' })}
-          />
-        )}
-      </TreeItem2Root>
-    </TreeItem2Provider>
-  );
+  //         <CustomLabel {...getLabelProps({ color })} />
+  //       </TreeItem2Content>
+  //       {children && (
+  //         <TransitionComponent
+  //           {...getGroupTransitionProps({ className: 'groupTransition' })}
+  //         />
+  //       )}
+  //     </TreeItem2Root>
+  //   </TreeItem2Provider>
+  // );
 });
 
 CustomTreeItem.propTypes = {
@@ -197,31 +200,32 @@ CustomTreeItem.propTypes = {
 };
 
 export default function CustomizedTreeView() {
-  return (
-    <Card
-      variant="outlined"
-      sx={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1 }}
-    >
-      <CardContent>
-        <Typography component="h2" variant="subtitle2">
-          Product tree
-        </Typography>
-        <RichTreeView
-          items={ITEMS}
-          aria-label="pages"
-          multiSelect
-          defaultExpandedItems={['1', '1.1']}
-          defaultSelectedItems={['1.1', '1.1.1']}
-          sx={{
-            m: '0 -8px',
-            pb: '8px',
-            height: 'fit-content',
-            flexGrow: 1,
-            overflowY: 'auto',
-          }}
-          slots={{ item: CustomTreeItem }}
-        />
-      </CardContent>
-    </Card>
-  );
+  return 
+  // (
+  //   <Card
+  //     variant="outlined"
+  //     sx={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1 }}
+  //   >
+  //     <CardContent>
+  //       <Typography component="h2" variant="subtitle2">
+  //         Product tree
+  //       </Typography>
+  //       <RichTreeView
+  //         items={ITEMS}
+  //         aria-label="pages"
+  //         multiSelect
+  //         defaultExpandedItems={['1', '1.1']}
+  //         defaultSelectedItems={['1.1', '1.1.1']}
+  //         sx={{
+  //           m: '0 -8px',
+  //           pb: '8px',
+  //           height: 'fit-content',
+  //           flexGrow: 1,
+  //           overflowY: 'auto',
+  //         }}
+  //         slots={{ item: CustomTreeItem }}
+  //       />
+  //     </CardContent>
+  //   </Card>
+  // );
 }
