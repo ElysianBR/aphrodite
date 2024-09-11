@@ -16,7 +16,7 @@ import SideMenu from './components/SideMenu';
 import TemplateFrame from './TemplateFrame';
 
 interface DashboardTemplateProps {
-  children: React.ReactNode; // Adiciona children como prop
+  children: React.ReactNode;
 }
 
 export default function DashboardTemplate({ children }: DashboardTemplateProps) {
