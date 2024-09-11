@@ -15,14 +15,14 @@ import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 
 const mainListItems = [
   { text: 'Home', icon: <HomeRoundedIcon /> },
-  { text: 'Analytics', icon: <AnalyticsRoundedIcon /> },
-  { text: 'Clients', icon: <PeopleRoundedIcon /> },
-  { text: 'Tasks', icon: <AssignmentRoundedIcon /> },
+  { text: 'Documentação', icon: <AnalyticsRoundedIcon /> },
+  { text: 'Contratos', icon: <PeopleRoundedIcon /> },
+  { text: 'Gráficos', icon: <AssignmentRoundedIcon /> },
 ];
 
 const secondaryListItems = [
-  { text: 'Settings', icon: <SettingsRoundedIcon /> },
-  { text: 'About', icon: <InfoRoundedIcon /> },
+  { text: 'Configurações', icon: <SettingsRoundedIcon /> },
+  { text: 'Sobre', icon: <InfoRoundedIcon /> },
   { text: 'Feedback', icon: <HelpRoundedIcon /> },
 ];
 
