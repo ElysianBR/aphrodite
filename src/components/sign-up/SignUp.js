@@ -15,7 +15,10 @@ import getSignUpTheme from './theme/getSignUpTheme';
 import { GoogleIcon, FacebookIcon } from './CustomIcons';
 import TemplateFrame from './TemplateFrame';
 import Image from 'next/image';
+import { useState } from 'react';
+import NextLink from 'next/link';
 import ElysianIcon from '/public/logo_wo_bg.png';
+import '/src/app/signup/signup.css';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -59,6 +62,7 @@ export default function SignUp() {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+  const [isAnimated, setIsAnimated] = useState(false);
 
   React.useEffect(() => {
     const savedMode = localStorage.getItem('themeMode');
@@ -80,6 +84,14 @@ export default function SignUp() {
 
   const toggleCustomTheme = () => {
     setShowCustomTheme((prev) => !prev);
+  };
+
+  const handleMouseEnter = () => {
+    setIsAnimated(true);  // Ativa a animação ao passar o mouse
+  };
+
+  const handleMouseLeave = () => {
+    setIsAnimated(false);  // Desativa a animação ao sair o mouse
   };
 
   const validateInputs = () => {
@@ -148,12 +160,21 @@ export default function SignUp() {
             }}
           >
             <Card variant="outlined">
-              <Image
-                src={ElysianIcon}
-                alt="Elysian logo"
-                width={100}
-                height={100}
-              />
+              <NextLink href="/" passHref>
+                <Box
+                  sx={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}
+                  className={`logo-login logo-animation ${isAnimated ? 'reverse' : ''}`}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <Image
+                    src={ElysianIcon}
+                    alt="Elysian logo"
+                    width={100}
+                    height={100}
+                  />
+                </Box>
+              </NextLink>
               <Typography
                 component="h1"
                 variant="h4"
