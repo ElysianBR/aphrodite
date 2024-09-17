@@ -1,11 +1,11 @@
 .logo-login {
-  transition: transform 0.5s ease;
+  transition: transform 1s ease; /* Controla a transição de transformação */
 }
 
 .logo-animation {
-  transform: scale(1);
+  transform: scale(1) rotate(0deg); /* Estado padrão com rotação em 0 graus */
 }
 
 .logo-animation.reverse {
-  transform: scale(0.5);
+  transform: scale(1) rotate(360deg); /* Reduz a escala e gira 360 graus */
 }

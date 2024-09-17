@@ -3,14 +3,16 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
+import { useState } from 'react';
+import Link from 'next/link';
 
 import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded';
 import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
 import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 
-import { SitemarkIcon } from './CustomIcons';
 import ElysianIcon from '/public/logo_wo_bg.png';
+import '/src/app/signup/signup.css';
 
 const items = [
   {
@@ -40,13 +42,32 @@ const items = [
 ];
 
 export default function Content() {
+  const [isAnimated, setIsAnimated] = useState(false);
+
+  // Funções para manipular a animação
+  const handleMouseEnter = () => {
+    setIsAnimated(true);  // Ativa a animação ao passar o mouse
+  };
+
+  const handleMouseLeave = () => {
+    setIsAnimated(false);  // Reverte a animação ao sair o mouse
+  };
+
   return (
     <Stack
       sx={{ flexDirection: 'column', alignSelf: 'center', gap: 4, maxWidth: 450 }}
     >
-      <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
-        <Image src={ElysianIcon} alt="Elysian Logo" width={150} height={50} />
-      </Box>
+      <Link href="/" passHref>
+        <Box
+          sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'center', cursor: 'pointer' }}
+          className={`logo-login logo-animation ${isAnimated ? 'reverse' : ''}`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <Image src={ElysianIcon} alt="Elysian Logo" width={150} height={50} />
+        </Box>
+      </Link>
+      
       {items.map((item, index) => (
         <Stack key={index} direction="row" sx={{ gap: 2 }}>
           {item.icon}
