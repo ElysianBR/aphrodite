@@ -9,14 +9,18 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import MuiCard from '@mui/material/Card';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import getSignUpTheme from './theme/getSignUpTheme';
 import { GoogleIcon, FacebookIcon } from './CustomIcons';
 import TemplateFrame from './TemplateFrame';
 import Image from 'next/image';
+import { useState, FormEvent } from 'react';
+import NextLink from 'next/link';
 import ElysianIcon from '/public/logo_wo_bg.png';
+import '/src/app/signup/signup.css';
 
-const Card = styled('div')(({ theme }) => ({
+const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignSelf: 'center',
@@ -58,6 +62,7 @@ export default function SignUp() {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+  const [isAnimated, setIsAnimated] = useState(false);
 
   React.useEffect(() => {
     const savedMode = localStorage.getItem('themeMode');
@@ -81,14 +86,22 @@ export default function SignUp() {
     setShowCustomTheme((prev) => !prev);
   };
 
+  const handleMouseEnter = () => {
+    setIsAnimated(true);  // Ativa a animação ao passar o mouse
+  };
+
+  const handleMouseLeave = () => {
+    setIsAnimated(false);  // Desativa a animação ao sair o mouse
+  };
+
   const validateInputs = () => {
-    const email = (document.getElementById('email') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement).value;
-    const name = (document.getElementById('name') as HTMLInputElement).value;
+    const email = document.getElementById('email') as HTMLInputElement;
+    const password = document.getElementById('password') as HTMLInputElement;
+    const name = document.getElementById('name') as HTMLInputElement;
 
     let isValid = true;
 
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
       setEmailErrorMessage('Insira um e-mail válido.');
       isValid = false;
@@ -97,7 +110,7 @@ export default function SignUp() {
       setEmailErrorMessage('');
     }
 
-    if (!password || password.length < 6) {
+    if (!password.value || password.value.length < 6) {
       setPasswordError(true);
       setPasswordErrorMessage('A senha deve conter 6 caracteres.');
       isValid = false;
@@ -106,7 +119,7 @@ export default function SignUp() {
       setPasswordErrorMessage('');
     }
 
-    if (!name || name.length < 1) {
+    if (!name.value || name.value.length < 1) {
       setNameError(true);
       setNameErrorMessage('Nome é obrigatório.');
       isValid = false;
@@ -118,7 +131,7 @@ export default function SignUp() {
     return isValid;
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -146,13 +159,22 @@ export default function SignUp() {
               p: 2,
             }}
           >
-            <Card>
-              <Image
-                src={ElysianIcon}
-                alt="Elysian logo"
-                width={100}
-                height={100}
-              />
+            <Card variant="outlined">
+              <NextLink href="/" passHref>
+                <Box
+                  sx={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}
+                  className={`logo-login logo-animation ${isAnimated ? 'reverse' : ''}`}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <Image
+                    src={ElysianIcon}
+                    alt="Elysian logo"
+                    width={100}
+                    height={100}
+                  />
+                </Box>
+              </NextLink>
               <Typography
                 component="h1"
                 variant="h4"
