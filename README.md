@@ -28,3 +28,4 @@ Siga-nos no [LinkedIn](#) para as últimas atualizações.
 ---
 
 Mergulhe no projeto Elysian e junte-se a nós na construção do futuro das soluções blockchain para empresas. Sua jornada em direção à inovação começa aqui.
+
