@@ -198,7 +198,7 @@ export default function SignInCard() {
           </span>
         </Typography>
       </Box>
-      <Divider>ou</Divider>
+      {/* <Divider>ou</Divider>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Button
           type="submit"
@@ -218,7 +218,7 @@ export default function SignInCard() {
         >
           Entre com o Facebook
         </Button>
-      </Box>
+      </Box> */}
     </Card>
   );
 }
