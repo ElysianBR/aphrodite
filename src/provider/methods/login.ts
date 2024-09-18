@@ -1,6 +1,6 @@
 import Provider from "../provider";
-import ResponseError from "../dtos/ResponseErrorDTO";
-import { LoginResponseOk } from "../dtos/LoginResponseOkDTO";
+import ResponseError from "../responses/ResponseErrorDTO";
+import { LoginResponseOk } from "../responses/LoginResponseOkDTO";
 
 
 export type LoginRequest = {
