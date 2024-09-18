@@ -10,6 +10,9 @@ export type genericLoaderType = {
 
 export default class Provider {
 
+    static TOKEN_STORE_PREFIX = "jwt_token";
+    static EXPIRE_STORE_PREFIX = "jwt_expires";
+
     // Variables
     private protocol = typeof window !== 'undefined'? window.location.protocol : '';
     private host = typeof window !== 'undefined' ? window.location.hostname : '';
@@ -17,7 +20,7 @@ export default class Provider {
     private alias = this.profile === 'development' ? '' : 'api.';
     private port = this.profile === 'development' ? ':8080' : '';
     private URI = this.protocol + '//' + this.alias + this.host + this.port;
-    private jwt_token = typeof window !== 'undefined' ?  window.localStorage.getItem('jwt_token') : '';
+    private jwt_token = typeof window !== 'undefined' ?  window.localStorage.getItem(Provider.TOKEN_STORE_PREFIX) : '';
 
     private headers: Headers = new Headers({
         'Content-Type': 'application/json',
@@ -58,7 +61,7 @@ export default class Provider {
                 }
             );
 
-            this.setJwtToken(response);
+            this.store(response);
 
             const json = await response.json();
 
@@ -88,19 +91,31 @@ export default class Provider {
     }
 
 
-    private setJwtToken(response: Response) {
+    private store(response: Response) {
         if (response != null && response.status == 200 && response.headers != null) {
 
             const bearer = response.headers.get('Authorization');
-            if (bearer != null) {
-                window.localStorage.setItem('jwt_token', bearer.replace("Bearer ", "").trim());
-            }
-
             const expires = response.headers.get('Expires');
-            if (expires != null) {
-                window.localStorage.setItem('jwt_expires', expires)
-            }
+            Provider.store(bearer, expires);
+
         }
+    }
+
+
+    public static store(token: string, expires: string) {
+        if (token != undefined && token != null) {
+            window.localStorage.setItem(Provider.TOKEN_STORE_PREFIX, token.replace("Bearer ", "").trim());
+        }
+
+        if (expires != undefined && expires != null) {
+            window.localStorage.setItem(Provider.EXPIRE_STORE_PREFIX, expires);
+        }
+    }
+
+
+    public static unStore() {
+        window.localStorage.removeItem(Provider.TOKEN_STORE_PREFIX);
+        window.localStorage.removeItem(Provider.EXPIRE_STORE_PREFIX);
     }
 
 
