@@ -23,10 +23,11 @@ type typeListItems = {
 
 
 interface MenuContentProps {
+  render: boolean;
   viewState: React.Dispatch<React.SetStateAction<React.JSX.Element | null | undefined>>;
 }
 
-export default function MenuContent({ viewState }: MenuContentProps) {
+export default function MenuContent(porps: MenuContentProps) {
   const [mainListItems, setMainListItems] = React.useState<typeListItems[]>([
     {
       context: 'main', text: 'Home', icon: <HomeRoundedIcon />, selected: true, element: <MainGrid />,
@@ -58,12 +59,14 @@ export default function MenuContent({ viewState }: MenuContentProps) {
     }));
 
     setMainListItems(updatedItems);
-    viewState(updatedItems[index].element);
+    porps.viewState(updatedItems[index].element);
   };
 
   React.useEffect(() => {
-    selectItem(0);
-  }, []);
+    if (porps.render) {
+      selectItem(0);
+    }
+  }, [porps.render]);
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>

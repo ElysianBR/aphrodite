@@ -10,8 +10,9 @@ import SelectContent from './SelectContent';
 import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 import OptionsMenu from './OptionsMenu';
-import Account from '@/provider/methods/Account';
+import Account from '@/provider/methods/account';
 import Provider from '@/provider/provider';
+import { useRouter } from "next/navigation";
 
 const drawerWidth = 240;
 
@@ -34,18 +35,18 @@ interface SideMenuProps {
 
 
 export default function SideMenu({ viewState }: SideMenuProps) {
-  const provider = new Provider();
-
+  const router = useRouter();
   const [account, setAccount] = React.useState<Account>()
 
   const findUser = async () => {
-    let accountOut = await Account.get(provider)
-
+    let accountOut = await Account.get()
     if (accountOut instanceof Account) {
       setAccount(accountOut);
+    } else {
+      router.push("/login")
     }
   }
-  
+
   const hasFetched = React.useRef(false);
 
   React.useEffect(() => {
@@ -80,7 +81,7 @@ export default function SideMenu({ viewState }: SideMenuProps) {
         <SelectContent />
       </Box> */}
       {/* <Divider /> */}
-      <MenuContent viewState={viewState} />
+      <MenuContent viewState={viewState} render={account != undefined} />
       {/* <CardAlert /> */}
       <Stack
         direction="row"

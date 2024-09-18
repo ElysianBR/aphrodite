@@ -1,9 +1,8 @@
 import Provider from "../provider";
-import ResponseError from "../responses/ResponseErrorDTO";
-import { LoginResponseOk } from "../responses/LoginResponseOkDTO";
-
+import ResponseError from "../responses/response-error";
 import { JsonObject, JsonProperty } from "json2typescript";
 import DateConvert from "../converts/date-convert";
+
 
 @JsonObject('Account')
 export default class Account {
@@ -43,7 +42,7 @@ export default class Account {
     static PATH: string = "api/v1/account";
     
 
-    static async get(provider: Provider): Promise<typeof Account | ResponseError> {
-        return await provider.executeGet({ path: Account.PATH }, Account);
+    static async get(): Promise<typeof Account | ResponseError> {
+        return await new Provider().executeGet({ path: Account.PATH }, Account);
     }
 }

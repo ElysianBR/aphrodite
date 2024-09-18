@@ -1,26 +1,41 @@
 import Provider from "../provider";
-import ResponseError from "../responses/ResponseErrorDTO";
-import { LoginResponseOk } from "../responses/LoginResponseOkDTO";
+import ResponseError from "../responses/response-error";
+import { JsonObject, JsonProperty } from "json2typescript";
+import DateConvert from "../converts/date-convert";
 
 
-export type LoginRequest = {
-    email: string,
-    password: string,
+@JsonObject('Login')
+export default class Login {
+
+    @JsonProperty('expiresIn', Number, DateConvert)
+    expiresIn: Date;
+
+    @JsonProperty('token', String)
+    token: string;
+
+    constructor(expiresIn: Date, token: string) {
+        this.expiresIn = expiresIn;
+        this.token = token;
+    }
+
+
+    static PATH: string = "api/v1/auth/login";
+
+    
+    static async post(params: postParams): Promise<typeof Login | ResponseError> {
+        const headers = new Headers({ "G-Recaptcha-Response": params.gRecaptchaResponse })
+        return await new Provider().executePost({ path: Login.PATH, data: params.credentials, headers: headers }, Login);
+    }
+
 }
 
+export type loginRequest = {
+    email: string,
+    password: string,
 
-export default class LoginMethod {
+}
 
-    public static PATH: string = "api/v1/auth/login";
-    private provider: Provider;
-
-    constructor(provider: Provider) {
-        this.provider = provider
-    }
-
-    login = async ({ credentials, gRecaptchaResponse }: { credentials: LoginRequest, gRecaptchaResponse: string }): Promise<typeof LoginResponseOk | ResponseError> => {
-        const headers = new Headers({ "G-Recaptcha-Response": gRecaptchaResponse })
-        return await this.provider.executePost({ path: LoginMethod.PATH, data: credentials, headers: headers }, LoginResponseOk);
-    }
-
+export type postParams = {
+    credentials: loginRequest,
+    gRecaptchaResponse: string,
 }

@@ -1,5 +1,5 @@
 import { JsonConvert, OperationMode, ValueCheckingMode } from "json2typescript";
-import ResponseError from "./responses/ResponseErrorDTO";
+import ResponseError from "./responses/response-error";
 
 export type genericLoaderType = {
     path: string
@@ -89,10 +89,16 @@ export default class Provider {
 
 
     private setJwtToken(response: Response) {
-        if (response != null && response.status === 200 && response.headers != null && response.headers.get('Authorization') != undefined) {
+        if (response != null && response.status == 200 && response.headers != null) {
+
             const bearer = response.headers.get('Authorization');
             if (bearer != null) {
-                window.localStorage.setItem('jwt_token', bearer.replace("Bearer ", ""));
+                window.localStorage.setItem('jwt_token', bearer.replace("Bearer ", "").trim());
+            }
+
+            const expires = response.headers.get('Expires');
+            if (expires != null) {
+                window.localStorage.setItem('jwt_expires', expires)
             }
         }
     }
