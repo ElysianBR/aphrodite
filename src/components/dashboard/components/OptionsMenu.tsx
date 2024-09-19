@@ -10,12 +10,15 @@ import ListItemIcon, { listItemIconClasses } from '@mui/material/ListItemIcon';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import MenuButton from './MenuButton';
+import { useRouter } from 'next/navigation';
+import Provider from '@/provider/provider';
 
 const MenuItem = styled(MuiMenuItem)({
   margin: '2px 0',
 });
 
 export default function OptionsMenu() {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -24,6 +27,12 @@ export default function OptionsMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = (event: React.MouseEvent<HTMLElement>) => {
+    Provider.unStore();
+    router.push("/login");
+  };
+
   return (
     <React.Fragment>
       <MenuButton
@@ -53,11 +62,11 @@ export default function OptionsMenu() {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>Perfil</MenuItem>
+        {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
         <Divider />
-        <MenuItem onClick={handleClose}>Add another account</MenuItem>
-        <MenuItem onClick={handleClose}>Settings</MenuItem>
+        {/* <MenuItem onClick={handleClose}>Add another account</MenuItem> */}
+        {/* <MenuItem onClick={handleClose}>Settings</MenuItem> */}
         <Divider />
         <MenuItem
           onClick={handleClose}
@@ -68,7 +77,7 @@ export default function OptionsMenu() {
             },
           }}
         >
-          <ListItemText>Logout</ListItemText>
+          <ListItemText onClick={handleLogout}>Logout</ListItemText>
           <ListItemIcon>
             <LogoutRoundedIcon fontSize="small" />
           </ListItemIcon>

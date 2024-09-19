@@ -11,44 +11,91 @@ import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
-import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
+import MainGrid from './MainGrid';
 
-const mainListItems = [
-  { text: 'Home', icon: <HomeRoundedIcon /> },
-  { text: 'Analytics', icon: <AnalyticsRoundedIcon /> },
-  { text: 'Clients', icon: <PeopleRoundedIcon /> },
-  { text: 'Tasks', icon: <AssignmentRoundedIcon /> },
-];
+type typeListItems = {
+  context: string,
+  text: string,
+  icon: React.JSX.Element,
+  selected: boolean,
+  element?: React.JSX.Element,
+};
 
-const secondaryListItems = [
-  { text: 'Settings', icon: <SettingsRoundedIcon /> },
-  { text: 'About', icon: <InfoRoundedIcon /> },
-  { text: 'Feedback', icon: <HelpRoundedIcon /> },
-];
 
-export default function MenuContent() {
+interface MenuContentProps {
+  render: boolean;
+  viewState: React.Dispatch<React.SetStateAction<React.JSX.Element | null | undefined>>;
+}
+
+export default function MenuContent(porps: MenuContentProps) {
+  const [mainListItems, setMainListItems] = React.useState<typeListItems[]>([
+    {
+      context: 'main', text: 'Home', icon: <HomeRoundedIcon />, selected: true, element: <MainGrid />,
+    },
+    {
+      context: 'main', text: 'Analises', icon: <AnalyticsRoundedIcon />, selected: false,
+    },
+    {
+      context: 'main', text: 'Contratos', icon: <PeopleRoundedIcon />, selected: false,
+    },
+    {
+      context: 'main', text: 'Documentação', icon: <AssignmentRoundedIcon />, selected: false,
+    },
+    {
+      context: 'secondary', text: 'Configurações', icon: <SettingsRoundedIcon />, selected: true
+    },
+    {
+      context: 'secondary', text: 'Ajuda', icon: <InfoRoundedIcon />, selected: false
+    },
+  ]);
+
+
+
+
+  const selectItem = (index: number) => {
+    const updatedItems = mainListItems.map((item, idx) => ({
+      ...item,
+      selected: idx === index,
+    }));
+
+    setMainListItems(updatedItems);
+    porps.viewState(updatedItems[index].element);
+  };
+
+  React.useEffect(() => {
+    if (porps.render) {
+      selectItem(0);
+    }
+  }, [porps.render]);
+
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
-      <List dense>
-        {mainListItems.map((item, index) => (
+      <List dense sx={{ marginTop: 'auto', marginBottom: 'auto' }}>
+        {mainListItems.map((item, index) => item.context === 'main' ? (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={index === 0}>
+            <ListItemButton
+              selected={item.selected}
+              onClick={() => selectItem(index)}
+            >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
-        ))}
+        ) : null)}
       </List>
 
       <List dense>
-        {secondaryListItems.map((item, index) => (
+        {mainListItems.map((item, index) => item.context === 'secondary' ? (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
+            <ListItemButton
+              selected={item.selected}
+              onClick={() => selectItem(index)}
+            >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
-        ))}
+        ) : null)}
       </List>
     </Stack>
   );

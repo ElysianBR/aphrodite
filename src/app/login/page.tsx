@@ -1,103 +1,78 @@
-"use client";
+"use client"
 
-import React, { FormEventHandler, useRef, useState, useEffect } from "react";
-import SignInSide from "@/components/sign-in-side/SignInSide";
-import Input from "@/components/input/input";
-import Button from "@/components/button/button";
-import "@/app/login/login.css";
-import Provider from "@/provider/provider";
-import LoginMethod from "@/provider/methods/loginMethod";
-import { LoginResponseOk } from "@/provider/dtos/LoginResponseOkDTO";
-import ResponseError from "@/provider/dtos/ResponseErrorDTO";
-import Image from "next/image";
-import GoogleCaptchaV3, { GetCaptchaToken } from "@/components/recaptcha/v3/google-captcha-v3";
-import { useRouter } from "next/navigation";
+import * as React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Stack from '@mui/material/Stack';
+import { createTheme, ThemeProvider, PaletteMode } from '@mui/material/styles';
+import getSignInSideTheme from '@/components/sign-in-side/theme/getSignInSideTheme';
+import SignInCard from '@/components/sign-in-side/SignInCard';
+import Content from '@/components/sign-in-side/Content';
 
-export default function Login() {
-    const router = useRouter();
-    const captchaRef: React.ForwardedRef<GetCaptchaToken> = useRef(null);
-    const [reverseAnimation, setReverseAnimation] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [provider, setProvider] = useState<Provider>();
-    const [loginProvider, setLoginProvider] = useState<LoginMethod>();
+interface SignInSideProps {
+  children: React.ReactNode;
+}
 
-    useEffect(() => {
-        const tmpProvider = new Provider();
-        setProvider(tmpProvider);
-        setLoginProvider(new LoginMethod(tmpProvider));
-    }, []);
+export default function SignInSide({ children }: SignInSideProps) {
+  const [mode, setMode] = React.useState<PaletteMode>('light');
+  const [showCustomTheme, setShowCustomTheme] = React.useState(true);
+  const defaultTheme = createTheme({ palette: { mode } });
+  const SignInSideTheme = createTheme(getSignInSideTheme(mode));
 
-    const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-        setLoading(true);
-        e.preventDefault();
+  React.useEffect(() => {
+    const savedMode = localStorage.getItem('themeMode') as PaletteMode | null;
+    if (savedMode) {
+      setMode(savedMode);
+    } else {
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setMode(systemPrefersDark ? 'dark' : 'light');
+    }
+  }, []);
 
-        const form = {
-            email: (e.currentTarget.elements.namedItem("email") as HTMLInputElement)?.value,
-            password: (e.currentTarget.elements.namedItem("password") as HTMLInputElement)?.value,
-        };
+  const toggleColorMode = () => {
+    const newMode = mode === 'dark' ? 'light' : 'dark';
+    setMode(newMode);
+    localStorage.setItem('themeMode', newMode);
+  };
 
-        try {
-            let gToken = '';
-            if (captchaRef.current) {
-                gToken = await captchaRef.current();
-            }
+  const toggleCustomTheme = () => {
+    setShowCustomTheme((prev) => !prev);
+  };
 
-            if (loginProvider) {
-                const data = await loginProvider.login({
-                    credentials: { email: form.email, password: form.password },
-                    gRecaptchaResponse: gToken,
-                });
-
-                if (data instanceof LoginResponseOk) {
-                    localStorage.setItem("SessionToken", data.getToken());
-                    localStorage.setItem("SessionExpires", data.getExpiresIn().toISOString());
-                    router.push("/dashboard");
-                } else if (data instanceof ResponseError) {
-                    const code = data.getStatusCode();
-                    const message = data.getMessage();
-                    alert(`Erro inesperado: [ ${code} - ${message} ]`);
-                }
-            }
-        } catch (err) {
-            alert("Ocorreu um erro inesperado durante o login...");
-            console.error("Erro de captura:", err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const awaitAnimationLogo = () => {
-        setReverseAnimation(true);
-        const timeOut = setTimeout(() => {
-            clearTimeout(timeOut);
-            router.push("/");
-        }, 80);
-    };
-
-    return (
-        <SignInSide>
-            <section id="login-page" className="await-animation purple-bg full-height">
-                <a onClick={awaitAnimationLogo}>
-                    <Image
-                        src="/logo_wo_bg.png"
-                        alt="Elysian Logo"
-                        className={`logo-login logo-animation ${reverseAnimation ? 'reverse' : ''}`}
-                        width={100}
-                        height={100}
-                    />
-                </a>
-
-                <form onSubmit={handleSubmit} id="login-form">
-                    <Input className="login" required placeholder="E-mail" name="email" type="email" />
-                    <Input className="login" required name="password" placeholder="Senha" type="password" autoComplete="on" />
-                    <a className="what-is-my-password" href="/recovery">Esqueci minha senha</a>
-
-                    <Button type="submit" className="login" disabled={loading}>
-                        {loading ? "Entrando..." : "Entrar"}
-                    </Button>
-                </form>
-                <GoogleCaptchaV3 ref={captchaRef} />
-            </section>
-        </SignInSide>
-    );
+  return (
+      <ThemeProvider theme={showCustomTheme ? SignInSideTheme : defaultTheme}>
+        <CssBaseline enableColorScheme />
+        <Stack
+          direction="column"
+          component="main"
+          sx={[
+            {
+              justifyContent: 'space-between',
+              height: { xs: 'auto', md: '100%' },
+            },
+            (theme) => ({
+              backgroundImage:
+                'radial-gradient(ellipse at 70% 51%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
+              backgroundSize: 'cover',
+              ...theme.applyStyles('dark', {
+                backgroundImage:
+                  'radial-gradient(at 70% 51%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
+              }),
+            }),
+          ]}
+        >
+          <Stack
+            direction={{ xs: 'column-reverse', md: 'row' }}
+            sx={{
+              justifyContent: 'center',
+              gap: { xs: 6, sm: 12 },
+              p: 2,
+              m: 'auto',
+            }}
+          >
+            <Content />
+            <SignInCard />
+          </Stack>
+        </Stack>
+      </ThemeProvider>
+  );
 }

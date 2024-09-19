@@ -10,6 +10,9 @@ import SelectContent from './SelectContent';
 import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 import OptionsMenu from './OptionsMenu';
+import Account from '@/provider/methods/account';
+import Provider from '@/provider/provider';
+import { useRouter } from "next/navigation";
 
 const drawerWidth = 240;
 
@@ -24,7 +27,40 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export default function SideMenu() {
+
+
+interface SideMenuProps {
+  viewState: React.Dispatch<React.SetStateAction<React.JSX.Element | null | undefined>>;
+}
+
+
+export default function SideMenu({ viewState }: SideMenuProps) {
+  const router = useRouter();
+  const [account, setAccount] = React.useState<Account>()
+
+  const findUser = async () => {
+    let accountOut = await Account.get()
+    if (accountOut instanceof Account) {
+      setAccount(accountOut);
+    } else {
+      router.push("/login")
+    }
+  }
+
+  const hasFetched = React.useRef(false);
+
+  React.useEffect(() => {
+    if (!hasFetched.current) {
+      findUser()
+      hasFetched.current = true;
+    }
+
+    return () => {
+    }
+  }, [])
+
+
+
   return (
     <Drawer
       variant="permanent"
@@ -35,7 +71,7 @@ export default function SideMenu() {
         },
       }}
     >
-      <Box
+      {/* <Box
         sx={{
           display: 'flex',
           mt: '60px',
@@ -43,10 +79,10 @@ export default function SideMenu() {
         }}
       >
         <SelectContent />
-      </Box>
-      <Divider />
-      <MenuContent />
-      <CardAlert />
+      </Box> */}
+      {/* <Divider /> */}
+      <MenuContent viewState={viewState} render={account != undefined} />
+      {/* <CardAlert /> */}
       <Stack
         direction="row"
         sx={{
@@ -59,16 +95,16 @@ export default function SideMenu() {
       >
         <Avatar
           sizes="small"
-          alt="Riley Carter"
-          src="/static/images/avatar/7.jpg"
+          alt={`${account != null ? account.firstName : ""} ${account != null ? account.lastName : ""}`}
+          // src="/static/images/avatar/7.jpg"
           sx={{ width: 36, height: 36 }}
         />
         <Box sx={{ mr: 'auto' }}>
           <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
-            Riley Carter
+            {`${account != null ? account.firstName : ""} ${account != null ? account.lastName : ""}`}
           </Typography>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            riley@email.com
+            {`${account != undefined ? account.email : ""}`}
           </Typography>
         </Box>
         <OptionsMenu />

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useRouter } from "next/navigation";
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
@@ -15,6 +17,10 @@ import { styled } from '@mui/material/styles';
 
 import ForgotPassword from './ForgotPassword';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
+import { GetCaptchaToken } from '../recaptcha/v3/google-captcha-v3';
+import Login from "@/provider/methods/login";
+import ResponseError from '@/provider/responses/response-error';
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -40,6 +46,9 @@ export default function SignInCard() {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const router = useRouter();
+  const captchaRef: React.ForwardedRef<GetCaptchaToken> = React.useRef(null);
+  const hasFetched = React.useRef(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,13 +58,33 @@ export default function SignInCard() {
     setOpen(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    const form = {
+      email: (event.currentTarget.elements.namedItem("email") as HTMLInputElement)?.value,
+      password: (event.currentTarget.elements.namedItem("password") as HTMLInputElement)?.value,
+    };
+
+    let gToken = '';
+    if (captchaRef.current) {
+      gToken = await captchaRef.current();
+    }
+
+    const data = await Login.post(
+      {
+        credentials: { email: form.email, password: form.password },
+        gRecaptchaResponse: gToken,
+      }
+    );
+
+    if (data instanceof Login) {
+      router.push("/dashboard");
+    } else if (data instanceof ResponseError) {
+      const code = data.getStatusCode();
+      const message = data.getMessage();
+      alert(`${code} - ${message}`);
+    }
   };
 
   const validateInputs = () => {
@@ -157,7 +186,7 @@ export default function SignInCard() {
           Entrar
         </Button>
         <Typography sx={{ textAlign: 'center' }}>
-        Você não tem uma conta?{' '}
+          Você não tem uma conta?{' '}
           <span>
             <Link
               href="/signup"
@@ -169,7 +198,7 @@ export default function SignInCard() {
           </span>
         </Typography>
       </Box>
-      <Divider>ou</Divider>
+      {/* <Divider>ou</Divider>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Button
           type="submit"
@@ -189,7 +218,7 @@ export default function SignInCard() {
         >
           Entre com o Facebook
         </Button>
-      </Box>
+      </Box> */}
     </Card>
   );
 }
