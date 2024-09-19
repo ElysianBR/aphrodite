@@ -15,8 +15,8 @@ import MainGrid from './MainGrid';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import ElysianIcon from '/public/logo_wo_bg.png'; // Importa o logo
-import '/src/app/signup/signup.css'; // Para reutilizar a animação
+import ElysianIcon from '/public/logo_wo_bg.png';
+import '/src/app/signup/signup.css';
 
 type typeListItems = {
   context: string,
@@ -41,7 +41,7 @@ export default function MenuContent(props: MenuContentProps) {
     { context: 'secondary', text: 'Ajuda', icon: <InfoRoundedIcon />, selected: false },
   ]);
 
-  const [isAnimated, setIsAnimated] = useState(false); // Para animação
+  const [isAnimated, setIsAnimated] = useState(false);
 
   const handleMouseEnter = () => {
     setIsAnimated(true);  // Ativa a animação
@@ -69,10 +69,10 @@ export default function MenuContent(props: MenuContentProps) {
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between', position: 'relative' }}>
-      <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: '10px', width: '100%' }}>
         <Link href="/" passHref>
           <div
-            className={`logo-login logo-animation ${isAnimated ? 'reverse' : ''}`} 
+            className={`logo-login logo-animation ${isAnimated ? 'reverse' : ''}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
@@ -82,31 +82,28 @@ export default function MenuContent(props: MenuContentProps) {
       </div>
 
       <List dense sx={{ marginTop: 'auto', marginBottom: 'auto' }}>
-        {mainListItems.map((item, index) => item.context === 'main' ? (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton
-              selected={item.selected}
-              onClick={() => selectItem(index)}
-            >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ) : null)}
+        {mainListItems.map((item, index) =>
+          item.context === 'main' ? (
+            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+              <ListItemButton selected={item.selected} onClick={() => selectItem(index)}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ) : null
+        )}
       </List>
-
       <List dense>
-        {mainListItems.map((item, index) => item.context === 'secondary' ? (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton
-              selected={item.selected}
-              onClick={() => selectItem(index)}
-            >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ) : null)}
+        {mainListItems.map((item, index) =>
+          item.context === 'secondary' ? (
+            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+              <ListItemButton selected={item.selected} onClick={() => selectItem(index)}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ) : null
+        )}
       </List>
     </Stack>
   );
