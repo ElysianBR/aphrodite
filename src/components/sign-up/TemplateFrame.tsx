@@ -50,7 +50,7 @@ export default function TemplateFrame({
     <ThemeProvider theme={signUpTheme}>
       <Box sx={{ height: '100dvh', display: 'flex', flexDirection: 'column' }}>
         <StyledAppBar>
-          <Toolbar
+          {/* <Toolbar
             variant="dense"
             disableGutters
             sx={{
@@ -87,7 +87,7 @@ export default function TemplateFrame({
                 toggleColorMode={toggleColorMode}
               />
             </Box>
-          </Toolbar>
+          </Toolbar> */}
         </StyledAppBar>
         <Box sx={{ flex: '1 1', overflow: 'auto' }}>{children}</Box>
       </Box>

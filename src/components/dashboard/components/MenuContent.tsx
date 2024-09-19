@@ -12,6 +12,11 @@ import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import MainGrid from './MainGrid';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
+import ElysianIcon from '/public/logo_wo_bg.png'; // Importa o logo
+import '/src/app/signup/signup.css'; // Para reutilizar a animação
 
 type typeListItems = {
   context: string,
@@ -21,36 +26,30 @@ type typeListItems = {
   element?: React.JSX.Element,
 };
 
-
 interface MenuContentProps {
   render: boolean;
   viewState: React.Dispatch<React.SetStateAction<React.JSX.Element | null | undefined>>;
 }
 
-export default function MenuContent(porps: MenuContentProps) {
+export default function MenuContent(props: MenuContentProps) {
   const [mainListItems, setMainListItems] = React.useState<typeListItems[]>([
-    {
-      context: 'main', text: 'Home', icon: <HomeRoundedIcon />, selected: true, element: <MainGrid />,
-    },
-    {
-      context: 'main', text: 'Analises', icon: <AnalyticsRoundedIcon />, selected: false,
-    },
-    {
-      context: 'main', text: 'Contratos', icon: <PeopleRoundedIcon />, selected: false,
-    },
-    {
-      context: 'main', text: 'Documentação', icon: <AssignmentRoundedIcon />, selected: false,
-    },
-    {
-      context: 'secondary', text: 'Configurações', icon: <SettingsRoundedIcon />, selected: true
-    },
-    {
-      context: 'secondary', text: 'Ajuda', icon: <InfoRoundedIcon />, selected: false
-    },
+    { context: 'main', text: 'Home', icon: <HomeRoundedIcon />, selected: true, element: <MainGrid /> },
+    { context: 'main', text: 'Analises', icon: <AnalyticsRoundedIcon />, selected: false },
+    { context: 'main', text: 'Contratos', icon: <PeopleRoundedIcon />, selected: false },
+    { context: 'main', text: 'Documentação', icon: <AssignmentRoundedIcon />, selected: false },
+    { context: 'secondary', text: 'Configurações', icon: <SettingsRoundedIcon />, selected: true },
+    { context: 'secondary', text: 'Ajuda', icon: <InfoRoundedIcon />, selected: false },
   ]);
 
+  const [isAnimated, setIsAnimated] = useState(false); // Para animação
 
+  const handleMouseEnter = () => {
+    setIsAnimated(true);  // Ativa a animação
+  };
 
+  const handleMouseLeave = () => {
+    setIsAnimated(false);  // Reverte a animação
+  };
 
   const selectItem = (index: number) => {
     const updatedItems = mainListItems.map((item, idx) => ({
@@ -59,17 +58,29 @@ export default function MenuContent(porps: MenuContentProps) {
     }));
 
     setMainListItems(updatedItems);
-    porps.viewState(updatedItems[index].element);
+    props.viewState(updatedItems[index].element);
   };
 
   React.useEffect(() => {
-    if (porps.render) {
+    if (props.render) {
       selectItem(0);
     }
-  }, [porps.render]);
+  }, [props.render]);
 
   return (
-    <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
+    <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between', position: 'relative' }}>
+      <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
+        <Link href="/" passHref>
+          <div
+            className={`logo-login logo-animation ${isAnimated ? 'reverse' : ''}`} 
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <Image src={ElysianIcon} alt="Logo" width={80} height={50} />
+          </div>
+        </Link>
+      </div>
+
       <List dense sx={{ marginTop: 'auto', marginBottom: 'auto' }}>
         {mainListItems.map((item, index) => item.context === 'main' ? (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>

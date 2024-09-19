@@ -19,8 +19,11 @@ export default class Provider {
     private profile = process.env.NODE_ENV;
     private alias = this.profile === 'development' ? '' : 'api.';
     private port = this.profile === 'development' ? ':8080' : '';
-    private URI = this.protocol + '//' + this.alias + this.host + this.port;
-    private jwt_token = typeof window !== 'undefined' ?  window.localStorage.getItem(Provider.TOKEN_STORE_PREFIX) : '';
+    private jwt_token = typeof window !== 'undefined' ? window.localStorage.getItem(Provider.TOKEN_STORE_PREFIX) : '';
+    
+    // Se API_URL estiver definida, use-a; caso contrário, use a lógica atual
+    private URI = process.env.NEXT_PUBLIC_API_URL || `${this.protocol}//${this.alias}${this.host}${this.port}`;
+    // console.log('API URL:', this.URI);
 
     private headers: Headers = new Headers({
         'Content-Type': 'application/json',

@@ -253,10 +253,10 @@ export default function SignUp() {
                   </span>
                 </Typography>
               </Box>
-              <Divider>
+              {/* <Divider>
                 <Typography sx={{ color: 'text.secondary' }}>ou</Typography>
-              </Divider>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              </Divider> */}
+              {/* <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Button
                   type="button"
                   fullWidth
@@ -275,7 +275,7 @@ export default function SignUp() {
                 >
                   Cadastro com o Facebook
                 </Button>
-              </Box>
+              </Box> */}
             </Card>
           </Stack>
         </SignUpContainer>
