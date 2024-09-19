@@ -14,13 +14,13 @@ export default class Provider {
     static EXPIRE_STORE_PREFIX = "jwt_expires";
 
     // Variables
-    private protocol = typeof window !== 'undefined'? window.location.protocol : '';
+    private protocol = typeof window !== 'undefined' ? window.location.protocol : '';
     private host = typeof window !== 'undefined' ? window.location.hostname : '';
     private profile = process.env.NODE_ENV;
     private alias = this.profile === 'development' ? '' : 'api.';
     private port = this.profile === 'development' ? ':8080' : '';
     private jwt_token = typeof window !== 'undefined' ? window.localStorage.getItem(Provider.TOKEN_STORE_PREFIX) : '';
-    
+
     // Se API_URL estiver definida, use-a; caso contrário, use a lógica atual
     private URI = process.env.NEXT_PUBLIC_API_URL || `${this.protocol}//${this.alias}${this.host}${this.port}`;
     // console.log('API URL:', this.URI);
@@ -105,7 +105,7 @@ export default class Provider {
     }
 
 
-    public static store(token: string, expires: string) {
+    public static store(token: string | null, expires: string | null) {
         if (token != undefined && token != null) {
             window.localStorage.setItem(Provider.TOKEN_STORE_PREFIX, token.replace("Bearer ", "").trim());
         }

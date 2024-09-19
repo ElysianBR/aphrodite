@@ -10,7 +10,7 @@ import SelectContent from './SelectContent';
 import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 import OptionsMenu from './OptionsMenu';
-import Account from '@/provider/methods/account';
+import Account from '@/provider/methods/Account';
 import Provider from '@/provider/provider';
 import { useRouter } from "next/navigation";
 
@@ -28,15 +28,24 @@ const Drawer = styled(MuiDrawer)({
 });
 
 
+export type TypeListItems = {
+  context: string,
+  text: string,
+  icon?: React.JSX.Element,
+  selected: boolean,
+  element?: React.JSX.Element,
+};
+
 
 interface SideMenuProps {
-  viewState: React.Dispatch<React.SetStateAction<React.JSX.Element | null | undefined>>;
+  viewState: React.Dispatch<React.SetStateAction<TypeListItems | undefined>>;
 }
 
 
 export default function SideMenu({ viewState }: SideMenuProps) {
   const router = useRouter();
   const [account, setAccount] = React.useState<Account>()
+  const hasFetched = React.useRef(false);
 
   const findUser = async () => {
     let accountOut = await Account.get()
@@ -46,8 +55,6 @@ export default function SideMenu({ viewState }: SideMenuProps) {
       router.push("/login")
     }
   }
-
-  const hasFetched = React.useRef(false);
 
   React.useEffect(() => {
     if (!hasFetched.current) {
@@ -107,7 +114,7 @@ export default function SideMenu({ viewState }: SideMenuProps) {
             {`${account != undefined ? account.email : ""}`}
           </Typography>
         </Box>
-        <OptionsMenu />
+        <OptionsMenu viewState={viewState}  />
       </Stack>
     </Drawer>
   );

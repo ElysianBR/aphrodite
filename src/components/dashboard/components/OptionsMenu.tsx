@@ -12,18 +12,32 @@ import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import MenuButton from './MenuButton';
 import { useRouter } from 'next/navigation';
 import Provider from '@/provider/provider';
+import { TypeListItems } from './SideMenu';
+import UserProfile from './UserProfile';
 
 const MenuItem = styled(MuiMenuItem)({
   margin: '2px 0',
 });
 
-export default function OptionsMenu() {
+interface SideMenuProps {
+  viewState: React.Dispatch<React.SetStateAction<TypeListItems | undefined>>;
+}
+
+const profile: TypeListItems = {
+  context: "profile",
+  text: "Perfil",
+  element: <UserProfile />
+}
+
+export default function OptionsMenu({ viewState }: SideMenuProps) {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -31,6 +45,12 @@ export default function OptionsMenu() {
   const handleLogout = (event: React.MouseEvent<HTMLElement>) => {
     Provider.unStore();
     router.push("/login");
+  };
+
+  const handleProfile = (event: React.MouseEvent<HTMLElement>) => {
+    viewState(
+      profile
+    )
   };
 
   return (
@@ -62,7 +82,7 @@ export default function OptionsMenu() {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>Perfil</MenuItem>
+        <MenuItem onClick={handleProfile}>{profile.text}</MenuItem>
         {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
         <Divider />
         {/* <MenuItem onClick={handleClose}>Add another account</MenuItem> */}

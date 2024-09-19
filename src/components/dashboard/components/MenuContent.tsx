@@ -17,22 +17,15 @@ import Image from 'next/image';
 import { useState } from 'react';
 import ElysianIcon from '/public/logo_wo_bg.png'; // Importa o logo
 import '/src/app/signup/signup.css'; // Para reutilizar a animação
-
-type typeListItems = {
-  context: string,
-  text: string,
-  icon: React.JSX.Element,
-  selected: boolean,
-  element?: React.JSX.Element,
-};
+import { TypeListItems } from './SideMenu';
 
 interface MenuContentProps {
   render: boolean;
-  viewState: React.Dispatch<React.SetStateAction<React.JSX.Element | null | undefined>>;
+  viewState: React.Dispatch<React.SetStateAction<TypeListItems | undefined>>;
 }
 
 export default function MenuContent(props: MenuContentProps) {
-  const [mainListItems, setMainListItems] = React.useState<typeListItems[]>([
+  const [mainListItems, setMainListItems] = React.useState<TypeListItems[]>([
     { context: 'main', text: 'Home', icon: <HomeRoundedIcon />, selected: true, element: <MainGrid /> },
     { context: 'main', text: 'Analises', icon: <AnalyticsRoundedIcon />, selected: false },
     { context: 'main', text: 'Contratos', icon: <PeopleRoundedIcon />, selected: false },
@@ -58,7 +51,7 @@ export default function MenuContent(props: MenuContentProps) {
     }));
 
     setMainListItems(updatedItems);
-    props.viewState(updatedItems[index].element);
+    props.viewState(updatedItems[index]);
   };
 
   React.useEffect(() => {
