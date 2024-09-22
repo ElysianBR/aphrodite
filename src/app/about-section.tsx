@@ -104,7 +104,7 @@ const AboutSection: FC<AboutProps> = (props) => {
                         <Grid item xs={12} sm={6} md={6}>
                             <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
                                 <a href="https://www.linkedin.com/in/williamciva" target="_blank" rel="noopener noreferrer">
-                                    <Image src="/wyl.png" alt="Fundador 1" width={200} height={200} />
+                                    <Image src="/wyl.jpg" style={{"borderRadius": "50%", "width": 200, "height": 200, "objectFit":"cover"}} alt="Fundador 1" width={200} height={200} />
                                 </a>
                                 <Typography variant="h6" textAlign="center" fontWeight="bold" gutterBottom>
                                     William Civa

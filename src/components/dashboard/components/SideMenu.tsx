@@ -52,6 +52,7 @@ export default function SideMenu({ viewState }: SideMenuProps) {
     if (accountOut instanceof Account) {
       setAccount(accountOut);
     } else {
+      Provider.unStore()
       router.push("/login")
     }
   }

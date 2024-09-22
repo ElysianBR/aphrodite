@@ -94,7 +94,7 @@ export default class Provider {
     }
 
 
-    private store(response: Response) {
+    public store(response: Response) {
         if (response != null && response.status == 200 && response.headers != null) {
 
             const bearer = response.headers.get('Authorization');
@@ -102,6 +102,10 @@ export default class Provider {
             Provider.store(bearer, expires);
 
         }
+    }
+
+    public static isAuthenticated() {
+        return window.localStorage.getItem(Provider.TOKEN_STORE_PREFIX);
     }
 
 

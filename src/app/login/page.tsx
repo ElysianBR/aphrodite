@@ -7,18 +7,28 @@ import { createTheme, ThemeProvider, PaletteMode } from '@mui/material/styles';
 import getSignInSideTheme from '@/components/sign-in-side/theme/getSignInSideTheme';
 import SignInCard from '@/components/sign-in-side/SignInCard';
 import Content from '@/components/sign-in-side/Content';
+import { useRouter } from 'next/navigation';
+import Provider from '@/provider/provider';
 
 interface SignInSideProps {
   children: React.ReactNode;
 }
 
 export default function SignInSide({ children }: SignInSideProps) {
+  const router = useRouter();
+
   const [mode, setMode] = React.useState<PaletteMode>('light');
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
   const defaultTheme = createTheme({ palette: { mode } });
   const SignInSideTheme = createTheme(getSignInSideTheme(mode));
 
+  const [isClient, setIsClient] = React.useState(false)
+
   React.useEffect(() => {
+    if (Provider.isAuthenticated()) {
+      router.push('dashboard');
+    }
+
     const savedMode = localStorage.getItem('themeMode') as PaletteMode | null;
     if (savedMode) {
       setMode(savedMode);
@@ -26,19 +36,13 @@ export default function SignInSide({ children }: SignInSideProps) {
       const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setMode(systemPrefersDark ? 'dark' : 'light');
     }
+
+    setIsClient(true)
   }, []);
 
-  const toggleColorMode = () => {
-    const newMode = mode === 'dark' ? 'light' : 'dark';
-    setMode(newMode);
-    localStorage.setItem('themeMode', newMode);
-  };
-
-  const toggleCustomTheme = () => {
-    setShowCustomTheme((prev) => !prev);
-  };
 
   return (
+    isClient ?
       <ThemeProvider theme={showCustomTheme ? SignInSideTheme : defaultTheme}>
         <CssBaseline enableColorScheme />
         <Stack
@@ -74,5 +78,6 @@ export default function SignInSide({ children }: SignInSideProps) {
           </Stack>
         </Stack>
       </ThemeProvider>
+      : null
   );
 }
