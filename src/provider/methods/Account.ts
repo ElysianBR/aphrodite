@@ -22,25 +22,51 @@ export default class Account {
     @JsonProperty('dateOfBirth', Number, DateConvert)
     dateOfBirth: Date;
 
+    @JsonProperty('dateOfBirth', String)
+    address: String;
+
+    @JsonProperty('dateOfBirth', String)
+    city: String;
+
+    @JsonProperty('dateOfBirth', String)
+    state: String;
+
+    @JsonProperty('dateOfBirth', String)
+    country: String;
+
     @JsonProperty('email', String)
     email: string;
 
     @JsonProperty('enable', Boolean)
     enable: boolean;
 
-    constructor(id: number, active: boolean, firstName: string, lastName: string, dateOfBirth: Date, email: string, enable: boolean) {
+    constructor(id: number,
+        active: boolean,
+        firstName: string,
+        lastName: string,
+        dateOfBirth: Date,
+        address: string,
+        city: string,
+        state: string,
+        country: string,
+        email: string,
+        enable: boolean) {
         this.id = id;
         this.active = active;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.country = country;
         this.email = email;
         this.enable = enable;
     }
 
 
     static PATH: string = "api/v1/account";
-    
+
 
     static async get(): Promise<typeof Account | ResponseError> {
         return await new Provider().executeGet({ path: Account.PATH }, Account);

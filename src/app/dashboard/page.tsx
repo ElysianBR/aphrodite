@@ -11,14 +11,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import getDashboardTheme from '@/components/dashboard/theme/getDashboardTheme';
-import SideMenu, { TypeListItems } from '@/components/dashboard/components/SideMenu';
-import AppNavbar from '@/components/dashboard/components/AppNavbar';
-import Header from '@/components/dashboard/components/Header';
-
-// Account Profile
-import "./black-dashboard-react.css";
-import "./demo.css";
-// import "./nucleo-icons.css";
+import SideMenu, { TypeListItems } from '@/components/dashboard/SideMenu';
+import AppNavbar from '@/components/dashboard/AppNavbar';
+import Header from '@/components/dashboard/Header';
 
 export default function DashboardTemplate() {
   const [view, setView] = React.useState<TypeListItems>();

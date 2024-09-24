@@ -18,23 +18,21 @@ import {
     Col,
 } from "reactstrap";
 
+// Account Profile Styles
+import "@/components/dashboard/styles/black-dashboard-react.css";
+// import "@/components/dashboard/styles/demo.css";
+// import "@/components/dashboard/styles/nucleo-icons.css";
 
 function UserProfile() {
     const router = useRouter();
     const [account, setAccount] = React.useState<Account>();
-    const [comapany, setCompany] = React.useState<Company>();
     const hasFetched = React.useRef(false);
 
 
-    const find= async () => {
+    const find = async () => {
         let accountOut = await Account.get()
         if (accountOut instanceof Account) {
             setAccount(accountOut);
-        }
-
-        let companyOut = await Company.get()
-        if (companyOut instanceof Company) {
-            setCompany(companyOut);
         }
     }
 
@@ -64,54 +62,19 @@ function UserProfile() {
                                     <Row>
                                         <Col className="pr-md-1" md="6">
                                             <FormGroup>
-                                                <label>Company</label>
+                                                <label>Primeiro Nome</label>
                                                 <Input
-                                                    disabled
-                                                    placeholder="Company"
-                                                    type="text"
-                                                    value={comapany?.companyName}
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                        {/* <Col className="px-md-1" md="3">
-                                            <FormGroup>
-                                                <label>Username</label>
-                                                <Input
-                                                    placeholder="Username"
-                                                    type="text"
-                                                    value={account.companyName}
-                                                />
-                                            </FormGroup>
-                                        </Col> */}
-                                        <Col className="pl-md-1" md="6">
-                                            <FormGroup>
-                                                <label htmlFor="exampleInputEmail1">
-                                                    Email address
-                                                </label>
-                                                <Input
-                                                    placeholder="mike@email.com"
-                                                    type="email"
-                                                    value={account?.email}
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col className="pr-md-1" md="6">
-                                            <FormGroup>
-                                                <label>First Name</label>
-                                                <Input
-                                                    placeholder="Company"
+                                                    placeholder="Primeiro Nome"
                                                     type="text"
                                                     value={account?.firstName}
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        <Col className="pl-md-1" md="6">
+                                        <Col className="px-md-1" md="6">
                                             <FormGroup>
-                                                <label>Last Name</label>
+                                                <label>Sobrenome</label>
                                                 <Input
-                                                    placeholder="Last Name"
+                                                    placeholder="Sobrenome"
                                                     type="text"
                                                     value={account?.lastName}
                                                 />
@@ -119,12 +82,25 @@ function UserProfile() {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col md="12">
+                                        <Col className="pr-md-1" md="6">
                                             <FormGroup>
-                                                <label>Address</label>
+                                                <label htmlFor="exampleInputEmail1">
+                                                    Email
+                                                </label>
                                                 <Input
-                                                    placeholder="Home Address"
+                                                    placeholder="account@email.com"
+                                                    type="email"
+                                                    value={account?.email}
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col className="px-md-1" md="6">
+                                            <FormGroup>
+                                                <label>Endereço</label>
+                                                <Input
+                                                    placeholder="Endereço"
                                                     type="text"
+                                                    value={account?.address}
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -132,30 +108,36 @@ function UserProfile() {
                                     <Row>
                                         <Col className="pr-md-1" md="4">
                                             <FormGroup>
-                                                <label>City</label>
+                                                <label>Cidade</label>
                                                 <Input
-                                                    placeholder="City"
+                                                    placeholder="Cidade"
                                                     type="text"
+                                                    value={account?.city}
                                                 />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col md="4">
+                                            <FormGroup>
+                                                <label>Estado</label>
+                                                <Input 
+                                                placeholder="Estado"
+                                                 type="text" 
+                                                 value={account?.state}
+                                                 />
                                             </FormGroup>
                                         </Col>
                                         <Col className="px-md-1" md="4">
                                             <FormGroup>
-                                                <label>Country</label>
+                                                <label>País</label>
                                                 <Input
-                                                    placeholder="Country"
+                                                    placeholder="País"
                                                     type="text"
+                                                    value={account?.country}
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        <Col className="pl-md-1" md="4">
-                                            <FormGroup>
-                                                <label>Postal Code</label>
-                                                <Input placeholder="ZIP Code" type="number" />
-                                            </FormGroup>
-                                        </Col>
                                     </Row>
-                                    <Row>
+                                    {/* <Row>
                                         <Col md="8">
                                             <FormGroup>
                                                 <label>About Me</label>
@@ -167,7 +149,7 @@ function UserProfile() {
                                                 />
                                             </FormGroup>
                                         </Col>
-                                    </Row>
+                                    </Row> */}
                                 </Form>
                             </CardBody>
                             <CardFooter>

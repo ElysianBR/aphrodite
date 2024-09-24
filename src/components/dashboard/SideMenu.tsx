@@ -32,7 +32,7 @@ export type TypeListItems = {
   context: string,
   text: string,
   icon?: React.JSX.Element,
-  selected: boolean,
+  selected?: boolean,
   element?: React.JSX.Element,
 };
 
