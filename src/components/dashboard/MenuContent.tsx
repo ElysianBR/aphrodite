@@ -15,24 +15,17 @@ import MainGrid from './MainGrid';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import ElysianIcon from '/public/logo_wo_bg.png';
-import '/src/app/signup/signup.css';
-
-type typeListItems = {
-  context: string,
-  text: string,
-  icon: React.JSX.Element,
-  selected: boolean,
-  element?: React.JSX.Element,
-};
+import ElysianIcon from '/public/logo_wo_bg.png'; // Importa o logo
+import '/src/app/signup/signup.css'; // Para reutilizar a animação
+import { TypeListItems } from './SideMenu';
 
 interface MenuContentProps {
   render: boolean;
-  viewState: React.Dispatch<React.SetStateAction<React.JSX.Element | null | undefined>>;
+  viewState: React.Dispatch<React.SetStateAction<TypeListItems | undefined>>;
 }
 
 export default function MenuContent(props: MenuContentProps) {
-  const [mainListItems, setMainListItems] = React.useState<typeListItems[]>([
+  const [mainListItems, setMainListItems] = React.useState<TypeListItems[]>([
     { context: 'main', text: 'Home', icon: <HomeRoundedIcon />, selected: true, element: <MainGrid /> },
     { context: 'main', text: 'Analises', icon: <AnalyticsRoundedIcon />, selected: false },
     { context: 'main', text: 'Contratos', icon: <PeopleRoundedIcon />, selected: false },
@@ -41,7 +34,7 @@ export default function MenuContent(props: MenuContentProps) {
     { context: 'secondary', text: 'Ajuda', icon: <InfoRoundedIcon />, selected: false },
   ]);
 
-  const [isAnimated, setIsAnimated] = useState(false);
+  const [isAnimated, setIsAnimated] = useState(false); // Para animação
 
   const handleMouseEnter = () => {
     setIsAnimated(true);  // Ativa a animação
@@ -58,7 +51,7 @@ export default function MenuContent(props: MenuContentProps) {
     }));
 
     setMainListItems(updatedItems);
-    props.viewState(updatedItems[index].element);
+    props.viewState(updatedItems[index]);
   };
 
   React.useEffect(() => {
@@ -82,28 +75,31 @@ export default function MenuContent(props: MenuContentProps) {
       </div>
 
       <List dense sx={{ marginTop: 'auto', marginBottom: 'auto' }}>
-        {mainListItems.map((item, index) =>
-          item.context === 'main' ? (
-            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton selected={item.selected} onClick={() => selectItem(index)}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            </ListItem>
-          ) : null
-        )}
+        {mainListItems.map((item, index) => item.context === 'main' ? (
+          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              selected={item.selected}
+              onClick={() => selectItem(index)}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ) : null)}
       </List>
+
       <List dense>
-        {mainListItems.map((item, index) =>
-          item.context === 'secondary' ? (
-            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton selected={item.selected} onClick={() => selectItem(index)}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            </ListItem>
-          ) : null
-        )}
+        {mainListItems.map((item, index) => item.context === 'secondary' ? (
+          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              selected={item.selected}
+              onClick={() => selectItem(index)}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ) : null)}
       </List>
     </Stack>
   );
