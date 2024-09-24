@@ -178,7 +178,11 @@ export default function SignUp() {
               <Typography
                 component="h1"
                 variant="h4"
-                sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  fontSize: 'clamp(2rem, 10vw, 2.15rem)',
+                }}
               >
                 Crie sua conta
               </Typography>
@@ -248,7 +252,7 @@ export default function SignUp() {
                       variant="body2"
                       sx={{ alignSelf: 'center' }}
                     >
-                      Login
+                      Entrar
                     </Link>
                   </span>
                 </Typography>
