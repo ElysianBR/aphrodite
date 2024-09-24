@@ -14,7 +14,6 @@ import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 import ElysianIcon from '/public/logo_wo_bg.png';
 import '/src/app/signup/signup.css';
 
-// Define the types for the items array
 interface Item {
   icon: JSX.Element;
   title: string;
@@ -51,7 +50,6 @@ const items: Item[] = [
 const Content: React.FC = () => {
   const [isAnimated, setIsAnimated] = useState(false);
 
-  // Funções para manipular a animação
   const handleMouseEnter = () => {
     setIsAnimated(true);  // Ativa a animação ao passar o mouse
   };
@@ -66,7 +64,7 @@ const Content: React.FC = () => {
     >
       <Link href="/" passHref>
         <Box
-          sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'center', cursor: 'pointer' }}
+          sx={{ display: { xs: 'flex', md: 'flex' }, justifyContent: 'center', cursor: 'pointer' }}
           className={`logo-login logo-animation ${isAnimated ? 'reverse' : ''}`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
