@@ -192,14 +192,28 @@ export default function SignUp() {
                 sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
               >
                 <FormControl>
-                  <FormLabel htmlFor="name">Nome completo</FormLabel>
+                  <FormLabel htmlFor="name">Nome</FormLabel>
                   <TextField
                     autoComplete="name"
                     name="name"
                     required
                     fullWidth
                     id="name"
-                    placeholder="Jon Snow"
+                    placeholder="Michael"
+                    error={nameError}
+                    helperText={nameErrorMessage}
+                    color={nameError ? 'error' : 'primary'}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel htmlFor="name">Sobrenome</FormLabel>
+                  <TextField
+                    autoComplete="surname"
+                    name="surname"
+                    required
+                    fullWidth
+                    id="surname"
+                    placeholder="Jordan"
                     error={nameError}
                     helperText={nameErrorMessage}
                     color={nameError ? 'error' : 'primary'}
