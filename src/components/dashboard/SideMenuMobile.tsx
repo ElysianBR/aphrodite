@@ -11,13 +11,42 @@ import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import MenuButton from './MenuButton';
 import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
+import Account from '@/provider/methods/Account';
+import { useRouter } from 'next/navigation';
+import Provider from '@/provider/provider';
+import { TypeListItems } from './SideMenu';
 
 interface SideMenuMobileProps {
   open: boolean | undefined;
   toggleDrawer: (newOpen: boolean) => () => void;
+  viewState: React.Dispatch<React.SetStateAction<TypeListItems | undefined>>;
 }
 
-export default function SideMenuMobile({ open, toggleDrawer }: SideMenuMobileProps) {
+export default function SideMenuMobile({ open, toggleDrawer, viewState }: SideMenuMobileProps) {
+  const router = useRouter();
+  const [account, setAccount] = React.useState<Account>()
+  const hasFetched = React.useRef(false);
+
+  const findUser = async () => {
+    let accountOut = await Account.get()
+    if (accountOut instanceof Account) {
+      setAccount(accountOut);
+    } else {
+      Provider.unStore()
+      router.push("/login")
+    }
+  }
+
+  React.useEffect(() => {
+    if (!hasFetched.current) {
+      findUser()
+      hasFetched.current = true;
+    }
+
+    return () => {
+    }
+  }, [])
+
   return (
     <Drawer
       anchor="right"
@@ -57,7 +86,7 @@ export default function SideMenuMobile({ open, toggleDrawer }: SideMenuMobilePro
         </Stack>
         <Divider />
         <Stack sx={{ flexGrow: 1 }}>
-          <MenuContent />
+          <MenuContent viewState={viewState} render={account != undefined} />
           <Divider />
         </Stack>
         <CardAlert />
