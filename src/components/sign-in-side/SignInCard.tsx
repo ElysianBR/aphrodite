@@ -18,7 +18,7 @@ import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
 import { GetCaptchaToken } from '../recaptcha/v3/google-captcha-v3';
-import Login from "@/provider/methods/login";
+import Login from "@/provider/methods/Login";
 import ResponseError from '@/provider/responses/response-error';
 
 

@@ -40,7 +40,7 @@ export default function DashboardTemplate() {
         <CssBaseline enableColorScheme />
         <Box sx={{ display: 'flex' }}>
           <SideMenu viewState={setView} />
-          <AppNavbar />
+          <AppNavbar viewState={setView} />
           <Box
             component="main"
             sx={(theme) => ({

@@ -37,7 +37,7 @@ export type TypeListItems = {
 };
 
 
-interface SideMenuProps {
+export interface SideMenuProps {
   viewState: React.Dispatch<React.SetStateAction<TypeListItems | undefined>>;
 }
 

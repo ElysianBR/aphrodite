@@ -10,11 +10,8 @@ import Content from '@/components/sign-in-side/Content';
 import { useRouter } from 'next/navigation';
 import Provider from '@/provider/provider';
 
-interface SignInSideProps {
-  children: React.ReactNode;
-}
 
-export default function SignInSide({ children }: SignInSideProps) {
+export default function SignInSide() {
   const router = useRouter();
 
   const [mode, setMode] = React.useState<PaletteMode>('light');
