@@ -8,7 +8,7 @@ import MenuButton from './MenuButton';
 import Search from './Search';
 
 interface HeaderProps {
-  location: string | undefined;,
+  location: string | undefined,
 }
 
 export default function Header(props: HeaderProps) {
