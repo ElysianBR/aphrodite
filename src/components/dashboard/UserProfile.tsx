@@ -20,8 +20,6 @@ import {
 
 // Account Profile Styles
 import "@/components/dashboard/styles/black-dashboard-react.css";
-// import "@/components/dashboard/styles/demo.css";
-// import "@/components/dashboard/styles/nucleo-icons.css";
 
 function UserProfile() {
     const router = useRouter();
@@ -50,7 +48,7 @@ function UserProfile() {
 
     return (
         <>
-            <div className="content">
+            <div className="content" style={{ marginTop: '10%' }}>
                 <Row>
                     <Col md="8">
                         <Card>
@@ -119,11 +117,11 @@ function UserProfile() {
                                         <Col md="4">
                                             <FormGroup>
                                                 <label>Estado</label>
-                                                <Input 
-                                                placeholder="Estado"
-                                                 type="text" 
-                                                 value={account?.state}
-                                                 />
+                                                <Input
+                                                    placeholder="Estado"
+                                                    type="text"
+                                                    value={account?.state}
+                                                />
                                             </FormGroup>
                                         </Col>
                                         <Col className="px-md-1" md="4">
@@ -174,17 +172,17 @@ function UserProfile() {
                                             className="avatar"
                                         // src={require("assets/img/emilyz.jpg")}
                                         />
-                                        <h5 className="title">Mike Andrew</h5>
+                                        <h5 className="title">{`${account?.firstName} ${account?.lastName}`}</h5>
                                     </a>
-                                    <p className="description">Ceo/Co-Founder</p>
+                                    {/* <p className="description">Ceo/Co-Founder</p> */}
                                 </div>
-                                <div className="card-description">
+                                {/* <div className="card-description">
                                     Do not be scared of the truth because we need to restart the
                                     human foundation in truth And I love you like Kanye loves
                                     Kanye I love Rick Owens’ bed design but the back is...
-                                </div>
+                                </div>  */}
                             </CardBody>
-                            <CardFooter>
+                            {/* <CardFooter>
                                 <div className="button-container">
                                     <Button className="btn-icon btn-round" color="facebook">
                                         <i className="fab fa-facebook" />
@@ -196,7 +194,7 @@ function UserProfile() {
                                         <i className="fab fa-google-plus" />
                                     </Button>
                                 </div>
-                            </CardFooter>
+                            </CardFooter> */}
                         </Card>
                     </Col>
                 </Row>

@@ -18,6 +18,7 @@ import { useState } from 'react';
 import ElysianIcon from '/public/logo_wo_bg.png'; // Importa o logo
 import '/src/app/signup/signup.css'; // Para reutilizar a animação
 import { TypeListItems } from './SideMenu';
+import Documentation from './Documentation';
 
 interface MenuContentProps {
   render: boolean;
@@ -29,7 +30,7 @@ export default function MenuContent(props: MenuContentProps) {
     { context: 'main', text: 'Home', icon: <HomeRoundedIcon />, selected: true, element: <MainGrid /> },
     { context: 'main', text: 'Analises', icon: <AnalyticsRoundedIcon />, selected: false },
     { context: 'main', text: 'Contratos', icon: <PeopleRoundedIcon />, selected: false },
-    { context: 'main', text: 'Documentação', icon: <AssignmentRoundedIcon />, selected: false },
+    { context: 'main', text: 'Documentação', icon: <AssignmentRoundedIcon />, selected: false, element: <Documentation /> },
     { context: 'secondary', text: 'Configurações', icon: <SettingsRoundedIcon />, selected: true },
     { context: 'secondary', text: 'Ajuda', icon: <InfoRoundedIcon />, selected: false },
   ]);
