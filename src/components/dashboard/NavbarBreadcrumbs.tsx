@@ -16,7 +16,7 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
 }));
 
 interface NavbarBreadcrumbsProps {
-  location: string | undefined;,
+  location: string | undefined,
 }
 
 export default function NavbarBreadcrumbs(props: NavbarBreadcrumbsProps) {
