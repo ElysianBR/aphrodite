@@ -58,7 +58,7 @@ export default function DashboardTemplate() {
                 mt: { xs: 8, md: 0 },
               }}
             >
-              <Header />
+              <Header location={view?.text} />
               {view != undefined ? view.element : null} {/* Renderiza o conteúdo passado como children */}
             </Stack>
           </Box>

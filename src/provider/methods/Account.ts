@@ -22,17 +22,20 @@ export default class Account {
     @JsonProperty('dateOfBirth', Number, DateConvert)
     dateOfBirth: Date;
 
-    @JsonProperty('dateOfBirth', String)
-    address: String;
+    @JsonProperty('profilePic', String)
+    profilePic: string;
 
-    @JsonProperty('dateOfBirth', String)
-    city: String;
+    @JsonProperty('address', String)
+    address: string;
 
-    @JsonProperty('dateOfBirth', String)
-    state: String;
+    @JsonProperty('city', String)
+    city: string;
 
-    @JsonProperty('dateOfBirth', String)
-    country: String;
+    @JsonProperty('state', String)
+    state: string;
+
+    @JsonProperty('country', String)
+    country: string;
 
     @JsonProperty('email', String)
     email: string;
@@ -45,6 +48,7 @@ export default class Account {
         firstName: string,
         lastName: string,
         dateOfBirth: Date,
+        profilePic: string,
         address: string,
         city: string,
         state: string,
@@ -56,6 +60,7 @@ export default class Account {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
+        this.profilePic = profilePic;
         this.address = address;
         this.city = city;
         this.state = state;
