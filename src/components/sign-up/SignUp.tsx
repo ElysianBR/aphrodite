@@ -2,7 +2,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Link from '@mui/material/Link';
@@ -12,13 +11,13 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import getSignUpTheme from './theme/getSignUpTheme';
-import { GoogleIcon, FacebookIcon } from './CustomIcons';
 import TemplateFrame from './TemplateFrame';
 import Image from 'next/image';
 import { useState, FormEvent } from 'react';
 import NextLink from 'next/link';
 import ElysianIcon from '/public/logo_wo_bg.png';
 import '/src/app/signup/signup.css';
+import Register, { registerRequest } from '@/provider/methods/Register';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -63,6 +62,7 @@ export default function SignUp() {
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
   const [isAnimated, setIsAnimated] = useState(false);
+  const [registerError, setRegisterError] = useState<string | null>(null);  // Estado para erro de registro
 
   React.useEffect(() => {
     const savedMode = localStorage.getItem('themeMode');
@@ -87,11 +87,11 @@ export default function SignUp() {
   };
 
   const handleMouseEnter = () => {
-    setIsAnimated(true);  // Ativa a animação ao passar o mouse
+    setIsAnimated(true);
   };
 
   const handleMouseLeave = () => {
-    setIsAnimated(false);  // Desativa a animação ao sair o mouse
+    setIsAnimated(false);
   };
 
   const validateInputs = () => {
@@ -131,15 +131,33 @@ export default function SignUp() {
     return isValid;
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get('name'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    if (validateInputs()) {
+      const requestData: registerRequest = {
+        firstName: data.get('name') as string,
+        lastName: data.get('lastName') as string,
+        email: data.get('email') as string,
+        password: data.get('password') as string,
+      };
+
+      try {
+        const response = await Register.post({ credentials: requestData });
+        
+        if (response instanceof Register) {
+          console.log('Registro bem-sucedido', response);
+          setRegisterError(null);
+        } else {
+          console.error('Erro no registro', response);
+          setRegisterError('Erro ao registrar a conta. Tente novamente.');
+        }
+      } catch (error) {
+        console.error('Erro ao enviar os dados', error);
+        setRegisterError('Erro ao registrar a conta. Tente novamente.');
+      }
+    }
   };
 
   return (
@@ -208,11 +226,11 @@ export default function SignUp() {
                 <FormControl>
                   <FormLabel htmlFor="name">Sobrenome</FormLabel>
                   <TextField
-                    autoComplete="surname"
-                    name="surname"
+                    autoComplete="lastName"
+                    name="lastName"
                     required
                     fullWidth
-                    id="surname"
+                    id="lastName"
                     placeholder="Jordan"
                     error={nameError}
                     helperText={nameErrorMessage}
@@ -222,13 +240,12 @@ export default function SignUp() {
                 <FormControl>
                   <FormLabel htmlFor="email">Email</FormLabel>
                   <TextField
+                    autoComplete="email"
+                    name="email"
                     required
                     fullWidth
                     id="email"
-                    placeholder="exemplo@email.com"
-                    name="email"
-                    autoComplete="email"
-                    variant="outlined"
+                    placeholder="michael@email.com"
                     error={emailError}
                     helperText={emailErrorMessage}
                     color={emailError ? 'error' : 'primary'}
@@ -240,60 +257,40 @@ export default function SignUp() {
                     required
                     fullWidth
                     name="password"
-                    placeholder="••••••"
                     type="password"
                     id="password"
                     autoComplete="new-password"
-                    variant="outlined"
+                    placeholder="Sua senha"
                     error={passwordError}
                     helperText={passwordErrorMessage}
                     color={passwordError ? 'error' : 'primary'}
                   />
                 </FormControl>
+                {registerError && (
+                  <Typography color="error" variant="body2" align="center">
+                    {registerError}
+                  </Typography>
+                )}
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
-                  onClick={validateInputs}
+                  sx={{ mt: 3, mb: 2 }}
                 >
-                  Cadastrar
+                  Criar conta
                 </Button>
-                <Typography sx={{ textAlign: 'center' }}>
-                  Já tem uma conta?{' '}
-                  <span>
-                    <Link
-                      href="/login"
-                      variant="body2"
-                      sx={{ alignSelf: 'center' }}
-                    >
-                      Entrar
-                    </Link>
-                  </span>
+                <Typography
+                  sx={{
+                    textAlign: 'center',
+                    color: 'grey.500',
+                    fontSize: '14px',
+                  }}
+                >
+                  <Link href="/login" component={NextLink}>
+                    Já tem uma conta? Faça login.
+                  </Link>
                 </Typography>
               </Box>
-              {/* <Divider>
-                <Typography sx={{ color: 'text.secondary' }}>ou</Typography>
-              </Divider> */}
-              {/* <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <Button
-                  type="button"
-                  fullWidth
-                  variant="outlined"
-                  onClick={() => alert('Cadastro com o Google')}
-                  startIcon={<GoogleIcon />}
-                >
-                  Cadastro com o Google
-                </Button>
-                <Button
-                  type="button"
-                  fullWidth
-                  variant="outlined"
-                  onClick={() => alert('Cadastro com o Facebook')}
-                  startIcon={<FacebookIcon />}
-                >
-                  Cadastro com o Facebook
-                </Button>
-              </Box> */}
             </Card>
           </Stack>
         </SignUpContainer>
