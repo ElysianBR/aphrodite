@@ -1,5 +1,5 @@
-import Account from "@/provider/methods/Account";
-import Company from "@/provider/methods/Company";
+import Account from "@/provider/requests/Account";
+import Company from "@/provider/requests/Company";
 import { useRouter } from "next/navigation";
 import React from "react";
 

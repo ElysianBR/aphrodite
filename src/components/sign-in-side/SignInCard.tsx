@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
 import Checkbox from '@mui/material/Checkbox';
-import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -16,9 +15,8 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 
 import ForgotPassword from './ForgotPassword';
-import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
 import { GetCaptchaToken } from '../recaptcha/v3/google-captcha-v3';
-import Login from "@/provider/methods/Login";
+import Login from "@/provider/requests/Login";
 import ResponseError from '@/provider/responses/response-error';
 
 
@@ -45,10 +43,11 @@ export default function SignInCard() {
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+  const [rememberMe, setRememberMe] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
   const captchaRef: React.ForwardedRef<GetCaptchaToken> = React.useRef(null);
-  const hasFetched = React.useRef(false);
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,10 +70,13 @@ export default function SignInCard() {
       gToken = await captchaRef.current();
     }
 
+    window.localStorage.setItem('rememberMe', String(rememberMe));
+
     const data = await Login.post(
       {
         credentials: { email: form.email, password: form.password },
         gRecaptchaResponse: gToken,
+        longLivedToken: String(rememberMe)
       }
     );
 
@@ -179,7 +181,7 @@ export default function SignInCard() {
           />
         </FormControl>
         <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
+          control={<Checkbox value="remember" color="primary" onChange={(e) => setRememberMe(e.target.checked)} />}
           label="Lembrar de mim"
         />
         <ForgotPassword open={open} handleClose={handleClose} />

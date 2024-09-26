@@ -17,7 +17,7 @@ import { useState, FormEvent } from 'react';
 import NextLink from 'next/link';
 import ElysianIcon from '/public/logo_wo_bg.png';
 import '/src/app/signup/signup.css';
-import Register, { registerRequest } from '@/provider/methods/Register';
+import Register, { registerRequest } from '@/provider/requests/Register';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
