@@ -1,5 +1,5 @@
-import Account from "@/provider/methods/Account";
-import Company from "@/provider/methods/Company";
+import Account from "@/provider/requests/Account";
+import Company from "@/provider/requests/Company";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -35,6 +35,30 @@ function UserProfile() {
     }
 
 
+    const handleSave = async () => {
+        if (account != undefined) {
+            let accountOut = await Account.put(account)
+            if (accountOut instanceof Account) {
+                setAccount(accountOut);
+            }
+        }
+    }
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setAccount((prevAccount) => {
+            if (prevAccount) {
+                return {
+                    ...prevAccount,
+                    [name]: value,
+                };
+            }
+            return prevAccount;
+        });
+    };
+
+
     React.useEffect(() => {
         if (!hasFetched.current) {
             find()
@@ -64,7 +88,9 @@ function UserProfile() {
                                                 <Input
                                                     placeholder="Primeiro Nome"
                                                     type="text"
+                                                    name="firstName"
                                                     value={account?.firstName}
+                                                    onChange={handleChange}
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -74,7 +100,9 @@ function UserProfile() {
                                                 <Input
                                                     placeholder="Sobrenome"
                                                     type="text"
+                                                    name="lastName"
                                                     value={account?.lastName}
+                                                    onChange={handleChange}
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -88,7 +116,9 @@ function UserProfile() {
                                                 <Input
                                                     placeholder="account@email.com"
                                                     type="email"
+                                                    name="email"
                                                     value={account?.email}
+                                                    onChange={handleChange}
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -98,7 +128,9 @@ function UserProfile() {
                                                 <Input
                                                     placeholder="Endereço"
                                                     type="text"
+                                                    name="address"
                                                     value={account?.address}
+                                                    onChange={handleChange}
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -110,7 +142,9 @@ function UserProfile() {
                                                 <Input
                                                     placeholder="Cidade"
                                                     type="text"
+                                                    name="city"
                                                     value={account?.city}
+                                                    onChange={handleChange}
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -120,7 +154,9 @@ function UserProfile() {
                                                 <Input
                                                     placeholder="Estado"
                                                     type="text"
+                                                    name="state"
                                                     value={account?.state}
+                                                    onChange={handleChange}
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -130,7 +166,9 @@ function UserProfile() {
                                                 <Input
                                                     placeholder="País"
                                                     type="text"
+                                                    name="country"
                                                     value={account?.country}
+                                                    onChange={handleChange}
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -151,8 +189,8 @@ function UserProfile() {
                                 </Form>
                             </CardBody>
                             <CardFooter>
-                                <Button className="btn-fill" color="primary" type="submit">
-                                    Save
+                                <Button className="btn-fill" color="primary" type="submit" onClick={handleSave}>
+                                    Salvar
                                 </Button>
                             </CardFooter>
                         </Card>
@@ -166,10 +204,12 @@ function UserProfile() {
                                     <div className="block block-two" />
                                     <div className="block block-three" />
                                     <div className="block block-four" />
-                                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                                    <a onClick={(e) => e.preventDefault()}>
                                         <img
-                                            alt="..."
+                                            alt="profile picture"
+                                            src={account?.profilePic}
                                             className="avatar"
+                                            style={{ "borderRadius": "50%", "width": 200, "height": 200, "objectFit": "cover" }}
                                         // src={require("assets/img/emilyz.jpg")}
                                         />
                                         <h5 className="title">{`${account?.firstName} ${account?.lastName}`}</h5>

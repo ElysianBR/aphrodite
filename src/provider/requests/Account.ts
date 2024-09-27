@@ -76,4 +76,8 @@ export default class Account {
     static async get(): Promise<typeof Account | ResponseError> {
         return await new Provider().executeGet({ path: Account.PATH }, Account);
     }
+
+    static async put(account: Account): Promise<typeof Account | ResponseError> {
+        return await new Provider().executePut({ path: Account.PATH, data: account }, Account);
+    }
 }

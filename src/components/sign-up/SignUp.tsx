@@ -17,7 +17,8 @@ import { useState, FormEvent } from 'react';
 import NextLink from 'next/link';
 import ElysianIcon from '/public/logo_wo_bg.png';
 import '/src/app/signup/signup.css';
-import Register, { registerRequest } from '@/provider/methods/Register';
+import Register, { registerRequest } from '@/provider/requests/Register';
+import { useRouter } from 'next/navigation';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -62,9 +63,10 @@ export default function SignUp() {
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
   const [isAnimated, setIsAnimated] = useState(false);
-  const [registerError, setRegisterError] = useState<string | null>(null);
+  const [registerError, setRegisterError] = useState<string | null>(null);  // Estado para erro de registro
   const [lastNameError, setLastNameError] = React.useState(false);
   const [lastNameErrorMessage, setLastNameErrorMessage] = React.useState('');
+  const router = useRouter()
 
   React.useEffect(() => {
     const savedMode = localStorage.getItem('themeMode');
@@ -166,6 +168,7 @@ export default function SignUp() {
         if (response instanceof Register) {
           console.log('Registro bem-sucedido', response);
           setRegisterError(null);
+          router.push('/login')
         } else {
           console.error('Erro no registro', response);
           setRegisterError('Erro ao registrar a conta. Tente novamente.');
