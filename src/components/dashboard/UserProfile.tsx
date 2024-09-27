@@ -207,7 +207,7 @@ function UserProfile() {
                                     <a onClick={(e) => e.preventDefault()}>
                                         <img
                                             alt="profile picture"
-                                            src={account?.profilePic}
+                                            src={account != undefined && account?.profilePic != null ? account.profilePic : './no-profile-pic.webp'}
                                             className="avatar"
                                             style={{ "borderRadius": "50%", "width": 200, "height": 200, "objectFit": "cover" }}
                                         // src={require("assets/img/emilyz.jpg")}
