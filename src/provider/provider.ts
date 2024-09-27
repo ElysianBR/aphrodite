@@ -95,6 +95,10 @@ export default class Provider {
         return this.execute('GET', loader, classT)
     }
 
+    public async executePut<T extends { new(...args: any[]): any }>(loader: genericLoaderType, classT: T): Promise<T | ResponseError> {
+        return this.execute('PUT', loader, classT)
+    }
+
     public static getAuthorization() {
         if (window.localStorage.getItem('rememberMe') === "true") {
             return window.localStorage.getItem(Provider.TOKEN_STORE_PREFIX);
