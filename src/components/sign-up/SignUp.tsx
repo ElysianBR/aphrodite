@@ -64,6 +64,8 @@ export default function SignUp() {
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
   const [isAnimated, setIsAnimated] = useState(false);
   const [registerError, setRegisterError] = useState<string | null>(null);  // Estado para erro de registro
+  const [lastNameError, setLastNameError] = React.useState(false);
+  const [lastNameErrorMessage, setLastNameErrorMessage] = React.useState('');
   const router = useRouter()
 
 
