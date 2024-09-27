@@ -68,7 +68,6 @@ export default function SignUp() {
   const [lastNameErrorMessage, setLastNameErrorMessage] = React.useState('');
   const router = useRouter()
 
-
   React.useEffect(() => {
     const savedMode = localStorage.getItem('themeMode');
     if (savedMode) {
@@ -103,6 +102,7 @@ export default function SignUp() {
     const email = document.getElementById('email') as HTMLInputElement;
     const password = document.getElementById('password') as HTMLInputElement;
     const name = document.getElementById('name') as HTMLInputElement;
+    const lastName = document.getElementById('lastName') as HTMLInputElement;
 
     let isValid = true;
 
@@ -115,9 +115,14 @@ export default function SignUp() {
       setEmailErrorMessage('');
     }
 
-    if (!password.value || password.value.length < 6) {
+    if (!password.value ||
+      password.value.length < 9 ||
+      !/[A-Z]/.test(password.value) ||
+      !/[a-z]/.test(password.value) ||
+      !/[0-9]/.test(password.value) ||
+      !/[^A-Za-z0-9]/.test(password.value)) {
       setPasswordError(true);
-      setPasswordErrorMessage('A senha deve conter 6 caracteres.');
+      setPasswordErrorMessage('A senha deve conter no mínimo 9 caracteres, com pelo menos uma letra maiúscula, uma letra minúscula, um número e um símbolo.');
       isValid = false;
     } else {
       setPasswordError(false);
@@ -131,6 +136,15 @@ export default function SignUp() {
     } else {
       setNameError(false);
       setNameErrorMessage('');
+    }
+
+    if (!lastName.value || lastName.value.length < 1) {
+      setLastNameError(true);
+      setLastNameErrorMessage('Sobrenome é obrigatório.');
+      isValid = false;
+    } else {
+      setLastNameError(false);
+      setLastNameErrorMessage('');
     }
 
     return isValid;
@@ -150,7 +164,7 @@ export default function SignUp() {
 
       try {
         const response = await Register.post({ credentials: requestData });
-        
+
         if (response instanceof Register) {
           console.log('Registro bem-sucedido', response);
           setRegisterError(null);
@@ -230,7 +244,7 @@ export default function SignUp() {
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel htmlFor="name">Sobrenome</FormLabel>
+                  <FormLabel htmlFor="lastName">Sobrenome</FormLabel>
                   <TextField
                     autoComplete="lastName"
                     name="lastName"
@@ -238,9 +252,9 @@ export default function SignUp() {
                     fullWidth
                     id="lastName"
                     placeholder="Jordan"
-                    error={nameError}
-                    helperText={nameErrorMessage}
-                    color={nameError ? 'error' : 'primary'}
+                    error={lastNameError}
+                    helperText={lastNameErrorMessage}
+                    color={lastNameError ? 'error' : 'primary'}
                   />
                 </FormControl>
                 <FormControl>
