@@ -1,0 +1,20 @@
+.avatar {
+    background-size: cover;
+    border-radius: 50%;
+    position: relative;
+
+  }
+  
+  .letterPlaceholder {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+  
+  .letterPlaceholder text {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    fill: white;
+  }
+  

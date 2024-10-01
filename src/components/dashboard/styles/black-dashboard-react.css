@@ -19851,25 +19851,25 @@ textarea.form-control {
   width: 250px;
 }
 .card-user .author .block.block-one {
-  background: rgba(225, 78, 202, 0.6);
+  background: rgb(194, 55, 216, 0.6);
   background: -webkit-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: -o-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: -moz-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=10);
@@ -19882,25 +19882,25 @@ textarea.form-control {
   margin-left: -50px;
 }
 .card-user .author .block.block-two {
-  background: rgba(225, 78, 202, 0.6);
+  background: rgb(194, 55, 216, 0.6);
   background: -webkit-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: -o-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: -moz-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=10);
@@ -19913,25 +19913,25 @@ textarea.form-control {
   margin-left: -100px;
 }
 .card-user .author .block.block-three {
-  background: rgba(225, 78, 202, 0.6);
+  background: rgb(194, 55, 216, 0.6);
   background: -webkit-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: -o-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: -moz-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=10);
@@ -19944,25 +19944,25 @@ textarea.form-control {
   right: -45px;
 }
 .card-user .author .block.block-four {
-  background: rgba(225, 78, 202, 0.6);
+  background: rgb(194, 55, 216, 0.6);
   background: -webkit-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: -o-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: -moz-linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   background: linear-gradient(
     to right,
-    rgba(225, 78, 202, 0.6) 0%,
+    rgb(194, 55, 216, 0.6) 0%,
     rgba(225, 78, 202, 0) 100%
   );
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=10);
@@ -19974,14 +19974,60 @@ textarea.form-control {
   margin-top: -25px;
   right: -45px;
 }
-.card-user .avatar {
-  width: 124px;
-  height: 124px;
-  border: 5px solid #2b3553;
-  border-bottom-color: transparent;
-  background-color: transparent;
+
+.card-user .upload-label {
   position: relative;
+  border: 5px solid #faa52d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  margin-bottom: 5%;
+  background-size: cover;
+  overflow: hidden;
+  border-radius: 50%;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+
 }
+
+.upload-label .avatar {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  margin: 0 auto;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.5s ease-in-out;
+}
+
+.upload-label .blur-avatar {
+  filter: blur(5px);
+}
+
+
+.upload-img {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  opacity: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+
+.avatar .letterPlaceholder text {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  fill: white;
+}
+
 .card-user .card-body {
   min-height: 240px;
 }

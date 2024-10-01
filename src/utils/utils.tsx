@@ -53,3 +53,15 @@ export function GetBreakpoint(theme: Theme): 'xs' | 'sm' | 'md' | 'lg' | 'xl' {
 
     return 'xl'
 }
+
+export function getChangedProperties<T extends object>(original: T, modified: T): Partial<T> {
+    const changes: Partial<T> = {};
+    
+    for (const key in modified) {
+        if (original[key] !== modified[key]) {
+            changes[key] = modified[key];
+        }
+    }
+
+    return changes;
+}

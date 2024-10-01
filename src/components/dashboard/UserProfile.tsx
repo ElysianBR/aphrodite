@@ -1,5 +1,5 @@
 import Account from "@/provider/requests/Account";
-import Company from "@/provider/requests/Company";
+import Avatar from '@mui/material/Avatar';
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -20,10 +20,13 @@ import {
 
 // Account Profile Styles
 import "@/components/dashboard/styles/black-dashboard-react.css";
+import ProfilePic from "./ProfilePic";
 
 function UserProfile() {
-    const router = useRouter();
     const [account, setAccount] = React.useState<Account>();
+    const [changed, setChanged] = React.useState(false);
+    const [image, setImage] = React.useState<string>();
+    const [imageChanged, setImageChanged] = React.useState(false);
     const hasFetched = React.useRef(false);
 
 
@@ -31,21 +34,38 @@ function UserProfile() {
         let accountOut = await Account.get()
         if (accountOut instanceof Account) {
             setAccount(accountOut);
+            setImage(accountOut.profilePic)
         }
     }
 
 
     const handleSave = async () => {
-        if (account != undefined) {
-            let accountOut = await Account.put(account)
-            if (accountOut instanceof Account) {
-                setAccount(accountOut);
+        if (changed) {
+            if (account) {
+                let accountOut = await Account.put(account)
+                if (accountOut instanceof Account) {
+                    setAccount(accountOut);
+                    setChanged(false)
+                }
             }
+            return;
+        }
+
+        if (imageChanged) {
+            if (image) {
+                try {
+                    Account.patchProfilePic(image)
+                } catch (err) {
+                    setImage(undefined);
+                }
+            }
+            return;
         }
     }
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setChanged(true);
         const { name, value } = e.target;
         setAccount((prevAccount) => {
             if (prevAccount) {
@@ -68,7 +88,6 @@ function UserProfile() {
         return () => {
         }
     }, [])
-
 
     return (
         <>
@@ -189,7 +208,7 @@ function UserProfile() {
                                 </Form>
                             </CardBody>
                             <CardFooter>
-                                <Button className="btn-fill" color="primary" type="submit" onClick={handleSave}>
+                                <Button className="btn-fill" color="primary" type="submit" onClick={handleSave} disabled={!changed && !imageChanged}>
                                     Salvar
                                 </Button>
                             </CardFooter>
@@ -204,16 +223,14 @@ function UserProfile() {
                                     <div className="block block-two" />
                                     <div className="block block-three" />
                                     <div className="block block-four" />
-                                    <a onClick={(e) => e.preventDefault()}>
-                                        <img
-                                            alt="profile picture"
-                                            src={account != undefined && account?.profilePic != null ? account.profilePic : './no-profile-pic.webp'}
-                                            className="avatar"
-                                            style={{ "borderRadius": "50%", "width": 200, "height": 200, "objectFit": "cover" }}
-                                        // src={require("assets/img/emilyz.jpg")}
-                                        />
-                                        <h5 className="title">{`${account?.firstName} ${account?.lastName}`}</h5>
-                                    </a>
+                                    {/* <Avatar
+                                        alt={account?.firstName}
+                                        src={account?.profilePic}
+                                        className="avatar"
+                                        // style={{ "width": 200, "height": 200}}
+                                    /> */}
+                                    <ProfilePic name={`${account?.firstName}`} imageState={[image, setImage]} setChanged={setImageChanged} />
+                                    <h5 className="title" style={{ fontSize: '25px' }}>{`${account?.firstName} ${account?.lastName}`}</h5>
                                     {/* <p className="description">Ceo/Co-Founder</p> */}
                                 </div>
                                 {/* <div className="card-description">
