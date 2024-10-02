@@ -18,6 +18,7 @@ import ForgotPassword from './ForgotPassword';
 import { GetCaptchaToken } from '../recaptcha/v3/google-captcha-v3';
 import Login from "@/provider/requests/Login";
 import ResponseError from '@/provider/responses/response-error';
+import { getStoredPlan } from '@/utils/planStorage';
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -81,7 +82,12 @@ export default function SignInCard() {
     );
 
     if (data instanceof Login) {
-      router.push("/dashboard");
+      const storedPlan = getStoredPlan();
+      if (storedPlan) {
+        router.push("/payment");
+      } else {
+        router.push("/dashboard");
+      }
     } else if (data instanceof ResponseError) {
       const code = data.getStatusCode();
       const message = data.getMessage();

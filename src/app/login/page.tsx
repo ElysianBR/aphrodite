@@ -9,7 +9,7 @@ import SignInCard from '@/components/sign-in-side/SignInCard';
 import Content from '@/components/sign-in-side/Content';
 import { useRouter } from 'next/navigation';
 import Provider from '@/provider/provider';
-
+import { getStoredPlan } from '@/utils/planStorage';
 
 export default function SignInSide() {
   const router = useRouter();
@@ -23,7 +23,12 @@ export default function SignInSide() {
 
   React.useEffect(() => {
     if (Provider.isAuthenticated()) {
-      router.push('dashboard');
+      const storedPlan = getStoredPlan();
+      if (storedPlan) {
+        router.push('/payment');
+      } else {
+        router.push('/dashboard');
+      }
     }
 
     const savedMode = localStorage.getItem('themeMode') as PaletteMode | null;
