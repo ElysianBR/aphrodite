@@ -4,7 +4,7 @@ import * as React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { getStoredPlan, clearStoredPlan } from '@/utils/planStorage';
-import { Box, Typography, Button, Container, Paper, Grid, TextField, InputAdornment, Tabs, Tab, useTheme } from '@mui/material';
+import { Box, Typography, Button, Container, Paper, Grid, TextField, InputAdornment, Tabs, Tab, useTheme, Divider } from '@mui/material';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import QrCodeIcon from '@mui/icons-material/QrCode';
@@ -175,39 +175,62 @@ export default function Payment() {
   };
 
   return (
-    <>
-      <Container maxWidth="md" sx={{ px: isMobile ? 2 : 3 }}>
-        <Box sx={{ mt: isMobile ? 6 : 12, mb: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {/* Adicione o logo aqui */}
+    <Box sx={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      flexDirection: 'column', 
+      backgroundColor: '#333333' 
+    }}>
+      <Container maxWidth="md" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', py: 4 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center',
+          mb: 4
+        }}>
           <Box 
             sx={{ 
-              mb: 4,
+              mb: 3,
               cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'center'
             }}
             onClick={handleLogoClick}
             className={`logo-login logo-animation ${isAnimated ? 'reverse' : ''}`}
           >
-            <Image src={ElysianLogo} alt="Elysian Logo" width={150} height={75} />
+            <Image src={ElysianLogo} alt="Elysian Logo" width={180} height={90} />
           </Box>
           
           {selectedPlan ? (
-            <Paper elevation={3} sx={{ p: isMobile ? 2 : 4, mt: 4, width: '100%' }}>
+            <Paper 
+              elevation={3} 
+              sx={{ 
+                p: isMobile ? 3 : 4, 
+                width: '100%', 
+                maxWidth: 600,
+                borderRadius: 2,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+              }}
+            >
+              <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#333333', textAlign: 'center', mb: 3 }}>
+                Pagamento
+              </Typography>
+              
               <Grid container spacing={isMobile ? 2 : 4}>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', fontSize: isMobile ? '1rem' : '1.25rem' }}>
-                    Detalhes do Plano
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    Plano selecionado: <strong>{selectedPlan}</strong>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    Preço: <strong>{getPlanPrice(selectedPlan)}</strong>
-                  </Typography>
+                <Grid item xs={12}>
+                  <Paper elevation={1} sx={{ p: 2, backgroundColor: '#f9f9f9', borderRadius: 1 }}>
+                    <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
+                      Detalhes do Plano
+                    </Typography>
+                    <Typography variant="body1">
+                      Plano selecionado: <strong>{selectedPlan}</strong>
+                    </Typography>
+                    <Typography variant="body1">
+                      Preço: <strong>{getPlanPrice(selectedPlan)}</strong>
+                    </Typography>
+                  </Paper>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', fontSize: isMobile ? '1rem' : '1.25rem' }}>
+                <Grid item xs={12}>
+                  <Divider sx={{ my: 2 }} />
+                  <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
                     Escolha a forma de pagamento
                   </Typography>
                   <Tabs 
@@ -322,17 +345,17 @@ export default function Payment() {
                 </Typography>
               </TabPanel>
               
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
                 <Button
                   variant="contained"
                   size="large"
                   onClick={handlePayment}
                   sx={{
-                    px: isMobile ? 2 : 4,
-                    py: isMobile ? 1 : 1.5,
-                    fontSize: isMobile ? '0.9rem' : '1.1rem',
+                    px: isMobile ? 4 : 6,
+                    py: 1.5,
+                    fontSize: '1.1rem',
                     fontWeight: 'bold',
-                    width: isMobile ? '100%' : 'auto',
+                    borderRadius: 50,
                     boxShadow: '0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)',
                     '&:hover': {
                       boxShadow: '0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08)',
@@ -348,6 +371,6 @@ export default function Payment() {
           )}
         </Box>
       </Container>
-    </>
+    </Box>
   );
 }
