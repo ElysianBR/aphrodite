@@ -1,7 +1,6 @@
 import * as React from "react";
 import { AppBar, Toolbar, Typography, Grid, IconButton } from "@mui/material";
-import { Instagram, LinkedIn, MailOutline } from "@mui/icons-material";
-import { relative } from "path";
+import { Instagram, LinkedIn, MailOutline, WhatsApp } from "@mui/icons-material";
 
 export default function Footer() {
   return (
@@ -19,6 +18,8 @@ export default function Footer() {
                 color="inherit"
                 aria-label="Instagram"
                 href="https://www.instagram.com/elysianbrazil"
+                target="_blank"
+                rel="noopener noreferrer"
                 sx={{
                   fontSize: 28,
                   '&:hover': {
@@ -33,6 +34,8 @@ export default function Footer() {
                 color="inherit"
                 aria-label="LinkedIn"
                 href="https://br.linkedin.com/company/elysianbr"
+                target="_blank"
+                rel="noopener noreferrer"
                 sx={{
                   fontSize: 28,
                   '&:hover': {
@@ -56,6 +59,22 @@ export default function Footer() {
                 }}
               >
                 <MailOutline fontSize="inherit" />
+              </IconButton>
+              <IconButton
+                color="inherit"
+                aria-label="WhatsApp"
+                href="https://wa.me/5554996030635"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  fontSize: 28,
+                  '&:hover': {
+                    color: '#25D366',
+                    transform: 'scale(1.2)',
+                  }
+                }}
+              >
+                <WhatsApp fontSize="inherit" />
               </IconButton>
             </Grid>
           </Grid>

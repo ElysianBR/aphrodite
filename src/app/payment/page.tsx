@@ -2,11 +2,12 @@
 
 import * as React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { getStoredPlan, clearStoredPlan } from '@/utils/planStorage';
-import { Box, Typography, Button, Container, Paper, Grid, TextField, InputAdornment } from '@mui/material';
+import { Box, Typography, Button, Container, Paper, Grid, TextField, InputAdornment, Tabs, Tab } from '@mui/material';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import QrCodeIcon from '@mui/icons-material/QrCode';
 import EventIcon from '@mui/icons-material/Event';
 import LockIcon from '@mui/icons-material/Lock';
 import ElysianLogo from '/public/logo_wo_bg.png';
@@ -32,6 +33,7 @@ const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardName, expiryDat
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
+      mb: 3,
     }}
   >
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -54,13 +56,47 @@ const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardName, expiryDat
   </Paper>
 );
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`payment-tabpanel-${index}`}
+      aria-labelledby={`payment-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `payment-tab-${index}`,
+    'aria-controls': `payment-tabpanel-${index}`,
+  };
+}
+
 export default function Payment() {
-  const [isAnimated, setIsAnimated] = React.useState(false);
   const [selectedPlan, setSelectedPlan] = React.useState<string | null>(null);
   const [cardNumber, setCardNumber] = React.useState<string>('');
   const [cardName, setCardName] = React.useState<string>('');
   const [expiryDate, setExpiryDate] = React.useState<string>('');
   const [cvv, setCvv] = React.useState<string>('');
+  const [isAnimated, setIsAnimated] = React.useState(false);
+  const [tabValue, setTabValue] = React.useState(0);
   const router = useRouter();
 
   React.useEffect(() => {
@@ -68,8 +104,14 @@ export default function Payment() {
     setSelectedPlan(plan);
   }, []);
 
+  const handleLogoClick = () => {
+    setIsAnimated(true);
+    setTimeout(() => {
+      router.push('/');
+    }, 1000);
+  };
+
   const handlePayment = () => {
-    // Lógica de pagamento
     alert('Pagamento processado com sucesso!');
     clearStoredPlan();
     router.push('/dashboard');
@@ -90,6 +132,10 @@ export default function Payment() {
     }
   };
 
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+  };
+
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
     setCardNumber(value);
@@ -101,18 +147,6 @@ export default function Payment() {
 
   const handleExpiryDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExpiryDate(e.target.value);
-  };
-
-  const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCvv(e.target.value);
-  };
-
-  const handleLogoClick = () => {
-    setIsAnimated(true);
-    // A animação dura 1 segundo, então vamos esperar 1 segundo antes de redirecionar
-    setTimeout(() => {
-      router.push('/');
-    }, 1000);
   };
 
   return (
@@ -131,7 +165,7 @@ export default function Payment() {
         <Image src={ElysianLogo} alt="Elysian Logo" width={150} height={50} />
       </Box>
       <Container maxWidth="md">
-        <Box sx={{ mt: 12, mb: 4 }}> {/* Aumentei o mt para dar espaço ao logo */}
+        <Box sx={{ mt: 12, mb: 4 }}>
           <Typography variant="h4" gutterBottom align="center" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
             Finalizar Pagamento
           </Typography>
@@ -148,75 +182,107 @@ export default function Payment() {
                   <Typography variant="body1" gutterBottom>
                     Preço: <strong>{getPlanPrice(selectedPlan)}</strong>
                   </Typography>
-                  <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
-                    <CreditCard cardNumber={cardNumber} cardName={cardName} expiryDate={expiryDate} />
-                  </Box>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
-                    Informações de Pagamento
+                    Escolha a forma de pagamento
                   </Typography>
-                  <TextField
-                    fullWidth
-                    label="Número do Cartão"
-                    variant="outlined"
-                    margin="normal"
-                    value={cardNumber}
-                    onChange={handleCardNumberChange}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <CreditCardIcon color="action" />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <TextField
-                    fullWidth
-                    label="Nome no Cartão"
-                    variant="outlined"
-                    margin="normal"
-                    value={cardName}
-                    onChange={handleCardNameChange}
-                  />
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      <TextField
-                        fullWidth
-                        label="Data de Expiração"
-                        variant="outlined"
-                        margin="normal"
-                        value={expiryDate}
-                        onChange={handleExpiryDateChange}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <EventIcon color="action" />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        fullWidth
-                        label="CVV"
-                        variant="outlined"
-                        margin="normal"
-                        value={cvv}
-                        onChange={handleCvvChange}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <LockIcon color="action" />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
+                  <Tabs value={tabValue} onChange={handleTabChange} aria-label="payment options" centered>
+                    <Tab icon={<CreditCardIcon />} label="Cartão" {...a11yProps(0)} />
+                    <Tab icon={<ReceiptIcon />} label="Boleto" {...a11yProps(1)} />
+                    <Tab icon={<QrCodeIcon />} label="PIX" {...a11yProps(2)} />
+                  </Tabs>
                 </Grid>
               </Grid>
+              
+              <TabPanel value={tabValue} index={0}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+                  <CreditCard cardNumber={cardNumber} cardName={cardName} expiryDate={expiryDate} />
+                </Box>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Número do Cartão"
+                      variant="outlined"
+                      value={cardNumber}
+                      onChange={handleCardNumberChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <CreditCardIcon color="action" />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Nome no Cartão"
+                      variant="outlined"
+                      value={cardName}
+                      onChange={handleCardNameChange}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      fullWidth
+                      label="Data de Expiração"
+                      variant="outlined"
+                      value={expiryDate}
+                      onChange={handleExpiryDateChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EventIcon color="action" />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      fullWidth
+                      label="CVV"
+                      variant="outlined"
+                      value={cvv}
+                      onChange={(e) => setCvv(e.target.value)}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LockIcon color="action" />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </TabPanel>
+              <TabPanel value={tabValue} index={1}>
+                <Typography variant="body1" gutterBottom>
+                  Clique no botão abaixo para gerar o boleto:
+                </Typography>
+                <Button
+                  variant="outlined"
+                  startIcon={<ReceiptIcon />}
+                  onClick={() => alert('Boleto gerado! Verifique seu e-mail.')}
+                >
+                  Gerar Boleto
+                </Button>
+              </TabPanel>
+              <TabPanel value={tabValue} index={2}>
+                <Typography variant="body1" gutterBottom>
+                  Escaneie o QR Code abaixo para pagar com PIX:
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
+                  <QrCodeIcon sx={{ fontSize: 150 }} />
+                </Box>
+                <Typography variant="body2" align="center">
+                  Ou use o código PIX: 123456789
+                </Typography>
+              </TabPanel>
+              
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4 }}>
                 <Button
                   variant="contained"
@@ -233,7 +299,7 @@ export default function Payment() {
                     }
                   }}
                 >
-                  Efetuar Pagamento
+                  Finalizar Pagamento
                 </Button>
               </Box>
             </Paper>
