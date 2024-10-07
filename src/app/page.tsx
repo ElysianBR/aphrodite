@@ -18,7 +18,7 @@ const linksArray: Link[] = [
   { text: "Home", href: "#home", id: "home" },
   { text: "Sobre", href: "#about", id: "about" },
   { text: "Planos", href: "#plans", id: "plans" },
-  { text: "Contato", href: "#contact", id: "contact" },
+  // { text: "Contato", href: "#contact", id: "contact" },
   { text: "Acesso", href: "/login", id: "login" },
 ];
 
@@ -36,7 +36,7 @@ export default function Home() {
           <HomeSection />
           <AboutSection isMobile={isMobile} />
           <PlansSection isMobile={isMobile} />
-          <ContactSection isMobile={isMobile} />
+          {/* <ContactSection isMobile={isMobile} /> */}
           <Footer />
         </Box>
       </ScrollbarCustom>

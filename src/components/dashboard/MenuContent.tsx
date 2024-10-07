@@ -15,8 +15,8 @@ import MainGrid from './MainGrid';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import ElysianIcon from '/public/logo_wo_bg.png'; // Importa o logo
-import '/src/app/signup/signup.css'; // Para reutilizar a animação
+import ElysianIcon from '/public/logo_wo_bg.png';
+import '/src/app/signup/signup.css';
 import { TypeListItems } from './SideMenu';
 import Documentation from './Documentation';
 
@@ -35,14 +35,14 @@ export default function MenuContent(props: MenuContentProps) {
     { context: 'secondary', text: 'Ajuda', icon: <InfoRoundedIcon />, selected: false },
   ]);
 
-  const [isAnimated, setIsAnimated] = useState(false); // Para animação
+  const [isAnimated, setIsAnimated] = useState(false);
 
   const handleMouseEnter = () => {
-    setIsAnimated(true);  // Ativa a animação
+    setIsAnimated(true);
   };
 
   const handleMouseLeave = () => {
-    setIsAnimated(false);  // Reverte a animação
+    setIsAnimated(false);
   };
 
   const selectItem = (index: number) => {

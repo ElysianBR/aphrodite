@@ -1,12 +1,21 @@
 import { Box, Container, Grid, Typography, Button } from "@mui/material";
 import Link from 'next/link';
 import { FC } from "react";
+import { storePlan } from '@/utils/planStorage';
+import { useRouter } from 'next/navigation';
 
 type PlansSectionProps = {
     isMobile: boolean;
 };
 
 const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
+    const router = useRouter();
+
+    const handlePlanSelection = (plan: string) => {
+        storePlan(plan);
+        router.push('/login');
+    };
+
     return (
         <section id="plans">
             <Box
@@ -79,6 +88,7 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                                 color: '#ffffff'
                                             }
                                         }}
+                                        onClick={() => handlePlanSelection('Plano Mensal')}
                                     >
                                         Escolher plano
                                     </Button>
@@ -130,6 +140,7 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                                 color: '#ffffff'
                                             }
                                         }}
+                                        onClick={() => handlePlanSelection('Plano Anual')}
                                     >
                                         Escolher plano
                                     </Button>
@@ -179,6 +190,7 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                                 color: '#ffffff'
                                             }
                                         }}
+                                        onClick={() => handlePlanSelection('Integração Personalizada')}
                                     >
                                         Escolher plano
                                     </Button>
@@ -228,6 +240,7 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                                 color: '#ffffff'
                                             }
                                         }}
+                                        onClick={() => handlePlanSelection('Transações Independentes')}
                                     >
                                         Saiba Mais
                                     </Button>
