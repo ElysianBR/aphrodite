@@ -1,5 +1,5 @@
 import Provider from "../provider";
-import ResponseError from "../responses/response-error";
+import ResponseError from "../response-error";
 import { JsonObject, JsonProperty } from "json2typescript";
 import DateConvert from "../converts/date-convert";
 

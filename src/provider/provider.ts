@@ -1,5 +1,5 @@
 import { JsonConvert, OperationMode, ValueCheckingMode } from "json2typescript";
-import ResponseError from "./responses/response-error";
+import ResponseError from "./response-error";
 
 export type genericLoaderType = {
     path: string
