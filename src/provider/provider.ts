@@ -1,5 +1,5 @@
 import { JsonConvert, OperationMode, ValueCheckingMode } from "json2typescript";
-import ResponseError from "./responses/response-error";
+import ResponseError from "./response-error";
 
 export type genericLoaderType = {
     path: string
@@ -86,17 +86,74 @@ export default class Provider {
         }
     }
 
+
+    public async executeSimple(method: string, loader: genericLoaderType): Promise<void | ResponseError> {
+        try {
+
+            let simpleHeaders = this.resolveHeaders(loader.headers);
+            simpleHeaders.set('Content-Type', 'text/plain')
+
+            const response = await fetch(
+                `${this.URI}/${loader.path}${this.resolveQueryParams(loader.queryParams)}`,
+                {
+                    method: method,
+                    headers: simpleHeaders,
+                    body: loader.data,
+                }
+            );
+
+            this.store(response);
+
+            const json = await response.json();
+
+            if (response.ok) {
+                return;
+            }
+
+            return this.deserializeResponse(json, ResponseError)
+        } catch (err) {
+            console.debug(err);
+
+            if (err instanceof Error) {
+                return new ResponseError(0, err.name, err.message);
+            }
+
+            return new ResponseError(-1, "UNEXPECTED ERROR", "An unexpected error has occurred, contact your administrator.");
+
+        }
+    }
+
+
     public async executePost<T extends { new(...args: any[]): any }>(loader: genericLoaderType, classT: T): Promise<T | ResponseError> {
         return this.execute('POST', loader, classT)
     }
 
+    public async executePostSimple(loader: genericLoaderType): Promise<void | ResponseError> {
+        return this.executeSimple('POST', loader)
+    }
 
     public async executeGet<T extends { new(...args: any[]): any }>(loader: genericLoaderType, classT: T): Promise<T | ResponseError> {
         return this.execute('GET', loader, classT)
     }
 
+    public async executeGetSimple(loader: genericLoaderType): Promise<void | ResponseError> {
+        return this.executeSimple('GET', loader)
+    }
+
     public async executePut<T extends { new(...args: any[]): any }>(loader: genericLoaderType, classT: T): Promise<T | ResponseError> {
         return this.execute('PUT', loader, classT)
+    }
+
+    public async executePutSimple(loader: genericLoaderType): Promise<void | ResponseError> {
+        return this.executeSimple('PUT', loader)
+    }
+
+    public async executePatch<T extends { new(...args: any[]): any }>(loader: genericLoaderType, classT: T): Promise<T | ResponseError> {
+        return this.execute('PATCH', loader, classT)
+    }
+
+    public async executePatchSimple(loader: genericLoaderType): Promise<void | ResponseError> {
+        return this.executeSimple('PATCH', loader)
     }
 
     public static getAuthorization() {

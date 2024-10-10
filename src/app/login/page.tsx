@@ -10,6 +10,7 @@ import Content from '@/components/sign-in-side/Content';
 import { useRouter } from 'next/navigation';
 import Provider from '@/provider/provider';
 import { getStoredPlan } from '@/utils/planStorage';
+import { PopupProvider } from '@/provider/popup-provider';
 
 export default function SignInSide() {
   const router = useRouter();
@@ -45,41 +46,43 @@ export default function SignInSide() {
 
   return (
     isClient ?
-      <ThemeProvider theme={showCustomTheme ? SignInSideTheme : defaultTheme}>
-        <CssBaseline enableColorScheme />
-        <Stack
-          direction="column"
-          component="main"
-          sx={[
-            {
-              justifyContent: 'space-between',
-              height: { xs: 'auto', md: '100%' },
-            },
-            (theme) => ({
-              backgroundImage:
-                'radial-gradient(ellipse at 70% 51%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-              backgroundSize: 'cover',
-              ...theme.applyStyles('dark', {
-                backgroundImage:
-                  'radial-gradient(at 70% 51%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
-              }),
-            }),
-          ]}
-        >
+      <PopupProvider >
+        <ThemeProvider theme={showCustomTheme ? SignInSideTheme : defaultTheme}>
+          <CssBaseline enableColorScheme />
           <Stack
-            direction={{ xs: 'column-reverse', md: 'row' }}
-            sx={{
-              justifyContent: 'center',
-              gap: { xs: 6, sm: 12 },
-              p: 2,
-              m: 'auto',
-            }}
+            direction="column"
+            component="main"
+            sx={[
+              {
+                justifyContent: 'space-between',
+                height: { xs: 'auto', md: '100%' },
+              },
+              (theme) => ({
+                backgroundImage:
+                  'radial-gradient(ellipse at 70% 51%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
+                backgroundSize: 'cover',
+                ...theme.applyStyles('dark', {
+                  backgroundImage:
+                    'radial-gradient(at 70% 51%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
+                }),
+              }),
+            ]}
           >
-            <Content />
-            <SignInCard />
+            <Stack
+              direction={{ xs: 'column-reverse', md: 'row' }}
+              sx={{
+                justifyContent: 'center',
+                gap: { xs: 6, sm: 12 },
+                p: 2,
+                m: 'auto',
+              }}
+            >
+              <Content />
+              <SignInCard />
+            </Stack>
           </Stack>
-        </Stack>
-      </ThemeProvider>
+        </ThemeProvider>
+      </PopupProvider>
       : null
   );
 }

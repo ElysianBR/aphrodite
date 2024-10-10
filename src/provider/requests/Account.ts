@@ -1,5 +1,5 @@
 import Provider from "../provider";
-import ResponseError from "../responses/response-error";
+import ResponseError from "../response-error";
 import { JsonObject, JsonProperty } from "json2typescript";
 import DateConvert from "../converts/date-convert";
 
@@ -79,5 +79,9 @@ export default class Account {
 
     static async put(account: Account): Promise<typeof Account | ResponseError> {
         return await new Provider().executePut({ path: Account.PATH, data: account }, Account);
+    }
+
+    static async patchProfilePic(dataPic: string): Promise<void | ResponseError> {
+        return await new Provider().executePatchSimple({ path: `${Account.PATH}/profile-pic`, data: dataPic });
     }
 }

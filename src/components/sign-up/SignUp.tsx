@@ -67,6 +67,7 @@ export default function SignUp() {
   const [lastNameError, setLastNameError] = React.useState(false);
   const [lastNameErrorMessage, setLastNameErrorMessage] = React.useState('');
   const router = useRouter()
+  const [isClient, setIsClient] = React.useState(false)
 
   React.useEffect(() => {
     const savedMode = localStorage.getItem('themeMode');
@@ -78,17 +79,9 @@ export default function SignUp() {
       ).matches;
       setMode(systemPrefersDark ? 'dark' : 'light');
     }
+
+    setIsClient(true)
   }, []);
-
-  const toggleColorMode = () => {
-    const newMode = mode === 'dark' ? 'light' : 'dark';
-    setMode(newMode);
-    localStorage.setItem('themeMode', newMode);
-  };
-
-  const toggleCustomTheme = () => {
-    setShowCustomTheme((prev) => !prev);
-  };
 
   const handleMouseEnter = () => {
     setIsAnimated(true);
@@ -181,12 +174,7 @@ export default function SignUp() {
   };
 
   return (
-    <TemplateFrame
-      toggleCustomTheme={toggleCustomTheme}
-      showCustomTheme={showCustomTheme}
-      mode={mode}
-      toggleColorMode={toggleColorMode}
-    >
+    isClient ?
       <ThemeProvider theme={showCustomTheme ? SignUpTheme : defaultTheme}>
         <CssBaseline enableColorScheme />
         <SignUpContainer direction="column" justifyContent="space-between">
@@ -315,6 +303,6 @@ export default function SignUp() {
           </Stack>
         </SignUpContainer>
       </ThemeProvider>
-    </TemplateFrame>
+      : null
   );
 }

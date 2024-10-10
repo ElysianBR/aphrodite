@@ -13,6 +13,8 @@ import OptionsMenu from './OptionsMenu';
 import Account from '@/provider/requests/Account';
 import Provider from '@/provider/provider';
 import { useRouter } from "next/navigation";
+import { showPopError } from '@/utils/popup-utils';
+import { PopupProvider, usePopup } from '@/provider/popup-provider';
 
 const drawerWidth = 240;
 
@@ -47,13 +49,17 @@ export default function SideMenu({ viewState }: SideMenuProps) {
   const [account, setAccount] = React.useState<Account>()
   const hasFetched = React.useRef(false);
 
+  const popup = usePopup();
+
   const findUser = async () => {
     let accountOut = await Account.get()
     if (accountOut instanceof Account) {
       setAccount(accountOut);
     } else {
-      Provider.unStore()
-      router.push("/login")
+      showPopError(popup, accountOut, () => {
+        Provider.unStore()
+        router.push("/login")
+      })
     }
   }
 
@@ -115,7 +121,7 @@ export default function SideMenu({ viewState }: SideMenuProps) {
             {`${account != undefined ? account.email : ""}`}
           </Typography>
         </Box>
-        <OptionsMenu viewState={viewState}  />
+        <OptionsMenu viewState={viewState} />
       </Stack>
     </Drawer>
   );

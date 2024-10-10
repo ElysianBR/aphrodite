@@ -17,8 +17,11 @@ import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import { GetCaptchaToken } from '../recaptcha/v3/google-captcha-v3';
 import Login from "@/provider/requests/Login";
-import ResponseError from '@/provider/responses/response-error';
+
 import { getStoredPlan } from '@/utils/planStorage';
+import ResponseError from '@/provider/response-error';
+import { showPopError } from '@/utils/popup-utils';
+import { PopupProvider, usePopup } from '@/provider/popup-provider';
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -49,6 +52,7 @@ export default function SignInCard() {
   const router = useRouter();
   const captchaRef: React.ForwardedRef<GetCaptchaToken> = React.useRef(null);
 
+  const popup = usePopup();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -88,10 +92,8 @@ export default function SignInCard() {
       } else {
         router.push("/dashboard");
       }
-    } else if (data instanceof ResponseError) {
-      const code = data.getStatusCode();
-      const message = data.getMessage();
-      alert(`${code} - ${message}`);
+    } else {
+      showPopError(popup, data)
     }
   };
 
@@ -123,91 +125,91 @@ export default function SignInCard() {
   };
 
   return (
-    <Card variant="outlined">
-      <Typography
-        component="h1"
-        variant="h4"
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          fontSize: 'clamp(2rem, 10vw, 2.15rem)',
-        }}
-      >
-        Acesso
-      </Typography>
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        noValidate
-        sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
-      >
-        <FormControl>
-          <FormLabel htmlFor="email">Email</FormLabel>
-          <TextField
-            error={emailError}
-            helperText={emailErrorMessage}
-            id="email"
-            type="email"
-            name="email"
-            placeholder="exemplo@email.com"
-            autoComplete="email"
-            autoFocus
-            required
-            fullWidth
-            variant="outlined"
-            color={emailError ? 'error' : 'primary'}
-            sx={{ ariaLabel: 'email' }}
-          />
-        </FormControl>
-        <FormControl>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <FormLabel htmlFor="password">Senha</FormLabel>
-            <Link
-              component="button"
-              onClick={handleClickOpen}
-              variant="body2"
-              sx={{ alignSelf: 'baseline' }}
-            >
-              Esqueceu sua senha?
-            </Link>
-          </Box>
-          <TextField
-            error={passwordError}
-            helperText={passwordErrorMessage}
-            name="password"
-            placeholder="••••••"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            autoFocus
-            required
-            fullWidth
-            variant="outlined"
-            color={passwordError ? 'error' : 'primary'}
-          />
-        </FormControl>
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" onChange={(e) => setRememberMe(e.target.checked)} />}
-          label="Lembrar de mim"
-        />
-        <ForgotPassword open={open} handleClose={handleClose} />
-        <Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
-          Entrar
-        </Button>
-        <Typography sx={{ textAlign: 'center' }}>
-          Você não tem uma conta?{' '}
-          <span>
-            <Link
-              href="/signup"
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
-            >
-              Cadastre-se
-            </Link>
-          </span>
+      <Card variant="outlined">
+        <Typography
+          component="h1"
+          variant="h4"
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: 'clamp(2rem, 10vw, 2.15rem)',
+          }}
+        >
+          Acesso
         </Typography>
-      </Box>
-      {/* <Divider>ou</Divider>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
+        >
+          <FormControl>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <TextField
+              error={emailError}
+              helperText={emailErrorMessage}
+              id="email"
+              type="email"
+              name="email"
+              placeholder="exemplo@email.com"
+              autoComplete="email"
+              autoFocus
+              required
+              fullWidth
+              variant="outlined"
+              color={emailError ? 'error' : 'primary'}
+              sx={{ ariaLabel: 'email' }}
+            />
+          </FormControl>
+          <FormControl>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <FormLabel htmlFor="password">Senha</FormLabel>
+              <Link
+                component="button"
+                onClick={handleClickOpen}
+                variant="body2"
+                sx={{ alignSelf: 'baseline' }}
+              >
+                Esqueceu sua senha?
+              </Link>
+            </Box>
+            <TextField
+              error={passwordError}
+              helperText={passwordErrorMessage}
+              name="password"
+              placeholder="••••••"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              autoFocus
+              required
+              fullWidth
+              variant="outlined"
+              color={passwordError ? 'error' : 'primary'}
+            />
+          </FormControl>
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" onChange={(e) => setRememberMe(e.target.checked)} />}
+            label="Lembrar de mim"
+          />
+          <ForgotPassword open={open} handleClose={handleClose} />
+          <Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
+            Entrar
+          </Button>
+          <Typography sx={{ textAlign: 'center' }}>
+            Você não tem uma conta?{' '}
+            <span>
+              <Link
+                href="/signup"
+                variant="body2"
+                sx={{ alignSelf: 'center' }}
+              >
+                Cadastre-se
+              </Link>
+            </span>
+          </Typography>
+        </Box>
+        {/* <Divider>ou</Divider>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Button
           type="submit"
@@ -228,6 +230,6 @@ export default function SignInCard() {
           Entre com o Facebook
         </Button>
       </Box> */}
-    </Card>
+      </Card>
   );
 }

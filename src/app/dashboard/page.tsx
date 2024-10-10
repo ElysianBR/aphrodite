@@ -14,6 +14,7 @@ import getDashboardTheme from '@/components/dashboard/theme/getDashboardTheme';
 import SideMenu, { TypeListItems } from '@/components/dashboard/SideMenu';
 import AppNavbar from '@/components/dashboard/AppNavbar';
 import Header from '@/components/dashboard/Header';
+import { PopupProvider } from '@/provider/popup-provider';
 
 export default function DashboardTemplate() {
   const [view, setView] = React.useState<TypeListItems>();
@@ -36,6 +37,7 @@ export default function DashboardTemplate() {
   }, []);
 
   return (
+    <PopupProvider>
       <ThemeProvider theme={showCustomTheme ? dashboardTheme : defaultTheme}>
         <CssBaseline enableColorScheme />
         <Box sx={{ display: 'flex' }}>
@@ -64,5 +66,6 @@ export default function DashboardTemplate() {
           </Box>
         </Box>
       </ThemeProvider>
+    </PopupProvider>
   );
 }
