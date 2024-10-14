@@ -35,7 +35,7 @@ export default function MenuContent(props: MenuContentProps) {
     { context: 'main', text: 'Contratos', icon: <PeopleRoundedIcon />, selected: false },
     { context: 'main', text: 'Documentação', icon: <AssignmentRoundedIcon />, selected: false, element: <Documentation /> },
     { context: 'main', text: 'Financeiro', icon: <AccountBalanceWalletRoundedIcon />, selected: false, element: <Financeiro /> },
-    { context: 'secondary', text: 'Configurações', icon: <SettingsRoundedIcon />, selected: true },
+    // { context: 'secondary', text: 'Configurações', icon: <SettingsRoundedIcon />, selected: true },
     { context: 'main', text: 'Ajuda', icon: <InfoRoundedIcon />, selected: false, element: <ContactCards /> },
   ]);
 

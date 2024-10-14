@@ -13,7 +13,8 @@ const contactOptions: ContactOption[] = [
   { icon: <Instagram />, text: 'Instagram', link: 'https://www.instagram.com/elysianbrazil', color: '#E4405F' },
   { icon: <LinkedIn />, text: 'LinkedIn', link: 'https://br.linkedin.com/company/elysianbr', color: '#0077B5' },
   { icon: <MailOutline />, text: 'E-mail', link: 'mailto:contato@elysian.com.br', color: '#D44638' },
-  { icon: <WhatsApp />, text: 'WhatsApp', link: 'https://wa.me/5554996030635', color: '#25D366' },
+  { icon: <WhatsApp />, text: 'WhatsApp 1', link: 'https://wa.me/5554981688639', color: '#25D366' },
+  { icon: <WhatsApp />, text: 'WhatsApp 2', link: 'https://wa.me/5554996030635', color: '#25D366' },
 ];
 
 const ContactCards: React.FC = () => {
@@ -22,7 +23,7 @@ const ContactCards: React.FC = () => {
   return (
     <Box sx={{ flexGrow: 1, p: 4 }}>
       <Typography variant="h4" gutterBottom sx={{ mb: 4, fontWeight: 'bold', color: theme.palette.primary.main }}>
-        Entre em Contato Conosco
+        Entre em contato conosco:
       </Typography>
       <Grid container spacing={4}>
         {contactOptions.map((option, idx) => (
