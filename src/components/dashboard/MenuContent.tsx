@@ -21,6 +21,7 @@ import { TypeListItems } from './SideMenu';
 import Documentation from './Documentation';
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 import Financeiro from '@/components/dashboard/Financeiro';
+import ContactCards from './ContactCards';
 
 interface MenuContentProps {
   render: boolean;
@@ -35,10 +36,11 @@ export default function MenuContent(props: MenuContentProps) {
     { context: 'main', text: 'Documentação', icon: <AssignmentRoundedIcon />, selected: false, element: <Documentation /> },
     { context: 'main', text: 'Financeiro', icon: <AccountBalanceWalletRoundedIcon />, selected: false, element: <Financeiro /> },
     { context: 'secondary', text: 'Configurações', icon: <SettingsRoundedIcon />, selected: true },
-    { context: 'secondary', text: 'Ajuda', icon: <InfoRoundedIcon />, selected: false },
+    { context: 'main', text: 'Ajuda', icon: <InfoRoundedIcon />, selected: false, element: <ContactCards /> },
   ]);
 
   const [isAnimated, setIsAnimated] = useState(false);
+  const [showContactCards, setShowContactCards] = useState(false);
 
   const handleMouseEnter = () => {
     setIsAnimated(true);
@@ -63,6 +65,11 @@ export default function MenuContent(props: MenuContentProps) {
       selectItem(0);
     }
   }, [props.render]);
+
+  const handleHelpClick = () => {
+    setShowContactCards(!showContactCards);
+    selectItem(mainListItems.findIndex(item => item.text === 'Ajuda'));
+  };
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between', position: 'relative' }}>
@@ -97,11 +104,12 @@ export default function MenuContent(props: MenuContentProps) {
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               selected={item.selected}
-              onClick={() => selectItem(index)}
+              onClick={item.text === 'Ajuda' ? handleHelpClick : () => selectItem(index)}
             >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>
+            {item.text === 'Ajuda' && showContactCards && <ContactCards />}
           </ListItem>
         ) : null)}
       </List>
