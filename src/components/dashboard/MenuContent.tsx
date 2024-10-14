@@ -19,6 +19,8 @@ import ElysianIcon from '/public/logo_wo_bg.png';
 import '/src/app/signup/signup.css';
 import { TypeListItems } from './SideMenu';
 import Documentation from './Documentation';
+import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
+import Financeiro from '@/components/dashboard/Financeiro';
 
 interface MenuContentProps {
   render: boolean;
@@ -31,6 +33,7 @@ export default function MenuContent(props: MenuContentProps) {
     { context: 'main', text: 'Analises', icon: <AnalyticsRoundedIcon />, selected: false },
     { context: 'main', text: 'Contratos', icon: <PeopleRoundedIcon />, selected: false },
     { context: 'main', text: 'Documentação', icon: <AssignmentRoundedIcon />, selected: false, element: <Documentation /> },
+    { context: 'main', text: 'Financeiro', icon: <AccountBalanceWalletRoundedIcon />, selected: false, element: <Financeiro /> },
     { context: 'secondary', text: 'Configurações', icon: <SettingsRoundedIcon />, selected: true },
     { context: 'secondary', text: 'Ajuda', icon: <InfoRoundedIcon />, selected: false },
   ]);
