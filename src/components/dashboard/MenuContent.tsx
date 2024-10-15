@@ -22,6 +22,9 @@ import Documentation from './Documentation';
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 import Financeiro from '@/components/dashboard/Financeiro';
 import ContactCards from './ContactCards';
+import Home from './Home';
+import Analises from './Analises';
+import Contratos from './Contratos';
 
 interface MenuContentProps {
   render: boolean;
@@ -30,9 +33,9 @@ interface MenuContentProps {
 
 export default function MenuContent(props: MenuContentProps) {
   const [mainListItems, setMainListItems] = React.useState<TypeListItems[]>([
-    { context: 'main', text: 'Home', icon: <HomeRoundedIcon />, selected: true, element: <MainGrid /> },
-    { context: 'main', text: 'Analises', icon: <AnalyticsRoundedIcon />, selected: false },
-    { context: 'main', text: 'Contratos', icon: <PeopleRoundedIcon />, selected: false },
+    { context: 'main', text: 'Home', icon: <HomeRoundedIcon />, selected: true, element: <Home /> },
+    { context: 'main', text: 'Análises', icon: <AnalyticsRoundedIcon />, selected: false, element: <Analises /> },
+    { context: 'main', text: 'Contratos', icon: <PeopleRoundedIcon />, selected: false, element: <Contratos /> },
     { context: 'main', text: 'Documentação', icon: <AssignmentRoundedIcon />, selected: false, element: <Documentation /> },
     { context: 'main', text: 'Financeiro', icon: <AccountBalanceWalletRoundedIcon />, selected: false, element: <Financeiro /> },
     // { context: 'secondary', text: 'Configurações', icon: <SettingsRoundedIcon />, selected: true },
