@@ -20,28 +20,25 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
         <section id="plans">
             <Box
                 color="primary.contrastText"
-                py={8}
-                style={{
-                    backgroundImage: 'url(/path/to/your/background-image.jpg)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                py={12}
+                sx={{
+                    background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
                 }}
             >
-                <Container>
+                <Container maxWidth="lg">
                     <Typography 
-                        variant="h3" 
+                        variant="h2" 
                         textAlign="center" 
                         fontWeight="bold"
-                        bgcolor="secondary.main" //comentar se achar feio
                         gutterBottom
-                        style={{ 
+                        sx={{ 
                             fontFamily: "'Roboto', sans-serif", 
                             color: "#fff", 
-                            padding: '20px 0',  // Aumenta o espaçamento vertical
-                            marginBottom: '40px' // Adiciona espaço abaixo do título
+                            marginBottom: '60px',
+                            textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
                         }}
                     >
-                        Escolha um plano
+                        Escolha o Plano Ideal para Você
                     </Typography>
                     <Grid container spacing={4} justifyContent="center">
                         <Grid item xs={12} sm={6} md={3}>
@@ -50,11 +47,19 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                 flexDirection="column"
                                 alignItems="center"
                                 p={4}
-                                bgcolor="secondary.main"
-                                borderRadius={2}
-                                boxShadow={3}
+                                bgcolor="rgba(255, 255, 255, 0.1)"
+                                borderRadius={4}
+                                boxShadow="0 8px 32px 0 rgba(31, 38, 135, 0.37)"
                                 textAlign="center"
                                 height="100%"
+                                sx={{
+                                    backdropFilter: 'blur(4px)',
+                                    border: '1px solid rgba(255, 255, 255, 0.18)',
+                                    transition: 'transform 0.3s ease-in-out',
+                                    '&:hover': {
+                                        transform: 'translateY(-10px)',
+                                    }
+                                }}
                             >
                                 <Typography variant="h5" fontWeight="bold" gutterBottom>
                                     Plano Mensal
@@ -81,12 +86,17 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                         type="submit"
                                         fullWidth
                                         sx={{
-                                            bgcolor: 'rgb(35, 35, 35)',
+                                            mt: 'auto',
+                                            bgcolor: 'primary.main',
                                             color: '#ffffff',
                                             '&:hover': {
-                                                bgcolor: 'rgb(35, 35, 35)',
-                                                color: '#ffffff'
-                                            }
+                                                bgcolor: 'primary.dark',
+                                            },
+                                            borderRadius: '50px',
+                                            padding: '12px 0',
+                                            fontWeight: 'bold',
+                                            textTransform: 'none',
+                                            fontSize: '1rem',
                                         }}
                                         onClick={() => handlePlanSelection('Plano Mensal')}
                                     >
@@ -101,11 +111,19 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                 flexDirection="column"
                                 alignItems="center"
                                 p={4}
-                                bgcolor="secondary.main"
-                                borderRadius={2}
-                                boxShadow={3}
+                                bgcolor="rgba(255, 255, 255, 0.1)"
+                                borderRadius={4}
+                                boxShadow="0 8px 32px 0 rgba(31, 38, 135, 0.37)"
                                 textAlign="center"
                                 height="100%"
+                                sx={{
+                                    backdropFilter: 'blur(4px)',
+                                    border: '1px solid rgba(255, 255, 255, 0.18)',
+                                    transition: 'transform 0.3s ease-in-out',
+                                    '&:hover': {
+                                        transform: 'translateY(-10px)',
+                                    }
+                                }}
                             >
                                 <Typography variant="h5" fontWeight="bold" gutterBottom>
                                     Plano Anual
@@ -133,12 +151,17 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                         type="submit"
                                         fullWidth
                                         sx={{
-                                            bgcolor: 'rgb(35, 35, 35)',
+                                            mt: 'auto',
+                                            bgcolor: 'primary.main',
                                             color: '#ffffff',
                                             '&:hover': {
-                                                bgcolor: 'rgb(35, 35, 35)',
-                                                color: '#ffffff'
-                                            }
+                                                bgcolor: 'primary.dark',
+                                            },
+                                            borderRadius: '50px',
+                                            padding: '12px 0',
+                                            fontWeight: 'bold',
+                                            textTransform: 'none',
+                                            fontSize: '1rem',
                                         }}
                                         onClick={() => handlePlanSelection('Plano Anual')}
                                     >
@@ -153,11 +176,19 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                 flexDirection="column"
                                 alignItems="center"
                                 p={4}
-                                bgcolor="secondary.main"
-                                borderRadius={2}
-                                boxShadow={3}
+                                bgcolor="rgba(255, 255, 255, 0.1)"
+                                borderRadius={4}
+                                boxShadow="0 8px 32px 0 rgba(31, 38, 135, 0.37)"
                                 textAlign="center"
                                 height="100%"
+                                sx={{
+                                    backdropFilter: 'blur(4px)',
+                                    border: '1px solid rgba(255, 255, 255, 0.18)',
+                                    transition: 'transform 0.3s ease-in-out',
+                                    '&:hover': {
+                                        transform: 'translateY(-10px)',
+                                    }
+                                }}
                             >
                                 <Typography variant="h5" fontWeight="bold" gutterBottom>
                                     Integração Personalizada
@@ -183,12 +214,17 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                         type="submit"
                                         fullWidth
                                         sx={{
-                                            bgcolor: 'rgb(35, 35, 35)',
+                                            mt: 'auto',
+                                            bgcolor: 'primary.main',
                                             color: '#ffffff',
                                             '&:hover': {
-                                                bgcolor: 'rgb(35, 35, 35)',
-                                                color: '#ffffff'
-                                            }
+                                                bgcolor: 'primary.dark',
+                                            },
+                                            borderRadius: '50px',
+                                            padding: '12px 0',
+                                            fontWeight: 'bold',
+                                            textTransform: 'none',
+                                            fontSize: '1rem',
                                         }}
                                         onClick={() => handlePlanSelection('Integração Personalizada')}
                                     >
@@ -203,11 +239,19 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                 flexDirection="column"
                                 alignItems="center"
                                 p={4}
-                                bgcolor="secondary.main"
-                                borderRadius={2}
-                                boxShadow={3}
+                                bgcolor="rgba(255, 255, 255, 0.1)"
+                                borderRadius={4}
+                                boxShadow="0 8px 32px 0 rgba(31, 38, 135, 0.37)"
                                 textAlign="center"
                                 height="100%"
+                                sx={{
+                                    backdropFilter: 'blur(4px)',
+                                    border: '1px solid rgba(255, 255, 255, 0.18)',
+                                    transition: 'transform 0.3s ease-in-out',
+                                    '&:hover': {
+                                        transform: 'translateY(-10px)',
+                                    }
+                                }}
                             >
                                 <Typography variant="h5" fontWeight="bold" gutterBottom>
                                     Transações Independentes
@@ -233,12 +277,17 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                         type="submit"
                                         fullWidth
                                         sx={{
-                                            bgcolor: 'rgb(35, 35, 35)',
+                                            mt: 'auto',
+                                            bgcolor: 'primary.main',
                                             color: '#ffffff',
                                             '&:hover': {
-                                                bgcolor: 'rgb(35, 35, 35)',
-                                                color: '#ffffff'
-                                            }
+                                                bgcolor: 'primary.dark',
+                                            },
+                                            borderRadius: '50px',
+                                            padding: '12px 0',
+                                            fontWeight: 'bold',
+                                            textTransform: 'none',
+                                            fontSize: '1rem',
                                         }}
                                         onClick={() => handlePlanSelection('Transações Independentes')}
                                     >
@@ -251,14 +300,41 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                 </Container>
             </Box>
             {/* Chamada para Ação */}
-            <Box bgcolor="secondary.main" color="primary.contrastText" py={8}>
-                <Container>
-                    <Typography variant={isMobile ? 'h5' : 'h4'} textAlign="center" fontWeight="bold" gutterBottom>
+            <Box 
+                bgcolor="primary.main" 
+                color="primary.contrastText" 
+                py={10}
+                sx={{
+                    background: 'linear-gradient(135deg, #2a5298 0%, #1e3c72 100%)',
+                }}
+            >
+                <Container maxWidth="md">
+                    <Typography variant={isMobile ? 'h4' : 'h3'} textAlign="center" fontWeight="bold" gutterBottom>
                         Pronto para revolucionar seu negócio?
                     </Typography>
-                    <Typography variant="h6" textAlign="center">
+                    <Typography variant="h6" textAlign="center" mb={4}>
                         Entre em contato conosco hoje mesmo e dê o primeiro passo para o futuro!
                     </Typography>
+                    <Box display="flex" justifyContent="center">
+                        <Button
+                            variant="contained"
+                            size="large"
+                            sx={{
+                                bgcolor: 'primary.main',
+                                color: 'primary.contrastText',
+                                '&:hover': {
+                                    bgcolor: 'secondary.dark',
+                                },
+                                borderRadius: '50px',
+                                padding: '12px 40px',
+                                fontWeight: 'bold',
+                                textTransform: 'none',
+                                fontSize: '1.1rem',
+                            }}
+                        >
+                            Fale Conosco
+                        </Button>
+                    </Box>
                 </Container>
             </Box>
         </section>

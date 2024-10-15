@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography, Paper } from "@mui/material";
 import Image from "next/image";
 import { FC } from "react";
 
@@ -10,123 +10,170 @@ const AboutSection: FC<AboutProps> = (props) => {
     return (
         <section id="about">
             <Box
-                bgcolor="secondary.main"
-                color="primary.contrastText"
-                py={8}
-                style={{ 
-                    backgroundImage: 'url(/path/to/your/background-image.jpg)', 
-                    backgroundSize: 'cover', 
-                    backgroundPosition: 'center' 
+                py={12}
+                sx={{
+                    background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+                    color: 'white',
                 }}
             >
-                <Container>
+                <Container maxWidth="lg">
                     <Typography 
-                        variant={props.isMobile ? 'h5' : 'h3'} 
+                        variant={props.isMobile ? 'h4' : 'h2'} 
                         textAlign="center" 
                         fontWeight="700" 
                         gutterBottom
-                        style={{ fontFamily: "'Roboto', sans-serif", color: "#fff" }}
+                        sx={{ 
+                            fontFamily: "'Roboto', sans-serif",
+                            marginBottom: '60px',
+                            textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                        }}
                     >
                         Transforme seu negócio com a blockchain
                     </Typography>
                     <Typography 
-                        variant="body1" 
+                        variant="h6" 
                         textAlign="center" 
                         paragraph 
-                        style={{ fontFamily: "'Open Sans', sans-serif", lineHeight: 1.6 }}
+                        sx={{ 
+                            fontFamily: "'Open Sans', sans-serif", 
+                            lineHeight: 1.6,
+                            maxWidth: '800px',
+                            margin: '0 auto 60px',
+                            opacity: 0.9
+                        }}
                     >
                         Na Elysian, acreditamos que a tecnologia blockchain pode
                         revolucionar a maneira como as empresas operam, trazendo
-                        transparência, segurança e eficiência sem precedentes. Somos uma
-                        startup inovadora focada em desenvolver contratos inteligentes,
-                        integrar sistemas e oferecer suporte de qualidade para garantir que
-                        sua transição para a nova era digital seja suave e bem-sucedida.
+                        transparência, segurança e eficiência sem precedentes.
                     </Typography>
-                </Container>
-                <Container>
                     <Grid container spacing={4} justifyContent="center">
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-                                <Image src="/security.png" alt="Segurança Máxima" width={50} height={50} />
-                                <Typography variant="h6" textAlign="center" fontWeight="bold" gutterBottom>
-                                    Segurança Máxima
-                                </Typography>
-                                <Typography variant="body2" textAlign="justify">
-                                Com a Elysian, seus dados estão protegidos por criptografia
-                                avançada e tecnologia de ponta, garantindo a máxima segurança
-                                nas transações.
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-                                <Image src="/clock.png" alt="Eficiência e Velocidade" width={50} height={50} />
-                                <Typography variant="h6" textAlign="center" fontWeight="bold" gutterBottom>
-                                    Eficiência e Velocidade
-                                </Typography>
-                                <Typography variant="body2" textAlign="justify">
-                                Nossa plataforma elimina intermediários, permitindo processar
-                                transações rapidamente e com menor custo. Oferecemos
-                                integração fácil com sistemas ERP existentes, proporcionando
-                                uma visão unificada e precisa de suas operações. Com a
-                                tecnologia blockchain, reduzimos erros e fraudes, tornando
-                                suas movimentações de estoque mais eficientes.
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-                                <Image src="/idea.png" alt="Inovação e Crescimento" width={50} height={50} />
-                                <Typography variant="h6" textAlign="center" fontWeight="bold" gutterBottom>
-                                    Inovação e Crescimento
-                                </Typography>
-                                <Typography variant="body2" textAlign="justify">
-                                Estamos constantemente investindo em pesquisa e desenvolvimento
-                                para trazer as mais recentes inovações ao seu negócio. Explore
-                                novos modelos de negócios e abra portas para o crescimento
-                                exponencial com nossas soluções personalizadas. Se você está
-                                pronto para dar o próximo passo na revolução digital, a Elysian
-                                está aqui para ajudá-lo a alcançar novos patamares.
-                                </Typography>
-                            </Box>
-                        </Grid>
+                        {[
+                            {
+                                icon: "/security.png",
+                                title: "Segurança Máxima",
+                                description: "Com a Elysian, seus dados estão protegidos por criptografia avançada e tecnologia de ponta, garantindo a máxima segurança nas transações."
+                            },
+                            {
+                                icon: "/clock.png",
+                                title: "Eficiência e Velocidade",
+                                description: "Nossa plataforma elimina intermediários, permitindo processar transações rapidamente e com menor custo. Oferecemos integração fácil com sistemas ERP existentes."
+                            },
+                            {
+                                icon: "/idea.png",
+                                title: "Inovação e Crescimento",
+                                description: "Estamos constantemente investindo em pesquisa e desenvolvimento para trazer as mais recentes inovações ao seu negócio."
+                            }
+                        ].map((item, index) => (
+                            <Grid item xs={12} sm={6} md={4} key={index}>
+                                <Paper
+                                    elevation={3}
+                                    sx={{
+                                        p: 4,
+                                        height: '100%',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                        backdropFilter: 'blur(4px)',
+                                        borderRadius: 4,
+                                        transition: 'transform 0.3s ease-in-out',
+                                        '&:hover': {
+                                            transform: 'translateY(-10px)',
+                                        }
+                                    }}
+                                >
+                                    <Image src={item.icon} alt={item.title} width={60} height={60} />
+                                    <Typography variant="h5" textAlign="center" fontWeight="bold" gutterBottom sx={{ mt: 2 }}>
+                                        {item.title}
+                                    </Typography>
+                                    <Typography variant="body1" textAlign="center">
+                                        {item.description}
+                                    </Typography>
+                                </Paper>
+                            </Grid>
+                        ))}
                     </Grid>
                 </Container>
             </Box>
 
             {/* Seção Quem Somos Nós */}
-            <Box py={5}>
-                <Container>
-                    <Typography variant={props.isMobile ? 'h5' : 'h3'} textAlign="center" fontWeight="bold" gutterBottom>
-                        Sobre a gente
+            <Box py={12} sx={{ backgroundColor: '#303030', color: 'white' }}>
+                <Container maxWidth="lg">
+                    <Typography 
+                        variant={props.isMobile ? 'h4' : 'h2'} 
+                        textAlign="center" 
+                        fontWeight="bold" 
+                        gutterBottom 
+                        sx={{ 
+                            mb: 6,
+                            color: 'white',
+                            textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                        }}
+                    >
+                        Nossa Equipe
                     </Typography>
-                    <Grid container spacing={4} justifyContent="center">
-                        <Grid item xs={12} sm={6} md={6}>
-                            <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-                                <a href="https://www.linkedin.com/in/williamciva" target="_blank" rel="noopener noreferrer">
-                                    <Image src="/wyl.jpg" style={{"borderRadius": "50%", "width": 200, "height": 200, "objectFit":"cover"}} alt="Fundador 1" width={200} height={200} />
-                                </a>
-                                <Typography variant="h6" textAlign="center" fontWeight="bold" gutterBottom>
-                                    William Civa
-                                </Typography>
-                                <Typography variant="body2" textAlign="justify">
-                                Analista de banco de dados com experiência em tecnologias como Java e Python, e um sólido histórico em banco de dados SQL e PL/SQL. Desde setembro de 2022, atua como analista de banco de dados, trazendo uma abordagem analítica e técnica para a otimização de dados e desenvolvimento de soluções robustas. Anteriormente, trabalhou como assistente de TI, onde desenvolveu habilidades práticas em gestão de banco de dados e suporte técnico. William é também um entusiasta de blockchain, acreditando na sua capacidade de transformar a maneira como as empresas gerenciam e protegem dados, e está comprometido em explorar e implementar inovações tecnológicas que promovam segurança e eficiência.
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={6}>
-                            <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-                                <a href="https://www.linkedin.com/in/andriano-toazza" target="_blank" rel="noopener noreferrer">
-                                    <Image src="/andy.jpg" alt="Fundador 2" width={200} height={200} />
-                                </a>
-                                <Typography variant="h6" textAlign="center" fontWeight="bold" gutterBottom>
-                                    Andriano Toazza
-                                </Typography>
-                                <Typography variant="body2" textAlign="justify">
-                                Entusiasta de blockchain e criptografia. Possui mais de três anos de experiência em Quality Assurance de software, com especialização em automação de testes para aplicações Web e APIs. Tem experiência significativa no desenvolvimento e manutenção de testes automatizados, garantindo cobertura eficiente e robusta. Além disso, possui habilidades em testes manuais e gestão de testes exploratórios, atuando com competência em ambientes ágeis e sempre buscando a excelência e inovação nos processos.
-                                </Typography>
-                            </Box>
-                        </Grid>
+                    <Grid container spacing={6} justifyContent="center">
+                        {[
+                            {
+                                name: "William Civa",
+                                role: "Analista de Banco de Dados",
+                                image: "/wyl.jpg",
+                                linkedin: "https://www.linkedin.com/in/williamciva",
+                                description: "Analista de banco de dados com experiência em Java, Python, SQL e PL/SQL. Entusiasta de blockchain, comprometido com inovações tecnológicas para segurança e eficiência."
+                            },
+                            {
+                                name: "Andriano Toazza",
+                                role: "Especialista em QA",
+                                image: "/andy.jpg",
+                                linkedin: "https://www.linkedin.com/in/andriano-toazza",
+                                description: "Entusiasta de blockchain e criptografia. Mais de três anos de experiência em Quality Assurance de software, especializado em automação de testes para aplicações Web e APIs."
+                            }
+                        ].map((member, index) => (
+                            <Grid item xs={12} sm={6} key={index}>
+                                <Paper
+                                    elevation={3}
+                                    sx={{
+                                        p: 4,
+                                        height: '100%',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        borderRadius: 4,
+                                        transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                                        backdropFilter: 'blur(10px)',
+                                        '&:hover': {
+                                            transform: 'translateY(-10px)',
+                                            boxShadow: '0 12px 20px rgba(0, 0, 0, 0.2)',
+                                        }
+                                    }}
+                                >
+                                    <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
+                                        <Image 
+                                            src={member.image} 
+                                            alt={member.name} 
+                                            width={200} 
+                                            height={200} 
+                                            style={{
+                                                borderRadius: '50%',
+                                                objectFit: 'cover',
+                                                marginBottom: '20px',
+                                                border: '4px solid #1e3c72',
+                                            }}
+                                        />
+                                    </a>
+                                    <Typography variant="h5" textAlign="center" fontWeight="bold" gutterBottom sx={{ color: 'white' }}>
+                                        {member.name}
+                                    </Typography>
+                                    <Typography variant="subtitle1" textAlign="center" color="secondary.light" gutterBottom>
+                                        {member.role}
+                                    </Typography>
+                                    <Typography variant="body1" textAlign="center" sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                                        {member.description}
+                                    </Typography>
+                                </Paper>
+                            </Grid>
+                        ))}
                     </Grid>
                 </Container>
             </Box>
