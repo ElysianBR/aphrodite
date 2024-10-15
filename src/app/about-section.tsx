@@ -79,7 +79,8 @@ const AboutSection: FC<AboutProps> = (props) => {
                                         transition: 'transform 0.3s ease-in-out',
                                         '&:hover': {
                                             transform: 'translateY(-10px)',
-                                        }
+                                        },
+                                        color: 'white', // Adicionando esta linha para mudar a cor do texto para branco
                                     }}
                                 >
                                     <Image src={item.icon} alt={item.title} width={60} height={60} />

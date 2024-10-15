@@ -313,17 +313,18 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                         Pronto para revolucionar seu negócio?
                     </Typography>
                     <Typography variant="h6" textAlign="center" mb={4}>
-                        Entre em contato conosco hoje mesmo e dê o primeiro passo para o futuro!
+                        Escolha o plano ideal para você e comece a transformar sua empresa hoje mesmo!
                     </Typography>
                     <Box display="flex" justifyContent="center">
                         <Button
                             variant="contained"
                             size="large"
+                            href="#plans"
                             sx={{
                                 bgcolor: 'primary.main',
                                 color: 'primary.contrastText',
                                 '&:hover': {
-                                    bgcolor: 'secondary.dark',
+                                    bgcolor: 'primary.dark',
                                 },
                                 borderRadius: '50px',
                                 padding: '12px 40px',
@@ -332,7 +333,7 @@ const PlansSection: FC<PlansSectionProps> = ({ isMobile }) => {
                                 fontSize: '1.1rem',
                             }}
                         >
-                            Fale Conosco
+                            Ver Planos
                         </Button>
                     </Box>
                 </Container>

@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Button, Grid, IconButton, Drawer, List, ListItemButton
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
 import { Link } from "@/app/types";
+import '../app/signup/signup.css';
 
 interface LinkButtonProps {
   link: Link;
@@ -18,14 +19,32 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link, index, currentSection, se
     onClick={() => setCurrentSection(index)}
     data-testid={`section-button-${link.id}`}
     sx={{
-      fontSize: "20px",
-      fontWeight: "bold",
+      fontFamily: "'Open Sans', sans-serif",
+      fontSize: "16px",
+      fontWeight: 700, // Alterado para 700 (negrito)
       textTransform: "none",
       color: "white",
-      textShadow: "0px 0px 8px rgba(0, 0, 0, 0.6)",
-      textDecoration: index === currentSection ? "underline" : "none",
+      textShadow: "0px 0px 8px rgba(0, 0, 0, 0.4)",
+      position: "relative",
+      padding: "4px 12px",
+      transition: "all 0.3s ease",
       '&:hover': {
         color: "#E4405F",
+        transform: "translateY(-2px)",
+      },
+      '&::after': {
+        content: '""',
+        position: "absolute",
+        bottom: 0,
+        left: "50%",
+        width: index === currentSection ? "100%" : "0%",
+        height: "2px",
+        backgroundColor: "#E4405F",
+        transition: "all 0.3s ease",
+        transform: "translateX(-50%)",
+      },
+      '&:hover::after': {
+        width: "100%",
       }
     }}
   >
@@ -40,44 +59,53 @@ export type HeaderProps = {
 const Header: FC<HeaderProps> = (props) => {
   const [currentSection, setCurrentSection] = useState<number>(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [isReverse, setIsReverse] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
-    const setCenterSection = () => {
-      const center = window.innerHeight / 2;
-      let minDistance = Number.MAX_VALUE;
+    const interval = setInterval(() => {
+      setIsReverse(prev => !prev);
+    }, 5000); // Alterna a cada 5 segundos
 
-      props.links.forEach((link, index) => {
-        const element = document.getElementById(link.id);
-        if (element) {
-          const verticalPosition = element.getBoundingClientRect().top + (element.clientHeight / 2);
-          const distance = Math.abs(verticalPosition - center);
-          if (distance < minDistance) {
-            minDistance = distance;
-            setCurrentSection(index);
-          }
-        }
-      });
-    };
-
-    document.addEventListener('scroll', setCenterSection);
-    return () => {
-      document.removeEventListener('scroll', setCenterSection);
-    };
-  }, [props.links]);
+    return () => clearInterval(interval);
+  }, []);
 
   const toggleDrawer = (open: boolean) => () => {
     setIsDrawerOpen(open);
   };
 
   return (
-    <AppBar position="sticky" color="transparent" elevation={0}>
-      <Toolbar variant="dense" style={{ margin: 2, padding: 2 }}>
+    <AppBar 
+      position="sticky" 
+      color="transparent" 
+      elevation={0}
+      sx={{
+        backdropFilter: "blur(10px)",
+        backgroundColor: "rgba(255, 255, 255, 0.1)",
+        boxShadow: "0 2px 15px rgba(0, 0, 0, 0.1)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.1)"
+      }}
+    >
+      <Toolbar 
+        variant="dense" 
+        sx={{ 
+          minHeight: '48px',
+          padding: '0 16px',
+        }}
+      >
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <a href="#home" data-testid="elysian-logo-button">
-              <Image src="/logo_wo_bg.png" alt="Elysian Logo" width={40} height={40} style={{ cursor: 'pointer' }} className="logo-animation" />
+              <div className={`logo-login logo-animation ${isReverse ? 'reverse' : ''}`}>
+                <Image 
+                  src="/logo_wo_bg.png" 
+                  alt="Elysian Logo" 
+                  width={40} 
+                  height={40} 
+                  style={{ cursor: 'pointer' }} 
+                />
+              </div>
             </a>
           </Grid>
           {isMobile ? (
@@ -86,12 +114,18 @@ const Header: FC<HeaderProps> = (props) => {
                 aria-label="menu"
                 onClick={toggleDrawer(true)}
                 sx={{
-                  backdropFilter: "blur(1px)",
-                  backgroundColor: "rgba(255, 255, 255, 0.4)",
-                  '&:hover': { backgroundColor: "rgba(255, 255, 255, 0.7)" }
+                  padding: '8px',
+                  backdropFilter: "blur(5px)",
+                  backgroundColor: "rgba(255, 255, 255, 0.2)",
+                  color: "white",
+                  '&:hover': { 
+                    backgroundColor: "rgba(255, 255, 255, 0.3)",
+                    transform: "scale(1.1)"
+                  },
+                  transition: "all 0.3s ease"
                 }}
               >
-                <MenuIcon />
+                <MenuIcon fontSize="small" />
               </IconButton>
             </Grid>
           ) : (
@@ -107,7 +141,15 @@ const Header: FC<HeaderProps> = (props) => {
         anchor="right"
         open={isDrawerOpen}
         onClose={toggleDrawer(false)}
-        PaperProps={{ sx: { backgroundColor: "rgba(0, 0, 0, 0.85)", color: "white", width: "250px", boxShadow: "0 4px 12px rgba(0,0,0,0.5)" } }}
+        PaperProps={{ 
+          sx: { 
+            backgroundColor: "rgba(0, 0, 0, 0.9)", 
+            color: "white", 
+            width: "280px", 
+            boxShadow: "0 4px 30px rgba(0, 0, 0, 0.5)",
+            backdropFilter: "blur(10px)"
+          } 
+        }}
         transitionDuration={500}
       >
         <List>
