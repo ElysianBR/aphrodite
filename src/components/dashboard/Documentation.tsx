@@ -1,6 +1,6 @@
 "user client"
 
-import Provider from '@/provider/provider'
+import Provider from '@/provider/api-provider'
 import React from 'react'
 
 export default function Documentation() {

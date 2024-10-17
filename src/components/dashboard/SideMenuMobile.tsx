@@ -13,7 +13,7 @@ import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 import Account from '@/provider/requests/Account';
 import { useRouter } from 'next/navigation';
-import Provider from '@/provider/provider';
+import Provider from '@/provider/api-provider';
 import { TypeListItems } from './SideMenu';
 
 interface SideMenuMobileProps {

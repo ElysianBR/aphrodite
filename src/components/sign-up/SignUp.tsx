@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -10,8 +12,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import getSignUpTheme from './theme/getSignUpTheme';
-import TemplateFrame from './TemplateFrame';
+import getSignUpTheme from '@/components/sign-up/theme/getSignUpTheme';
 import Image from 'next/image';
 import { useState, FormEvent } from 'react';
 import NextLink from 'next/link';
@@ -19,6 +20,8 @@ import ElysianIcon from '/public/logo_wo_bg.png';
 import '/src/app/signup/signup.css';
 import Register, { registerRequest } from '@/provider/requests/Register';
 import { useRouter } from 'next/navigation';
+import { showPopError } from '@/utils/popup-utils';
+import { usePopup } from '@/provider/popup-provider';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -63,11 +66,11 @@ export default function SignUp() {
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
   const [isAnimated, setIsAnimated] = useState(false);
-  const [registerError, setRegisterError] = useState<string | null>(null);  // Estado para erro de registro
   const [lastNameError, setLastNameError] = React.useState(false);
   const [lastNameErrorMessage, setLastNameErrorMessage] = React.useState('');
   const router = useRouter()
   const [isClient, setIsClient] = React.useState(false)
+  const popup = usePopup();
 
   React.useEffect(() => {
     const savedMode = localStorage.getItem('themeMode');
@@ -155,154 +158,142 @@ export default function SignUp() {
         password: data.get('password') as string,
       };
 
-      try {
-        const response = await Register.post({ credentials: requestData });
+      const response = await Register.post({ credentials: requestData });
 
-        if (response instanceof Register) {
-          console.log('Registro bem-sucedido', response);
-          setRegisterError(null);
-          router.push('/login')
-        } else {
-          console.error('Erro no registro', response);
-          setRegisterError('Erro ao registrar a conta. Tente novamente.');
-        }
-      } catch (error) {
-        console.error('Erro ao enviar os dados', error);
-        setRegisterError('Erro ao registrar a conta. Tente novamente.');
+      if (response instanceof Register) {
+        console.log('Registro bem-sucedido', response);
+        router.push('/login')
+      } else {
+        showPopError(popup, response)
       }
     }
   };
 
   return (
     isClient ?
-      <ThemeProvider theme={showCustomTheme ? SignUpTheme : defaultTheme}>
-        <CssBaseline enableColorScheme />
-        <SignUpContainer direction="column" justifyContent="space-between">
-          <Stack
-            sx={{
-              justifyContent: 'center',
-              height: '100dvh',
-              p: 2,
-            }}
-          >
-            <Card variant="outlined">
-              <NextLink href="/" passHref>
-                <Box
-                  sx={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}
-                  className={`logo-login logo-animation ${isAnimated ? 'reverse' : ''}`}
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <Image
-                    src={ElysianIcon}
-                    alt="Elysian logo"
-                    width={100}
-                    height={100}
-                  />
-                </Box>
-              </NextLink>
-              <Typography
-                component="h1"
-                variant="h4"
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  fontSize: 'clamp(2rem, 10vw, 2.15rem)',
-                }}
-              >
-                Crie sua conta
-              </Typography>
-              <Box
-                component="form"
-                onSubmit={handleSubmit}
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-              >
-                <FormControl>
-                  <FormLabel htmlFor="name">Nome</FormLabel>
-                  <TextField
-                    autoComplete="name"
-                    name="name"
-                    required
-                    fullWidth
-                    id="name"
-                    placeholder="Michael"
-                    error={nameError}
-                    helperText={nameErrorMessage}
-                    color={nameError ? 'error' : 'primary'}
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel htmlFor="lastName">Sobrenome</FormLabel>
-                  <TextField
-                    autoComplete="lastName"
-                    name="lastName"
-                    required
-                    fullWidth
-                    id="lastName"
-                    placeholder="Jordan"
-                    error={lastNameError}
-                    helperText={lastNameErrorMessage}
-                    color={lastNameError ? 'error' : 'primary'}
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel htmlFor="email">Email</FormLabel>
-                  <TextField
-                    autoComplete="email"
-                    name="email"
-                    required
-                    fullWidth
-                    id="email"
-                    placeholder="michael@email.com"
-                    error={emailError}
-                    helperText={emailErrorMessage}
-                    color={emailError ? 'error' : 'primary'}
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel htmlFor="password">Senha</FormLabel>
-                  <TextField
-                    required
-                    fullWidth
-                    name="password"
-                    type="password"
-                    id="password"
-                    autoComplete="new-password"
-                    placeholder="Sua senha"
-                    error={passwordError}
-                    helperText={passwordErrorMessage}
-                    color={passwordError ? 'error' : 'primary'}
-                  />
-                </FormControl>
-                {registerError && (
-                  <Typography color="error" variant="body2" align="center">
-                    {registerError}
-                  </Typography>
-                )}
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Criar conta
-                </Button>
+        <ThemeProvider theme={showCustomTheme ? SignUpTheme : defaultTheme}>
+          <CssBaseline enableColorScheme />
+          <SignUpContainer direction="column" justifyContent="space-between">
+            <Stack
+              sx={{
+                justifyContent: 'center',
+                height: '100dvh',
+                p: 2,
+              }}
+            >
+              <Card variant="outlined">
+                <NextLink href="/" passHref>
+                  <Box
+                    sx={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}
+                    className={`logo-login logo-animation ${isAnimated ? 'reverse' : ''}`}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <Image
+                      src={ElysianIcon}
+                      alt="Elysian logo"
+                      width={100}
+                      height={100}
+                    />
+                  </Box>
+                </NextLink>
                 <Typography
+                  component="h1"
+                  variant="h4"
                   sx={{
-                    textAlign: 'center',
-                    color: 'grey.500',
-                    fontSize: '14px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    fontSize: 'clamp(2rem, 10vw, 2.15rem)',
                   }}
                 >
-                  <Link href="/login" component={NextLink}>
-                    Já tem uma conta? Faça login.
-                  </Link>
+                  Crie sua conta
                 </Typography>
-              </Box>
-            </Card>
-          </Stack>
-        </SignUpContainer>
-      </ThemeProvider>
+                <Box
+                  component="form"
+                  onSubmit={handleSubmit}
+                  sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+                >
+                  <FormControl>
+                    <FormLabel htmlFor="name">Nome</FormLabel>
+                    <TextField
+                      autoComplete="name"
+                      name="name"
+                      required
+                      fullWidth
+                      id="name"
+                      placeholder="Michael"
+                      error={nameError}
+                      helperText={nameErrorMessage}
+                      color={nameError ? 'error' : 'primary'}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel htmlFor="lastName">Sobrenome</FormLabel>
+                    <TextField
+                      autoComplete="lastName"
+                      name="lastName"
+                      required
+                      fullWidth
+                      id="lastName"
+                      placeholder="Jordan"
+                      error={lastNameError}
+                      helperText={lastNameErrorMessage}
+                      color={lastNameError ? 'error' : 'primary'}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel htmlFor="email">Email</FormLabel>
+                    <TextField
+                      autoComplete="email"
+                      name="email"
+                      required
+                      fullWidth
+                      id="email"
+                      placeholder="michael@email.com"
+                      error={emailError}
+                      helperText={emailErrorMessage}
+                      color={emailError ? 'error' : 'primary'}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel htmlFor="password">Senha</FormLabel>
+                    <TextField
+                      required
+                      fullWidth
+                      name="password"
+                      type="password"
+                      id="password"
+                      autoComplete="new-password"
+                      placeholder="Sua senha"
+                      error={passwordError}
+                      helperText={passwordErrorMessage}
+                      color={passwordError ? 'error' : 'primary'}
+                    />
+                  </FormControl>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Criar conta
+                  </Button>
+                  <Typography
+                    sx={{
+                      textAlign: 'center',
+                      color: 'grey.500',
+                      fontSize: '14px',
+                    }}
+                  >
+                    <Link href="/login" component={NextLink}>
+                      Já tem uma conta? Faça login.
+                    </Link>
+                  </Typography>
+                </Box>
+              </Card>
+            </Stack>
+          </SignUpContainer>
+        </ThemeProvider>
       : null
   );
 }

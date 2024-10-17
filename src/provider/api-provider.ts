@@ -45,7 +45,6 @@ export default class Provider {
         jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL;
         jsonConvert.mapUndefinedToNull = true;
 
-
         try {
             return jsonConvert.deserializeObject(response, classT);
         } catch (e) {
