@@ -21,7 +21,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link, index, currentSection, se
     sx={{
       fontFamily: "'Open Sans', sans-serif",
       fontSize: "16px",
-      fontWeight: 700, // Alterado para 700 (negrito)
+      fontWeight: 700,
       textTransform: "none",
       color: "white",
       textShadow: "0px 0px 8px rgba(0, 0, 0, 0.4)",
@@ -66,10 +66,36 @@ const Header: FC<HeaderProps> = (props) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIsReverse(prev => !prev);
-    }, 5000); // Alterna a cada 5 segundos
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const sectionElements = props.links.map(link => document.getElementById(link.href.slice(1)));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          console.log(entry.target.id, entry.isIntersecting); // Log para verificar se a seção está sendo observada
+          if (entry.isIntersecting) {
+            const index = sectionElements.findIndex(section => section === entry.target);
+            setCurrentSection(index);
+          }
+        });
+      },
+      { threshold: 0.3 } // Ajustado para capturar seções menores com 30% visível
+    );
+
+    sectionElements.forEach(section => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sectionElements.forEach(section => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, [props.links]);
 
   const toggleDrawer = (open: boolean) => () => {
     setIsDrawerOpen(open);
