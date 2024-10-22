@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { AppBar, Toolbar, Button, Grid, IconButton, Drawer, List, ListItemButton, useTheme, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
@@ -59,43 +59,31 @@ export type HeaderProps = {
 const Header: FC<HeaderProps> = (props) => {
   const [currentSection, setCurrentSection] = useState<number>(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-  const [isReverse, setIsReverse] = useState(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false); // Estado para hover
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  // Lógica para mudança de seção com scroll
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIsReverse(prev => !prev);
-    }, 5000);
+    const handleScroll = () => {
+      const sections = document.querySelectorAll('section');
+      const scrollPosition = window.scrollY;
 
-    return () => clearInterval(interval);
-  }, []);
+      sections.forEach((section, index) => {
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        const sectionHeight = section.clientHeight;
 
-  useEffect(() => {
-    const sectionElements = props.links.map(link => document.getElementById(link.href.slice(1)));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          console.log(entry.target.id, entry.isIntersecting); // Log para verificar se a seção está sendo observada
-          if (entry.isIntersecting) {
-            const index = sectionElements.findIndex(section => section === entry.target);
-            setCurrentSection(index);
-          }
-        });
-      },
-      { threshold: 0.3 } // Ajustado para capturar seções menores com 30% visível
-    );
-
-    sectionElements.forEach(section => {
-      if (section) observer.observe(section);
-    });
-
-    return () => {
-      sectionElements.forEach(section => {
-        if (section) observer.unobserve(section);
+        if (scrollPosition >= sectionTop - sectionHeight / 3) {
+          setCurrentSection(index);
+        }
       });
     };
-  }, [props.links]);
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const toggleDrawer = (open: boolean) => () => {
     setIsDrawerOpen(open);
@@ -123,7 +111,15 @@ const Header: FC<HeaderProps> = (props) => {
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <a href="#home" data-testid="elysian-logo-button">
-              <div className={`logo-login logo-animation ${isReverse ? 'reverse' : ''}`}>
+              <div
+                className="logo-login"
+                style={{
+                  transform: isHovered ? "rotate(360deg)" : "none",
+                  transition: "transform 0.6s ease-in-out",
+                }}
+                onMouseEnter={() => setIsHovered(true)}  // Inicia rotação ao passar o mouse
+                onMouseLeave={() => setIsHovered(false)} // Para a rotação ao sair o mouse
+              >
                 <Image 
                   src="/logo_wo_bg.png" 
                   alt="Elysian Logo" 
