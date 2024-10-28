@@ -10,7 +10,7 @@ import ListItemIcon, { listItemIconClasses } from '@mui/material/ListItemIcon';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import MenuButton from './MenuButton';
-import Provider from '@/provider/provider';
+import Provider from '@/provider/api-provider';
 import { TypeListItems } from './SideMenu';
 import UserProfile from './UserProfile';
 

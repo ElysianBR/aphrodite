@@ -8,7 +8,7 @@ import getSignInSideTheme from '@/components/sign-in-side/theme/getSignInSideThe
 import SignInCard from '@/components/sign-in-side/SignInCard';
 import Content from '@/components/sign-in-side/Content';
 import { useRouter } from 'next/navigation';
-import Provider from '@/provider/provider';
+import Provider from '@/provider/api-provider';
 import { getStoredPlan } from '@/utils/planStorage';
 import { PopupProvider } from '@/provider/popup-provider';
 

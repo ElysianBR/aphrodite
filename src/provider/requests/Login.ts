@@ -1,4 +1,4 @@
-import Provider from "../provider";
+import Provider from "../api-provider";
 import ResponseError from "../response-error";
 import { JsonObject, JsonProperty } from "json2typescript";
 import DateConvert from "../converts/date-convert";
